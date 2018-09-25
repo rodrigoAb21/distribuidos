@@ -2,22 +2,21 @@
 
 namespace App\Modelos;
 
-use App\User;
 use Illuminate\Database\Eloquent\Model;
 
-class Modelo extends Model
+class Pregunta extends Model
 {
-    protected $table = 'modelo_encuesta';
+    protected $table = 'pregunta';
     protected $primaryKey = 'id';
     public $timestamps = false;
     protected $fillable = [
-        'nombre',
-        'estado',
+        'enunciado',
+        'tipo_preg',
         'descripcion',
         'user_id',
     ];
 
     public function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Modelos;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Empresa extends Model
@@ -15,4 +16,8 @@ class Empresa extends Model
         'telefono',
         'email',
     ];
+
+    public function users(){
+        return $this->hasMany(User::class);
+    }
 }
