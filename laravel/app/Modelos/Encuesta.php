@@ -4,12 +4,11 @@ namespace App\Modelos;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Area extends Model
+class Encuesta extends Model
 {
-    protected $table = 'area';
+    protected $table = 'encuesta';
     protected $primaryKey = 'id';
     public $timestamps = false;
     protected $fillable = [
-        'nombre'
     ];
 }
