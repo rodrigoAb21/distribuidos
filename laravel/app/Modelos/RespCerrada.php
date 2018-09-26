@@ -4,17 +4,18 @@ namespace App\Modelos;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Area extends Model
+class RespCerrada extends Model
 {
-    protected $table = 'area';
+    protected $table = 'resp_cerrada';
     protected $primaryKey = 'id';
     public $timestamps = false;
     protected $fillable = [
-        'nombre',
+        'opcion_id',
+        'ficha_resp_id',
         'empresa_id'
     ];
 
-    public function puntos(){
-        return $this->hasMany(Punto::class);
+    public function opcion(){
+        return $this->belongsTo(Opcion::class);
     }
 }

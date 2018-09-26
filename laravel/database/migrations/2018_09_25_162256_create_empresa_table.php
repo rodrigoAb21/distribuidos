@@ -19,6 +19,7 @@ class CreateEmpresaTable extends Migration
             $table->string('direccion');
             $table->string('telefono')->nullable();
             $table->string('email')->unique();
+            $table->string('empresa_id');
         });
     }
 

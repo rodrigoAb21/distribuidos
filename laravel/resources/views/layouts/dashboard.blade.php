@@ -37,38 +37,32 @@
                 <ul class="nav">
                     <li class="">
                         <a href="{{url('/empleados')}}">
-                            <i class="nc-icon nc-single-02"></i>
-                            <p>Perfil de Usuario</p>
+                            <i class="fa fa-users"></i>
+                            <p>Empleados</p>
                         </a>
                     </li>
                     <li class="">
                         <a href="{{url('/modelos')}}">
-                            <i class="nc-icon nc-money-coins"></i>
-                            <p>Cartera</p>
+                            <i class="fa fa-file-invoice"></i>
+                            <p>Modelos de Encuesta</p>
                         </a>
                     </li>
                     <li class="">
                         <a href="{{url('/areas')}}">
-                            <i class="nc-icon nc-bus-front-12"></i>
-                            <p>Vehiculos</p>
+                            <i class="fa fa-map-marked-alt"></i>
+                            <p>Areas</p>
                         </a>
                     </li>
                     <li class="">
                         <a href="{{url('/asignaciones')}}">
-                            <i class="nc-icon nc-world-2"></i>
-                            <p>Rutas</p>
+                            <i class="fa fa-hand-point-right"></i>
+                            <p>Asignaciones</p>
                         </a>
                     </li>
                     <li class="">
                         <a href="{{url('/reportes')}}">
-                            <i class="nc-icon nc-spaceship"></i>
-                            <p>Servicios</p>
-                        </a>
-                    </li>
-                    <li class="">
-                        <a href="{{url('/mensajes')}}">
-                            <i class="nc-icon nc-email-85"></i>
-                            <p>Mensajes</p>
+                            <i class="fa fa-chart-pie"></i>
+                            <p>Reportes</p>
                         </a>
                     </li>
                 </ul>
