@@ -24,6 +24,7 @@ class CreateEncuestaTable extends Migration
             $table->unsignedInteger('encuestado_id');
             $table->foreign('asignacion_id')->references('id')->on('asignacion')->onDelete('cascade');
             $table->foreign('encuestado_id')->references('id')->on('encuestado')->onDelete('cascade');
+            $table->string('empresa_id');
         });
     }
 

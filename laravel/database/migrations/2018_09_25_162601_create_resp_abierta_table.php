@@ -20,6 +20,7 @@ class CreateRespAbiertaTable extends Migration
 
             $table->unsignedInteger('ficha_resp_id');
             $table->foreign('ficha_resp_id')->references('id')->on('ficha_resp')->onDelete('cascade');
+            $table->string('empresa_id');
         });
 
         //
