@@ -25,7 +25,7 @@ class User extends Authenticatable
         'tipo',
         'empresa_id',
         'email',
-        'password',
+        'password'
     ];
 
     /**

@@ -10,5 +10,13 @@ class PregRequisito extends Model
     protected $primaryKey = 'id';
     public $timestamps = false;
     protected $fillable = [
+        'pregunta_id',
+        'pregunta_requisito_id',
+        'opcion_id',
+        'empresa_id'
     ];
+
+    public function pregunta(){
+        return $this->belongsTo(Pregunta::class);
+    }
 }

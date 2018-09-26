@@ -10,5 +10,8 @@ class RespAbierta extends Model
     protected $primaryKey = 'id';
     public $timestamps = false;
     protected $fillable = [
+        'descripcion',
+        'ficha_resp_id',
+        'empresa_id'
     ];
 }

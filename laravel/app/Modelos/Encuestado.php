@@ -10,5 +10,9 @@ class Encuestado extends Model
     protected $primaryKey = 'id';
     public $timestamps = false;
     protected $fillable = [
+        'nombre',
+        'sexo',
+        'edad',
+        'empresa_id'
     ];
 }

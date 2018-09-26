@@ -19,8 +19,9 @@ class CreatePuntoTable extends Migration
             $table->double('latitud');
             //$table->timestamps();
 
-            $table->integer('area_id');
+            $table->unsignedInteger('area_id');
             $table->foreign('area_id')->references('id')->on('area')->onDelete('cascade');
+            $table->string('empresa_id');
         });
     }
 

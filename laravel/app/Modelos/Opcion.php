@@ -10,5 +10,8 @@ class Opcion extends Model
     protected $primaryKey = 'id';
     public $timestamps = false;
     protected $fillable = [
+        'texto',
+        'pregunta_id',
+        'empresa_id'
     ];
 }

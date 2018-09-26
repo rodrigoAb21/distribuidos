@@ -10,5 +10,12 @@ class RespCerrada extends Model
     protected $primaryKey = 'id';
     public $timestamps = false;
     protected $fillable = [
+        'opcion_id',
+        'ficha_resp_id',
+        'empresa_id'
     ];
+
+    public function opcion(){
+        return $this->belongsTo(Opcion::class);
+    }
 }

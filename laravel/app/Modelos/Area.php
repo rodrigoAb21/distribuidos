@@ -10,6 +10,11 @@ class Area extends Model
     protected $primaryKey = 'id';
     public $timestamps = false;
     protected $fillable = [
-        'nombre'
+        'nombre',
+        'empresa_id'
     ];
+
+    public function puntos(){
+        return $this->hasMany(Punto::class);
+    }
 }

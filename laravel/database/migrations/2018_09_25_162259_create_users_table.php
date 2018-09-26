@@ -27,6 +27,7 @@ class CreateUsersTable extends Migration
             $table->timestamps();
             $table->unsignedInteger('empresa_id');
             $table->foreign('empresa_id')->references('id')->on('empresa')->onDelete('cascade');
+            $table->string('empresa_id');
         });
     }
 
