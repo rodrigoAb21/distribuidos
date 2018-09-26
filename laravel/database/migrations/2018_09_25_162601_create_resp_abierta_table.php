@@ -22,7 +22,9 @@ class CreateRespAbiertaTable extends Migration
             $table->foreign('ficha_resp_id')->references('id')->on('ficha_resp')->onDelete('cascade');
             $table->string('empresa_id');
         });
-        
+
+
+        //
     }
 
     /**
