@@ -10,7 +10,7 @@
                             <div class="row">
                                 <div class="col-5 col-md-4">
                                     <div class="icon-big text-center icon-warning">
-                                        <i class="nc-icon nc-single-02 text-info"></i>
+                                        <i class="fa fa-user"></i>
                                     </div>
                                 </div>
                                 <div class="col-7 col-md-8">
@@ -33,7 +33,7 @@
                             <div class="row">
                                 <div class="col-5 col-md-4">
                                     <div class="icon-big text-center icon-warning">
-                                        <i class="nc-icon nc-world-2 text-primary"></i>
+                                        <i class="fa fa-draw-polygon"></i>
                                     </div>
                                 </div>
                                 <div class="col-7 col-md-8">

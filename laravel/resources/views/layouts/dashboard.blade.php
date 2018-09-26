@@ -12,7 +12,7 @@
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
 
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{{asset('plantilla/css/fontawesome/css/all.css')}}" rel="stylesheet" />
 
     <link href="{{asset('plantilla/css/bootstrap.min.css')}}" rel="stylesheet" />
     <link href="{{asset('plantilla/css/paper-dashboard.css')}}" rel="stylesheet" />
@@ -36,31 +36,31 @@
             <div class="sidebar-wrapper">
                 <ul class="nav">
                     <li class="">
-                        <a href="{{url('/usuario/editar')}}">
+                        <a href="{{url('/empleados')}}">
                             <i class="nc-icon nc-single-02"></i>
                             <p>Perfil de Usuario</p>
                         </a>
                     </li>
                     <li class="">
-                        <a href="{{url('/cartera')}}">
+                        <a href="{{url('/modelos')}}">
                             <i class="nc-icon nc-money-coins"></i>
                             <p>Cartera</p>
                         </a>
                     </li>
                     <li class="">
-                        <a href="{{url('/vehiculos')}}">
+                        <a href="{{url('/areas')}}">
                             <i class="nc-icon nc-bus-front-12"></i>
                             <p>Vehiculos</p>
                         </a>
                     </li>
                     <li class="">
-                        <a href="{{url('/rutas')}}">
+                        <a href="{{url('/asignaciones')}}">
                             <i class="nc-icon nc-world-2"></i>
                             <p>Rutas</p>
                         </a>
                     </li>
                     <li class="">
-                        <a href="{{url('/servicio')}}">
+                        <a href="{{url('/reportes')}}">
                             <i class="nc-icon nc-spaceship"></i>
                             <p>Servicios</p>
                         </a>
