@@ -5,7 +5,7 @@
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
                     <div class="card-header form-inline">
-                        <h4 class="card-title">Nuevo encuestador</h4>
+                        <h4 class="card-title">Nuevo modelo de encuesta</h4>
                     </div>
                     <div class="card-body">
                         <form action="{{url('/modelos')}}" method="POST" autocomplete="off">
