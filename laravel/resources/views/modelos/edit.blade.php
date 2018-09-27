@@ -59,7 +59,7 @@
                                         <td>Le gustaria actualizar su PC?</td>
                                         <td>Seleccion unica</td>
                                         <td>
-                                            <a href=""><button class="btn btn-warning"><i class="fa fa-pencil-alt"></i></button></a>
+                                            <button class="btn btn-warning" data-toggle="modal" data-target="#myModal4"><i class="fa fa-pencil-alt"></i></button>
                                             <button class="btn btn-danger" data-toggle="modal" data-target="#myModal3"><i class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>
@@ -68,7 +68,7 @@
                                         <td>Que busca en una PC?</td>
                                         <td>Seleccion multiple</td>
                                         <td>
-                                            <a href=""><button class="btn btn-warning"><i class="fa fa-pencil-alt"></i></button></a>
+                                            <button class="btn btn-warning" data-toggle="modal" data-target="#myModal4"><i class="fa fa-pencil-alt"></i></button>
                                             <button class="btn btn-danger" data-toggle="modal" data-target="#myModal3"><i class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>
@@ -77,7 +77,7 @@
                                         <td>Cuanto espera pagar por una nueva PC?</td>
                                         <td>Seleccion unica</td>
                                         <td>
-                                            <a href=""><button class="btn btn-warning"><i class="fa fa-pencil-alt"></i></button></a>
+                                            <button class="btn btn-warning" data-toggle="modal" data-target="#myModal4"><i class="fa fa-pencil-alt"></i></button>
                                             <button class="btn btn-danger" data-toggle="modal" data-target="#myModal3"><i class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>
@@ -86,7 +86,7 @@
                                         <td>Porque esta dispuesto a pagar ese monto?</td>
                                         <td>Entrada de texto</td>
                                         <td>
-                                            <a href=""><button class="btn btn-warning"><i class="fa fa-pencil-alt"></i></button></a>
+                                            <button class="btn btn-warning" data-toggle="modal" data-target="#myModal4"><i class="fa fa-pencil-alt"></i></button>
                                             <button class="btn btn-danger" data-toggle="modal" data-target="#myModal3"><i class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>
@@ -95,7 +95,7 @@
                                         <td>Como le gustaria pagar su nueva PC?</td>
                                         <td>Seleccion unica</td>
                                         <td>
-                                            <a href=""><button class="btn btn-warning"><i class="fa fa-pencil-alt"></i></button></a>
+                                            <button class="btn btn-warning" data-toggle="modal" data-target="#myModal4"><i class="fa fa-pencil-alt"></i></button>
                                             <button class="btn btn-danger" data-toggle="modal" data-target="#myModal3"><i class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>
@@ -109,6 +109,7 @@
 
                     @include('modelos.modales.pmodal')
                     @include('modelos.modales.epmodal')
+                    @include('modelos.modales.editmodal')
 
 
                 </div>

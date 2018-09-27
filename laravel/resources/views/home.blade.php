@@ -96,7 +96,7 @@
                 </a>
             </div>
             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6">
-                <a href="{{url('/reportes')}}">
+                <a href="{{url('/informes')}}">
                     <div class="card card-stats">
                         <div class="card-header"></div>
                         <div class="card-body ">
@@ -109,7 +109,7 @@
                                 <div class="col-10 col-md-10">
                                     <div class="numbers">
                                         <p class="card-category">Ver</p>
-                                        <p class="card-title">Reportes<p>
+                                        <p class="card-title">Informes<p>
                                     </div>
                                 </div>
                             </div>

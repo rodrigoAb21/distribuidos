@@ -27,6 +27,6 @@ Route::resource('/modelos', 'Web\ModeloController');
 Route::delete('/modelos/{mid}/pregunta/{pid}', 'Web\ModeloController@eliminarPregunta');
 Route::resource('/areas', 'Web\AreaController');
 Route::resource('/asignaciones', 'Web\AsignacionController');
-Route::resource('/reportes', 'Web\ReporteController');
+Route::resource('/informes', 'Web\InformeController');
 
 

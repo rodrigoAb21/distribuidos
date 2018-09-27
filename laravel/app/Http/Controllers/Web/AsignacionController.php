@@ -14,7 +14,7 @@ class AsignacionController extends Controller
      */
     public function index()
     {
-        //
+        return view('asignaciones.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class AsignacionController extends Controller
      */
     public function create()
     {
-        //
+        return view('asignaciones.create');
     }
 
     /**
@@ -35,7 +35,7 @@ class AsignacionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return redirect('/asignaciones');
     }
 
     /**
@@ -80,6 +80,6 @@ class AsignacionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return redirect('/asignaciones');
     }
 }

@@ -1,8 +1,8 @@
-<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true" style="overflow-y:auto;">
+<div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel4" aria-hidden="true" style="overflow-y:auto;">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Nueva Pregunta</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Editar pregunta</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -13,7 +13,7 @@
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <label>Enunciado</label>
-                                <textarea class="form-control" rows="2"></textarea>
+                                <textarea class="form-control" rows="2">Le gustaria actualizar su PC?</textarea>
                             </div>
                         </div>
 
@@ -21,7 +21,7 @@
                             <div class="form-group">
                                 <label>Tipo</label>
                                 <select class="form-control">
-                                    <option value="">Seleccion Unica</option>
+                                    <option  selected>Seleccion Unica</option>
                                     <option value="">Seleccion Multiple</option>
                                     <option value="">Entrada de texto</option>
                                 </select>
@@ -31,7 +31,7 @@
                             <div class="form-group">
                                 <label>Tipo de entrada</label>
                                 <select class="form-control">
-                                    <option selected value="">Texto</option>
+                                    <option selected >Texto</option>
                                     <option value="">Numerico</option>
                                     <option value="">Fecha</option>
                                 </select>
@@ -41,7 +41,7 @@
                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox">
+                                    <input type="checkbox" checked>
                                     Pregunta obligatoria
                                 </label>
                             </div>
@@ -73,14 +73,31 @@
 
                     <div class="table-responsive-sm">
                         <table class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Nombre</th>
-                                        <th class="w-25">Opciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th class="w-25">Opciones</th>
+                                </tr>
+                                <tr>
+                                    <td>Si</td>
+                                    <td>
+                                        <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>No</td>
+                                    <td>
+                                        <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Talvez</td>
+                                    <td>
+                                        <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                    </td>
+                                </tr>
+
+
+
                         </table>
                     </div>
 

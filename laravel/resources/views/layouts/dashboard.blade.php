@@ -60,9 +60,9 @@
                         </a>
                     </li>
                     <li class="">
-                        <a href="{{url('/reportes')}}">
+                        <a href="{{url('/informes')}}">
                             <i class="fa fa-chart-pie"></i>
-                            <p>Reportes</p>
+                            <p>Informes estadisticos</p>
                         </a>
                     </li>
                 </ul>
