@@ -3,7 +3,7 @@
     <div class="content">
         <div class="row">
             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6">
-                <a href="{{url('/empleados')}}">
+                <a href="{{url('/encuestadores')}}">
                     <div class="card card-stats">
                         <div class="card-header"></div>
                         <div class="card-body ">
