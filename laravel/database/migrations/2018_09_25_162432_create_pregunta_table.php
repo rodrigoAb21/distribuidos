@@ -23,7 +23,7 @@ class CreatePreguntaTable extends Migration
 
             $table->unsignedInteger('modelo_encuesta_id');
             $table->foreign('modelo_encuesta_id')->references('id')->on('modelo_encuesta')->onDelete('cascade');
-            $table->string('empresa_id');
+
         });
     }
 

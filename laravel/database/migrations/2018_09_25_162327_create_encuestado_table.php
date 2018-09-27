@@ -19,7 +19,7 @@ class CreateEncuestadoTable extends Migration
             $table->char('sexo');
             $table->tinyInteger('edad')->nullable();
             //$table->timestamps();
-            $table->string('empresa_id');
+            $table->unsignedInteger('user_id');
         });
     }
 

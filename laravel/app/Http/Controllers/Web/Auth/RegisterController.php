@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Web\Auth;
 
 use App\Modelos\Empresa;
 use App\User;
@@ -63,13 +63,6 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
 
-        $empresa = new Empresa();
-        $empresa -> nombre = $data['enombre'];
-        $empresa -> direccion = $data['edireccion'];
-        $empresa -> telefono = $data['etelefono'];
-        $empresa -> email = $data['eemail'];
-        $empresa -> save();
-
         return User::create([
             'ci' => $data['ci'],
             'nombre' => $data['nombre'],
@@ -77,7 +70,6 @@ class RegisterController extends Controller
             'direccion' => $data['direccion'],
             'telefono' => $data['telefono'],
             'tipo' => 'Administrador',
-            'empresa_id' => $empresa->id,
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);

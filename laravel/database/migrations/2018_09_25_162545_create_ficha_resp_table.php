@@ -21,7 +21,7 @@ class CreateFichaRespTable extends Migration
             $table->unsignedInteger('pregunta_id');
             $table->foreign('encuesta_id')->references('id')->on('encuesta')->onDelete('cascade');
             $table->foreign('pregunta_id')->references('id')->on('pregunta')->onDelete('cascade');
-            $table->string('empresa_id');
+
         });
     }
 

@@ -15,5 +15,17 @@ Route::get('/', function () {
     return view('home');
 })->middleware('auth');
 
-Auth::routes();
+/* Rutas para el usuario */
+Route::get('/login', 'Web\Auth\LoginController@showLoginForm')->name('login');
+Route::post('/login', 'Web\Auth\LoginController@login')->name('login');
+Route::post('/logout', 'Web\Auth\LoginController@logout')->name('logout');
+Route::get('/register', 'Web\Auth\RegisterController@showRegistrationForm')->name('register');
+Route::post('/register', 'Web\Auth\RegisterController@register')->name('register');
+
+Route::resource('/encuestadores', 'Web\EncuestadorController');
+Route::resource('/modelos', 'Web\ModeloController');
+Route::resource('/areas', 'Web\AreaController');
+Route::resource('/asignaciones', 'Web\AsignacionController');
+Route::resource('/reportes', 'Web\ReporteController');
+
 

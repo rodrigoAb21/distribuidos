@@ -36,9 +36,9 @@
             <div class="sidebar-wrapper">
                 <ul class="nav">
                     <li class="">
-                        <a href="{{url('/empleados')}}">
+                        <a href="{{url('/encuestadores')}}">
                             <i class="fa fa-users"></i>
-                            <p>Empleados</p>
+                            <p>Encuestadores</p>
                         </a>
                     </li>
                     <li class="">

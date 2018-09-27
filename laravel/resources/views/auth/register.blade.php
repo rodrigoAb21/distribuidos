@@ -43,42 +43,6 @@
                     <form id="login-form" class="form" method="POST" action="{{ route('register') }}" >
                         {{ csrf_field() }}
                         <h3 class="text-center text-info">Registro</h3>
-                        <h5>Datos Empresa</h5>
-
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <div class="form-group">
-                                    <label for="nombre" class="text-info">Nombre:</label><br>
-                                    <input type="text" name="enombre" id="enombre" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <div class="form-group">
-                                    <label for="email" class="text-info">Email:</label><br>
-                                    <input type="text" name="eemail" id="eemail" class="form-control" required>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                                <div class="form-group">
-                                    <label for="direccion" class="text-info">Direccion:</label><br>
-                                    <input type="text" name="edireccion" id="edireccion" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                <div class="form-group">
-                                    <label for="etelefono" class="text-info">Telefono:</label><br>
-                                    <input type="number" name="etelefono" id="etelefono" class="form-control" required>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                        <hr>
-                        <h5>Datos Usuario</h5>
 
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">

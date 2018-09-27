@@ -26,7 +26,6 @@ class CreateAsignacionTable extends Migration
             $table->foreign('encuestador_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('modelo_encuesta_id')->references('id')->on('modelo_encuesta')->onDelete('cascade');
             $table->foreign('area_id')->refences('id')->on('area')->onDelete('cascade');
-            $table->string('empresa_id');
         });
     }
 

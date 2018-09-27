@@ -21,7 +21,7 @@ class CreatePuntoTable extends Migration
 
             $table->unsignedInteger('area_id');
             $table->foreign('area_id')->references('id')->on('area')->onDelete('cascade');
-            $table->string('empresa_id');
+
         });
     }
 
