@@ -3,19 +3,19 @@
 
 <head>
     <meta charset="utf-8" />
-    <link rel="apple-touch-icon" sizes="76x76" href="{{asset('plantilla/img/apple-icon.png')}}">
-    <link rel="icon" type="image/png" href="{{asset('plantilla/img/favicon.png')}}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{asset('img/apple-icon.png')}}">
+    <link rel="icon" type="image/png" href="{{asset('img/favicon.png')}}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>
-        Proyecto Software I
+        Encuestas
     </title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
 
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
-    <link href="{{asset('plantilla/css/fontawesome/css/all.css')}}" rel="stylesheet" />
+    <link href="{{asset('css/terceros/fontawesome/css/all.css')}}" rel="stylesheet" />
 
-    <link href="{{asset('plantilla/css/bootstrap.min.css')}}" rel="stylesheet" />
-    <link href="{{asset('plantilla/css/paper-dashboard.css')}}" rel="stylesheet" />
+    <link href="{{asset('css/terceros/bootstrap/bootstrap.min.css')}}" rel="stylesheet" />
+    <link href="{{asset('css/plantilla/paper-dashboard.css')}}" rel="stylesheet" />
 
     @stack('shead')
 </head>
@@ -26,7 +26,7 @@
             <div class="logo">
                 <a href="{{url('/')}}" class="simple-text logo-mini">
                     <div class="logo-image-small">
-                        <img src="{{asset('plantilla/img/logo-small.png')}}">
+                        <img src="{{asset('img/logo-small.png')}}">
                     </div>
                 </a>
                 <a href="{{url('/')}}" class="simple-text logo-normal">
@@ -91,7 +91,7 @@
                         <ul class="navbar-nav">
                             <li class="nav-item btn-rotate dropdown">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="nc-icon nc-circle-10"></i>
+                                    <i class="fa fa-user-circle"></i>
                                     <p>
                                         <span class="d-lg-none d-md-block">{{ Auth::user()->nombre }} {{ Auth::user()->apellido }}</span>
                                     </p>
@@ -117,14 +117,14 @@
         </div>
     </div>
 
-<script src="{{asset('plantilla/js/core/jquery.min.js')}}"></script>
-<script src="{{asset('plantilla/js/core/popper.min.js')}}"></script>
-<script src="{{asset('plantilla/js/core/bootstrap.min.js')}}"></script>
-<script src="{{asset('plantilla/js/plugins/perfect-scrollbar.jquery.min.js')}}"></script>
+<script src="{{asset('js/terceros/jquery/jquery.min.js')}}"></script>
+<script src="{{asset('js/terceros/bootstrap/popper.min.js')}}"></script>
+<script src="{{asset('js/terceros/bootstrap/bootstrap.min.js')}}"></script>
+<script src="{{asset('js/terceros/jquery/perfect-scrollbar.jquery.min.js')}}"></script>
 
-<script src="{{asset('plantilla/js/plugins/bootstrap-notify.js')}}"></script>
+<script src="{{asset('js/terceros/bootstrap/bootstrap-notify.js')}}"></script>
 
-<script src="{{asset('plantilla/js/paper-dashboard.min.js')}}" type="text/javascript"></script>
+<script src="{{asset('js/plantilla/paper-dashboard.min.js')}}" type="text/javascript"></script>
     @stack('scripts')
 </body>
 
