@@ -24,6 +24,7 @@ Route::post('/register', 'Web\Auth\RegisterController@register')->name('register
 
 Route::resource('/encuestadores', 'Web\EncuestadorController');
 Route::resource('/modelos', 'Web\ModeloController');
+Route::delete('/modelos/{mid}/pregunta/{pid}', 'Web\ModeloController@eliminarPregunta');
 Route::resource('/areas', 'Web\AreaController');
 Route::resource('/asignaciones', 'Web\AsignacionController');
 Route::resource('/reportes', 'Web\ReporteController');

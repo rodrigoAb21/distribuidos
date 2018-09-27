@@ -14,7 +14,7 @@ class ModeloController extends Controller
      */
     public function index()
     {
-        //
+        return view('modelos.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class ModeloController extends Controller
      */
     public function create()
     {
-        //
+        return view('modelos.create');
     }
 
     /**
@@ -35,7 +35,7 @@ class ModeloController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return redirect('/modelos');
     }
 
     /**
@@ -57,7 +57,7 @@ class ModeloController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('modelos.edit');
     }
 
     /**
@@ -69,7 +69,7 @@ class ModeloController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return redirect('/modelos/'.$id.'/edit');
     }
 
     /**
@@ -80,6 +80,14 @@ class ModeloController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return redirect('/modelos');
+    }
+
+    public function guardarPregunta(Request $request, $id){
+        return redirect('/modelos/'.$id.'/edit');
+    }
+
+    public function eliminarPregunta($mid, $pid){
+        return redirect('/modelos/'.$mid.'/edit');
     }
 }

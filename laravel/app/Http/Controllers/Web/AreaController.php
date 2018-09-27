@@ -14,7 +14,7 @@ class AreaController extends Controller
      */
     public function index()
     {
-        //
+        return view('areas.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class AreaController extends Controller
      */
     public function create()
     {
-        //
+        return view('areas.create');
     }
 
     /**
@@ -35,7 +35,7 @@ class AreaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return redirect('/areas');
     }
 
     /**
@@ -57,7 +57,7 @@ class AreaController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('areas.edit');
     }
 
     /**
@@ -69,7 +69,7 @@ class AreaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return redirect('/areas');
     }
 
     /**
@@ -80,6 +80,6 @@ class AreaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return redirect('areas');
     }
 }
