@@ -14,7 +14,7 @@ class ReporteController extends Controller
      */
     public function index()
     {
-        //
+        return view('reportes.index');
     }
 
     /**
@@ -46,7 +46,7 @@ class ReporteController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('reportes.show');
     }
 
     /**
