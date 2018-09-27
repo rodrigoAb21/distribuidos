@@ -14,7 +14,7 @@ class CreateEncuestadoTable extends Migration
     public function up()
     {
         Schema::create('encuestado', function (Blueprint $table) {
-            $table->increments('id')->primary();
+            $table->increments('id');
             $table->string('nombre');
             $table->char('sexo');
             $table->tinyInteger('edad')->nullable();

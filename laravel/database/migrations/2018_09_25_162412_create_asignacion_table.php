@@ -14,7 +14,7 @@ class CreateAsignacionTable extends Migration
     public function up()
     {
         Schema::create('asignacion', function (Blueprint $table) {
-            $table->increments('id')->primary();
+            $table->increments('id');
             $table->integer('cantidad');
             $table->dateTime('hora_inicio');
             $table->dateTime('hora_final');
@@ -25,7 +25,7 @@ class CreateAsignacionTable extends Migration
             $table->unsignedInteger('area_id');
             $table->foreign('encuestador_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('modelo_encuesta_id')->references('id')->on('modelo_encuesta')->onDelete('cascade');
-            $table->foreign('area_id')->refences('id')->on('area')->onDelete('cascade');
+            $table->foreign('area_id')->references('id')->on('area')->onDelete('cascade');
         });
     }
 

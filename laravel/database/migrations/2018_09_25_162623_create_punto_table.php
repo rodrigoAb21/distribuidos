@@ -14,7 +14,7 @@ class CreatePuntoTable extends Migration
     public function up()
     {
         Schema::create('punto', function (Blueprint $table) {
-            $table->increments('id')->primary();
+            $table->increments('id');
             $table->double('longitud');
             $table->double('latitud');
             //$table->timestamps();

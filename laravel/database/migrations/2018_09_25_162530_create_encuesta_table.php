@@ -14,7 +14,7 @@ class CreateEncuestaTable extends Migration
     public function up()
     {
         Schema::create('encuesta', function (Blueprint $table) {
-            $table->increments('id')->primary();
+            $table->increments('id');
             $table->date('fecha');
             $table->double('longitud');
             $table->double('latitud');
