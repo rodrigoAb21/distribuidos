@@ -15,9 +15,8 @@ class Empresa extends Model
         'direccion',
         'telefono',
         'email',
+        'empresa_id'
     ];
 
-    public function users(){
-        return $this->hasMany(User::class);
-    }
+
 }

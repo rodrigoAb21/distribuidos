@@ -23,6 +23,7 @@ class CreatePregRequisitoTable extends Migration
             $table->foreign('pregunta_id')->references('id')->on('pregunta')->onDelete('cascade');
             $table->foreign('pregunta_requisito_id')->references('id')->on('pregunta')->onDelete('cascade');
             $table->foreign('opcion_id')->references('id')->on('opcion')->onDelete('cascade');
+            $table->string('empresa_id');
         });
     }
 

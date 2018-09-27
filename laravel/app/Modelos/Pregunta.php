@@ -12,11 +12,13 @@ class Pregunta extends Model
     protected $fillable = [
         'enunciado',
         'tipo_preg',
-        'descripcion',
-        'user_id',
+        'obligatoria',
+        'tipo_dato',
+        'modelo_encuesta_id',
+        'empresa_id'
     ];
 
-    public function user(){
-        return $this->belongsTo(User::class, 'user_id');
+    public function opciones(){
+        return $this->hasMany(Opcion::class);
     }
 }
