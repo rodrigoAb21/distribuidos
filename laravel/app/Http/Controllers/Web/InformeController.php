@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class InformeController extends Controller
 {
@@ -14,7 +16,9 @@ class InformeController extends Controller
      */
     public function index()
     {
-        return view('informes.index');
+        $modelos = DB::table('modelo_encuesta')->where('user_id', '=', Auth::user()->id)
+                                             ->where('estado' , '<>', 'en edición');
+        return view('informes.index',['modelos'=>$modelos]);
     }
 
     /**

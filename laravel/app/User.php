@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Modelos\Empresa;
+
 use App\Modelos\Modelo;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -37,9 +37,6 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function empresa(){
-        return $this->belongsTo(Empresa::class);
-    }
 
     public function modelos(){
         return $this->hasMany(Modelo::class);

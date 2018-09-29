@@ -19,57 +19,18 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
+                                @foreach($modelos as $modelo)
                                 <tr>
                                     <td>1</td>
-                                    <td>Encuesta Tecnologia</td>
-                                    <td><span class="label label-default">En proceso</span></td>
+                                    <td>{{$modelo->nombre}}</td>
+                                    <td><span class="label label-default">{{$modelo->estado}}</span></td>
                                     <td>
                                         <a href="{{url('/informes/1')}}">
                                             <button class="btn btn-primary"><i class="fa fa-eye"></i></button>
                                         </a>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Encuesta Prestamos</td>
-                                    <td><span class="label label-default">En proceso</span></td>
-                                    <td>
-                                        <a href="{{url('/informes/1')}}">
-                                            <button class="btn btn-primary"><i class="fa fa-eye"></i></button>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Encuesta Inmuebles</td>
-                                    <td><span class="label label-default">Terminado</span></td>
-                                    <td>
-                                        <a href="{{url('/informes/1')}}">
-                                            <button class="btn btn-primary"><i class="fa fa-eye"></i></button>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Encuesta Celulares</td>
-                                    <td><span class="label label-default">Terminado</span></td>
-                                    <td>
-                                        <a href="{{url('/informes/1')}}">
-                                            <button class="btn btn-primary"><i class="fa fa-eye"></i></button>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>Encuesta Moda</td>
-                                    <td><span class="label label-default">Terminado</span></td>
-                                    <td>
-                                        <a href="{{url('/informes/1')}}">
-                                            <button class="btn btn-primary"><i class="fa fa-eye"></i></button>
-                                        </a>
-                                    </td>
-                                </tr>
+                                @endforeach
 
                             </table>
                         </div>

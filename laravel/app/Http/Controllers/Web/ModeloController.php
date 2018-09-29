@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Modelos\Modelo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ModeloController extends Controller
 {
@@ -14,7 +17,9 @@ class ModeloController extends Controller
      */
     public function index()
     {
-        return view('modelos.index');
+        //$modelos = DB::table('modelo_encuesta')->where('user_id', '=', Auth::user()->id)->paginate();
+
+        return view('modelos.index',['modelos'=>Auth::user()->modelos]);
     }
 
     /**
@@ -35,6 +40,12 @@ class ModeloController extends Controller
      */
     public function store(Request $request)
     {
+        $modelo = new Modelo();
+        $modelo->nombre = $request->nombre;
+        $modelo->descripcion = $request->descripcion;
+        $modelo->estado = 'en edición';
+        $modelo->user_id = Auth::user()->id;
+        $modelo->save();
         return redirect('/modelos');
     }
 
@@ -57,7 +68,8 @@ class ModeloController extends Controller
      */
     public function edit($id)
     {
-        return view('modelos.edit');
+        $modelo = Modelo::findOrFail($id);
+        return view('modelos.edit',['modelo'=>$modelo]);
     }
 
     /**
@@ -69,7 +81,14 @@ class ModeloController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $modelo = Modelo::findOrFail($id);
+        if($modelo->estado == 'en edición'){
+            $modelo->nombre = $request->nombre;
+            $modelo->descripcion = $request->descripcion;
+            $modelo->update();
+        }
         return redirect('/modelos/'.$id.'/edit');
+
     }
 
     /**
@@ -80,6 +99,10 @@ class ModeloController extends Controller
      */
     public function destroy($id)
     {
+        $modelo = Modelo::findOrFail($id);
+        if($modelo->estado == 'en edición'){
+            $modelo->delete();
+        }
         return redirect('/modelos');
     }
 

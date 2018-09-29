@@ -8,21 +8,21 @@
                         <h4 class="card-title">Editar modelo de encuesta</h4>
                     </div>
                     <div class="card-body">
-                        <form action="{{url('/modelos/1')}}" method="POST" autocomplete="off">
+                        <form action="{{url('/modelos/'.$modelo->id)}}" method="POST" autocomplete="off">
                             {{ method_field('PATCH') }}
                             {{csrf_field()}}
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="form-group">
                                         <label>Nombre</label>
-                                        <input type="text" class="form-control" value="Encuesta Tecnologia">
+                                        <input name="nombre" type="text" class="form-control" value={{$modelo->nombre}}>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="form-group">
                                         <label>Descripcion</label>
-                                        <textarea name="descripcion" rows="3" class="form-control">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis justo sagittis, facilisis tellus non, facilisis turpis. Integer eget felis sit amet nunc sodales luctus quis sed libero. Aliquam ullamcorper erat justo, vel commodo metus malesuada ac. </textarea>
+                                        <textarea name="descripcion" rows="3" class="form-control">{{$modelo->descripcion}}</textarea>
                                     </div>
                                 </div>
                             </div>

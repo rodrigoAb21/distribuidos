@@ -20,61 +20,27 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-
+                                @foreach($modelos as $modelo)
                                 <tr>
-                                    <td>1</td>
-                                    <td>Encuesta Tecnologia</td>
-                                    <td><span class="label label-success">Edicion</span></td>
+                                    <td>{{$modelo->id}}</td>
+                                    <td>{{$modelo->nombre}}</td>
+                                    <td><span class="label label-success">{{$modelo->estado}}</span></td>
                                     <td>0</td>
                                     <td>
-                                        <a href="{{url('/modelos/1/edit')}}"><button class="btn btn-warning"><i class="fa fa-pencil-alt"></i></button></a>
-                                        <button class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash"></i></button>
+                                        @if($modelo->estado == 'en edición')
+                                        <a href="{{url('/modelos/'.$modelo->id.'/edit')}}">
+                                        <button class="btn btn-warning"><i class="fa fa-pencil-alt"></i></button>
+                                        </a>
+                                        <button class="btn btn-danger" data-toggle="modal" data-target="#myModal-{{$modelo->id}}"><i class="fa fa-trash"></i></button>
+                                            @include('modelos.modales.modal')
+                                        @endif
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Encuesta Prestamos</td>
-                                    <td><span class="label label-success">Edicion</span></td>
-                                    <td>0</td>
-                                    <td>
-                                        <a href="{{url('/modelos/1/edit')}}"><button class="btn btn-warning"><i class="fa fa-pencil-alt"></i></button></a>
-                                        <button class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Encuesta Inmuebles</td>
-                                    <td><span class="label label-warning">Enviada</span></td>
-                                    <td>14</td>
-                                    <td>
-                                        <a href="{{url('/modelos/1/edit')}}"><button class="btn btn-warning"><i class="fa fa-pencil-alt"></i></button></a>
-                                        <button class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Encuesta Celulares</td>
-                                    <td><span class="label label-warning">Enviada</span></td>
-                                    <td>27</td>
-                                    <td>
-                                        <a href="{{url('/modelos/1/edit')}}"><button class="btn btn-warning"><i class="fa fa-pencil-alt"></i></button></a>
-                                        <button class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>Encuesta Moda</td>
-                                    <td><span class="label label-danger">Terminada</span></td>
-                                    <td>124</td>
-                                    <td>
-                                        <a href="{{url('/modelos/1/edit')}}"><button class="btn btn-warning"><i class="fa fa-pencil-alt"></i></button></a>
-                                        <button class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash"></i></button>
-                                    </td>
-                                </tr>
+                                @endforeach
 
                                 </tbody>
 
-                                @include('modelos.modales.modal')
+
 
                             </table>
                         </div>
