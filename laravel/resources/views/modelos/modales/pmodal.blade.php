@@ -63,21 +63,21 @@
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <label>Texto</label>
-                                <input type="text" class="form-control" name="texto">
+                                <input id="texto" name="texto" type="text" class="form-control" >
                             </div>
                             <div class="pull-right">
-                                <button class="btn btn-default" type="button" id="button-addon2">Agregar</button>
+                                <button id="btnAgregar" class="btn btn-default" type="button" onclick="agregar()">Agregar</button>
                             </div>
                         </div>
 
                     </div>
 
                     <div class="table-responsive-sm">
-                        <table class="table table-bordered table-hover">
+                        <table id="tabla" class="table table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th>Nombre</th>
                                 <th class="w-25">Opciones</th>
+                                <th>Nombre</th>
                             </tr>
                             </thead>
                             <tbody>
