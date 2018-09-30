@@ -15,7 +15,6 @@ class Pregunta extends Model
         'obligatoria',
         'tipo_dato',
         'modelo_encuesta_id',
-        'empresa_id'
     ];
 
     public function opciones(){

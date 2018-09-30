@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Modelos\Modelo;
+use App\Modelos\Pregunta;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -107,7 +108,15 @@ class ModeloController extends Controller
     }
 
     public function guardarPregunta(Request $request, $id){
+        $pregunta = new Pregunta();
+        $pregunta->enunciado = $request->enunciado;
+        $pregunta->tipo_pregunta = $request->tipop;
+        $pregunta->obligatoira = $request->obligatoria;
+        $pregunta->tipo_dato = $request->tipod;
+        $pregunta->modelo_encuesta_id = $id;
+        $pregunta->save();
         return redirect('/modelos/'.$id.'/edit');
+
     }
 
     public function eliminarPregunta($mid, $pid){
