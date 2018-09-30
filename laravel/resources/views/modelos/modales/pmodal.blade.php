@@ -46,9 +46,9 @@
                                     Pregunta obligatoria
                                 </label>
                             </div>
-                            <div class="checkbox">
+                            <div id="checkOtro" class="checkbox" >
                                 <label>
-                                    <input name="otro" type="checkbox">
+                                    <input id="checkInput" name="otro" type="checkbox">
                                     Agregar campo "Otro"
                                 </label>
                             </div>

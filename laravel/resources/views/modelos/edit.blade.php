@@ -87,6 +87,7 @@
         <script>
             var cont = 0;
             $('#tipoP').change(evaluar);
+
         function agregar() {
             cont++;
             var texto =$('#texto').val();
@@ -102,6 +103,8 @@
 
         function esconder() {
             vaciarT();
+            $('#checkInput').prop('checked',false);
+            $('#checkOtro').hide();
             $('#contOpciones').hide();
         }
 
@@ -117,6 +120,7 @@
                 esconder();
             }else {
                 $('#contOpciones').show();
+                $('#checkOtro').show();
             }
         }
         </script>
