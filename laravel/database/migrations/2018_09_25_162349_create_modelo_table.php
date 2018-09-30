@@ -13,7 +13,7 @@ class CreateModeloEncuestaTable extends Migration
      */
     public function up()
     {
-        Schema::create('modelo_encuesta', function (Blueprint $table) {
+        Schema::create('modelo', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
             $table->string('estado');
