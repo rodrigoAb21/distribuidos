@@ -15,7 +15,7 @@ class Asignacion extends Model
         'hora_inicio',
         'hora_final',
         'encuestador_id',
-        'modelo_encuesta_id',
+        'modelo_id',
         'area_id',
         'empresa_id'
     ];

@@ -13,8 +13,9 @@ class Pregunta extends Model
         'enunciado',
         'tipo_preg',
         'obligatoria',
+        'otro',
         'tipo_dato',
-        'modelo_encuesta_id',
+        'modelo_id',
     ];
 
     public function opciones(){

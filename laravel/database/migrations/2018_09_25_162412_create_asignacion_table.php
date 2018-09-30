@@ -21,10 +21,10 @@ class CreateAsignacionTable extends Migration
             //$table->timestamps();
 
             $table->unsignedInteger('encuestador_id');
-            $table->unsignedInteger('modelo_encuesta_id');
+            $table->unsignedInteger('modelo_id');
             $table->unsignedInteger('area_id');
             $table->foreign('encuestador_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('modelo_encuesta_id')->references('id')->on('modelo_encuesta')->onDelete('cascade');
+            $table->foreign('modelo_id')->references('id')->on('modelo')->onDelete('cascade');
             $table->foreign('area_id')->references('id')->on('area')->onDelete('cascade');
         });
     }

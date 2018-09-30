@@ -16,13 +16,14 @@ class CreatePreguntaTable extends Migration
         Schema::create('pregunta', function (Blueprint $table) {
             $table->increments('id');
             $table->string('enunciado');
-            $table->char('tipo_preg');
+            $table->string('tipo_preg');
             $table->boolean('obligatoria');
+            $table->boolean('otro');
             $table->string('tipo_dato');
             //$table->timestamps();
 
-            $table->unsignedInteger('modelo_encuesta_id');
-            $table->foreign('modelo_encuesta_id')->references('id')->on('modelo_encuesta')->onDelete('cascade');
+            $table->unsignedInteger('modelo_id');
+            $table->foreign('modelo_id')->references('id')->on('modelo')->onDelete('cascade');
 
         });
     }

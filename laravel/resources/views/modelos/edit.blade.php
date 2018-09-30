@@ -38,7 +38,8 @@
 
 
                         <button class="btn btn-success" data-toggle="modal" data-target="#myModal2">
-                            <i class="fa fa-plus"> Nueva pregunta</i>
+                            <i class="fa fa-plus"></i>
+                            Nueva pregunta
                         </button>
 
 
@@ -54,52 +55,17 @@
                                     </thead>
                                     <tbody>
 
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Le gustaria actualizar su PC?</td>
-                                        <td>Seleccion unica</td>
-                                        <td>
-                                            <button class="btn btn-warning" data-toggle="modal" data-target="#myModal4"><i class="fa fa-pencil-alt"></i></button>
-                                            <button class="btn btn-danger" data-toggle="modal" data-target="#myModal3"><i class="fa fa-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Que busca en una PC?</td>
-                                        <td>Seleccion multiple</td>
-                                        <td>
-                                            <button class="btn btn-warning" data-toggle="modal" data-target="#myModal4"><i class="fa fa-pencil-alt"></i></button>
-                                            <button class="btn btn-danger" data-toggle="modal" data-target="#myModal3"><i class="fa fa-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Cuanto espera pagar por una nueva PC?</td>
-                                        <td>Seleccion unica</td>
-                                        <td>
-                                            <button class="btn btn-warning" data-toggle="modal" data-target="#myModal4"><i class="fa fa-pencil-alt"></i></button>
-                                            <button class="btn btn-danger" data-toggle="modal" data-target="#myModal3"><i class="fa fa-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>Porque esta dispuesto a pagar ese monto?</td>
-                                        <td>Entrada de texto</td>
-                                        <td>
-                                            <button class="btn btn-warning" data-toggle="modal" data-target="#myModal4"><i class="fa fa-pencil-alt"></i></button>
-                                            <button class="btn btn-danger" data-toggle="modal" data-target="#myModal3"><i class="fa fa-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>Como le gustaria pagar su nueva PC?</td>
-                                        <td>Seleccion unica</td>
-                                        <td>
-                                            <button class="btn btn-warning" data-toggle="modal" data-target="#myModal4"><i class="fa fa-pencil-alt"></i></button>
-                                            <button class="btn btn-danger" data-toggle="modal" data-target="#myModal3"><i class="fa fa-trash"></i></button>
-                                        </td>
-                                    </tr>
-
+                                    @foreach($modelo -> preguntas as $pregunta)
+                                        <tr>
+                                            <td>{{$loop->iteration}}</td>
+                                            <td>{{$pregunta->enunciado}}</td>
+                                            <td>{{$pregunta->tipo_preg}}</td>
+                                            <td>
+                                                <button class="btn btn-warning" data-toggle="modal" data-target="#myModal4"><i class="fa fa-pencil-alt"></i></button>
+                                                <button class="btn btn-danger" data-toggle="modal" data-target="#myModal3"><i class="fa fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
 
                                 </table>

@@ -18,8 +18,6 @@ class ModeloController extends Controller
      */
     public function index()
     {
-        //$modelos = DB::table('modelo_encuesta')->where('user_id', '=', Auth::user()->id)->paginate();
-
         return view('modelos.index',['modelos'=>Auth::user()->modelos]);
     }
 
@@ -70,6 +68,7 @@ class ModeloController extends Controller
     public function edit($id)
     {
         $modelo = Modelo::findOrFail($id);
+        // $preguntas = $modelo -> preguntas;
         return view('modelos.edit',['modelo'=>$modelo]);
     }
 
@@ -105,18 +104,6 @@ class ModeloController extends Controller
             $modelo->delete();
         }
         return redirect('/modelos');
-    }
-
-    public function guardarPregunta(Request $request, $id){
-        $pregunta = new Pregunta();
-        $pregunta->enunciado = $request->enunciado;
-        $pregunta->tipo_pregunta = $request->tipop;
-        $pregunta->obligatoira = $request->obligatoria;
-        $pregunta->tipo_dato = $request->tipod;
-        $pregunta->modelo_encuesta_id = $id;
-        $pregunta->save();
-        return redirect('/modelos/'.$id.'/edit');
-
     }
 
     public function eliminarPregunta($mid, $pid){

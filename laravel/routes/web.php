@@ -23,8 +23,15 @@ Route::get('/register', 'Web\Auth\RegisterController@showRegistrationForm')->nam
 Route::post('/register', 'Web\Auth\RegisterController@register')->name('register');
 
 Route::resource('/encuestadores', 'Web\EncuestadorController');
+
+/* Rutas para TOD0 lo que es modelos, preguntas y opciones */
 Route::resource('/modelos', 'Web\ModeloController');
-Route::delete('/modelos/{mid}/pregunta/{pid}', 'Web\ModeloController@eliminarPregunta');
+Route::post('/modelos/{id}/nuevaPregunta','Web\PreguntaController@nuevaPregunta');
+Route::delete('/modelos/{mid}/pregunta/{pid}', 'Web\PreguntaController@eliminarPregunta');
+
+
+
+/*      FIN       */
 Route::resource('/areas', 'Web\AreaController');
 Route::resource('/asignaciones', 'Web\AsignacionController');
 Route::resource('/informes', 'Web\InformeController');
