@@ -27,7 +27,7 @@ Route::resource('/encuestadores', 'Web\EncuestadorController');
 /* Rutas para TOD0 lo que es modelos, preguntas y opciones */
 Route::resource('/modelos', 'Web\ModeloController');
 Route::post('/modelos/{id}/nuevaPregunta','Web\PreguntaController@nuevaPregunta');
-Route::delete('/modelos/{mid}/pregunta/{pid}', 'Web\PreguntaController@eliminarPregunta');
+Route::delete('/modelos/pregunta/{pid}', 'Web\PreguntaController@eliminarPregunta');
 
 
 

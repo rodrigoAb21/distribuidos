@@ -43,7 +43,37 @@ class PreguntaController extends Controller
         return redirect('/modelos/'.$id.'/edit');
     }
 
-    public function eliminarPregunta($id){
+    public function editarPregunta(Request $request, $id){
+        try{
+            DB::beginTransaction();
+            $pregunta = Pregunta::finOrFail($id);
+            $pregunta->enunciado = $request->enunciado;
+            $pregunta->obligatoria = ($request->obligatoria == 'on');
+            $pregunta->otro = ($request->otro == 'on');
+            $pregunta->save();
 
+            if($pregunta->tipo_preg != 'Entrada de texto'){
+                $id = $request -> idT;
+                $texto = $request -> textoT;
+                $cont = 0;
+                while ($cont < count($texto)) {
+                    $opcion = Opcion::findOrFail($id);
+                    $opcion -> texto = $texto[$cont];
+                    $opcion -> save();
+                    $cont = $cont + 1;
+                }
+            }
+
+            DB::commit();
+        }catch (Exception $e){
+            DB::rollback();
+        }
+
+        return redirect('/modelos/'.$id.'/edit');
+    }
+
+    public function eliminarPregunta($id){
+        $pregunta = Pregunta::findOrFail($id);
+        dd($pregunta);
     }
 }

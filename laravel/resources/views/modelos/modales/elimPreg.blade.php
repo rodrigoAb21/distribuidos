@@ -1,4 +1,4 @@
-<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
+<div class="modal fade" id="elimPreg" tabindex="-1" role="dialog" aria-labelledby="elimPregLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -8,10 +8,10 @@
                 </button>
             </div>
             <div class="modal-body">
-                Esta seguro de eliminar la pregunta: "Le gustaria actualizar su PC?"?
+                <p id="enunElimPreg"></p>
             </div>
             <div class="modal-footer">
-                <form action="{{url('/modelos/1/pregunta/1')}}" method="POST">
+                <form id="formElimPreg" method="POST">
                     {{method_field('DELETE')}}
                     {{csrf_field()}}
                     <button type="submit" class="btn btn-danger">Eliminar</button>

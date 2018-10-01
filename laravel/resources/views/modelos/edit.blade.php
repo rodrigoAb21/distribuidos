@@ -37,7 +37,7 @@
                         <hr>
 
 
-                        <button class="btn btn-success" data-toggle="modal" data-target="#myModal2">
+                        <button class="btn btn-success" data-toggle="modal" data-target="#modalForm">
                             <i class="fa fa-plus"></i>
                             Nueva pregunta
                         </button>
@@ -54,15 +54,14 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-
                                     @foreach($modelo -> preguntas as $pregunta)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$pregunta->enunciado}}</td>
                                             <td>{{$pregunta->tipo_preg}}</td>
                                             <td>
-                                                <button class="btn btn-warning" data-toggle="modal" data-target="#myModal4"><i class="fa fa-pencil-alt"></i></button>
-                                                <button class="btn btn-danger" data-toggle="modal" data-target="#myModal3"><i class="fa fa-trash"></i></button>
+                                                <button class="btn btn-warning" onclick="datosModal2('{{$pregunta->enunciado}}','{{$pregunta->obligatoria}}')"><i class="fa fa-pencil-alt"></i></button>
+                                                <button class="btn btn-danger" onclick="datosModal('{{$pregunta->enunciado}}','{{url('modelos/pregunta/'.$pregunta->id)}}')"><i class="fa fa-trash"></i></button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -72,10 +71,10 @@
                             </div>
 
                     </div>
+                    @include('modelos.modales.editPreg')
+                    @include('modelos.modales.formPreg')
+                    @include('modelos.modales.modal')
 
-                    @include('modelos.modales.pmodal')
-                    @include('modelos.modales.epmodal')
-                    @include('modelos.modales.editmodal')
 
 
                 </div>
@@ -84,45 +83,27 @@
     </div>
 
     @push('scripts')
+        <script src="{{asset('js\propios\modalRegPreg.js')}}"></script>
+
         <script>
-            var cont = 0;
-            $('#tipoP').change(evaluar);
 
-        function agregar() {
-            cont++;
-            var texto =$('#texto').val();
-            var fila='<tr id="fila'+cont+'"><td><button type="button" class="btn btn-danger btn-sm" onclick="eliminar('+cont+');"><i class="fa fa-trash" aria-hidden="true"></i></button></td><td><input type="hidden" name="textoT[]" value="'+texto+'"/>'+texto+'</td></tr>';
-            $("#tabla").append(fila);
-            $('#texto').val("");
-        }
-
-        function eliminar(index) {
-            $("#fila" + index).remove();
-            cont--;
-        }
-
-        function esconder() {
-            vaciarT();
-            $('#checkInput').prop('checked',false);
-            $('#checkOtro').hide();
-            $('#contOpciones').hide();
-        }
-
-        function vaciarT() {
-            while (cont>0){
-                eliminar(cont);
+            function datosModal(nombre, url) {
+                $('#formulario').attr("action", url);
+                $('#enunciado').html("Realmente desea eliminar el modelo: " + nombre + "?");
+                $('#myModal').modal('show');
             }
 
-        }
-        
-        function evaluar() {
-            if($('#tipoP option:selected').text() == 'Entrada de texto'){
-                esconder();
-            }else {
-                $('#contOpciones').show();
-                $('#checkOtro').show();
+
+            function datosModal2(enunciado, check) {
+                $('#enunciado').val(enunciado);
+                if(check==1){
+                    $('#check').prop('checked',true);
+                }else {
+                    $('#check').prop('checked',false);
+                }
+                $('#formEdit').modal('show');
             }
-        }
+
         </script>
     @endpush
 

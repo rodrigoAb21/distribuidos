@@ -31,17 +31,13 @@
                                         <a href="{{url('/modelos/'.$modelo->id.'/edit')}}">
                                         <button class="btn btn-warning"><i class="fa fa-pencil-alt"></i></button>
                                         </a>
-                                        <button class="btn btn-danger" data-toggle="modal" data-target="#myModal-{{$modelo->id}}"><i class="fa fa-trash"></i></button>
-                                            @include('modelos.modales.modal')
+                                        <button class="btn btn-danger" onclick="datosModal('{{$modelo->nombre}}', '{{url('modelos/'.$modelo->id)}}')"><i class="fa fa-trash"></i></button>
                                         @endif
                                     </td>
                                 </tr>
                                 @endforeach
 
                                 </tbody>
-
-
-
                             </table>
                         </div>
                     </div>
@@ -50,6 +46,20 @@
         </div>
     </div>
 
+    @include('modelos.modales.modal')
 
+
+    @push('scripts')
+        <script>
+
+            function datosModal(nombre, url) {
+                $('#formulario').attr("action", url);
+                $('#enunciado').html("Realmente desea eliminar el modelo: " + nombre + "?");
+                $('#myModal').modal('show');
+            }
+
+        </script>
+
+    @endpush()
 
 @endsection
