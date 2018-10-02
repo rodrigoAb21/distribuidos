@@ -11,7 +11,6 @@ class Opcion extends Model
     public $timestamps = false;
     protected $fillable = [
         'texto',
-        'pregunta_id',
-        'empresa_id'
+        'pregunta_id'
     ];
 }

@@ -60,8 +60,9 @@
                                             <td>{{$pregunta->enunciado}}</td>
                                             <td>{{$pregunta->tipo_preg}}</td>
                                             <td>
-                                                <button class="btn btn-warning" onclick="datosModal2('{{$pregunta->enunciado}}','{{$pregunta->obligatoria}}')"><i class="fa fa-pencil-alt"></i></button>
-                                                <button class="btn btn-danger" onclick="datosModal('{{$pregunta->enunciado}}','{{url('modelos/pregunta/'.$pregunta->id)}}')"><i class="fa fa-trash"></i></button>
+                                                <button class="btn btn-warning" onclick="datosModal2('{{$pregunta}}', '{{$pregunta->opciones}}','{{url('modelos/pregunta/'.$pregunta->id.'/edit')}}')"><i class="fa fa-pencil-alt"></i></button>
+
+                                                <button class="btn btn-danger" onclick="datosModalEliminar('{{$pregunta->enunciado}}','{{url('modelos/pregunta/'.$pregunta->id)}}')"><i class="fa fa-trash"></i></button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -85,26 +86,43 @@
     @push('scripts')
         <script src="{{asset('js\propios\modalRegPreg.js')}}"></script>
 
-        <script>
-
-            function datosModal(nombre, url) {
-                $('#formulario').attr("action", url);
-                $('#enunciado').html("Realmente desea eliminar el modelo: " + nombre + "?");
-                $('#myModal').modal('show');
-            }
-
-
-            function datosModal2(enunciado, check) {
-                $('#enunciado').val(enunciado);
-                if(check==1){
-                    $('#check').prop('checked',true);
-                }else {
-                    $('#check').prop('checked',false);
-                }
-                $('#formEdit').modal('show');
-            }
-
-        </script>
     @endpush
+    <script>
+
+        function datosModalEliminar(nombre, url) {
+            $('#formulario').attr("action", url);
+            $('#enunciado').html("Realmente desea eliminar el modelo: " + nombre + "?");
+            $('#myModal').modal('show');
+        }
+
+
+        function datosModal2(pregunta, opciones, url) {
+            var contador=0;
+            $('#formulario_edit').attr("action", url);
+            var preg = JSON.parse(pregunta);
+            var opc = JSON.parse(opciones);
+            $('#enun_edit').val(preg.enunciado);
+            $('#check_edit').prop('checked',preg.obligatoria);
+            while(contador<opc.length ){
+
+                contador++;
+                var fila = '<tr id="fila' + contador + 'Edit"><td><button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></button></td><td><input class="form-control" name="textoT[]" value="' + opc[contador-1].texto + '"/></td></tr>';
+                $("#tabla_edit").append(fila);
+            }
+
+            $('#formEdit').modal('show');
+
+        }
+
+        function guardarEdit() {
+
+        }
+
+
+
+
+
+
+    </script>
 
 @endsection
