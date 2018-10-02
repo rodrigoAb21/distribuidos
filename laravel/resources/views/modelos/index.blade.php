@@ -46,7 +46,7 @@
         </div>
     </div>
 
-    @include('modelos.modales.modal')
+    @include('modelos.modales.eliminar')
 
 
     @push('scripts')
@@ -55,7 +55,7 @@
             function datosModal(nombre, url) {
                 $('#formulario').attr("action", url);
                 $('#enunciado').html("Realmente desea eliminar el modelo: " + nombre + "?");
-                $('#myModal').modal('show');
+                $('#eliminar').modal('show');
             }
 
         </script>

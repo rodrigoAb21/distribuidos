@@ -1,4 +1,4 @@
-<div class="modal fade" id="formEdit" tabindex="-1" role="dialog" aria-labelledby="formEditLabel" aria-hidden="true" style="overflow-y:auto;">
+<div class="modal fade" id="editPreg" tabindex="-1" role="dialog" aria-labelledby="editPregLabel" aria-hidden="true" style="overflow-y:auto;">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
