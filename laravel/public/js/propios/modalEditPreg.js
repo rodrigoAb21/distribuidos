@@ -1,3 +1,5 @@
+var contador=0;
+
 function datosModal2(pregunta, opciones, url) {
     $(".ff").remove();
     contador = 0;

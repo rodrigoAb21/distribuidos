@@ -88,11 +88,10 @@
         <script src="{{asset('js\propios\modalEditPreg.js')}}"></script>
         <script>
 
-            var contador=0;
-
             function datosModalEliminar(nombre, url) {
                 $('#formulario').attr("action", url);
-                $('#enunciado').html("Realmente desea eliminar el modelo: " + nombre + "?");
+                $('#titulo').html("Eliminar pregunta");
+                $('#enunciado').html("Realmente desea eliminar la pregunta: " + nombre + "?");
                 $('#eliminar').modal('show');
             }
 
