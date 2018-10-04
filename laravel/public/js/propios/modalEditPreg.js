@@ -1,6 +1,6 @@
 var contador=0;
 
-function datosModal2(pregunta, opciones, url) {
+function editarPreguntaM(pregunta, opciones, url) {
     $(".ff").remove();
     contador = 0;
 

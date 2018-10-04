@@ -37,7 +37,7 @@
                         <hr>
 
 
-                        <button class="btn btn-success" data-toggle="modal" data-target="#formPreg">
+                        <button class="btn btn-success" type="button" onclick="nuevaPregunta()">
                             <i class="fa fa-plus"></i>
                             Nueva pregunta
                         </button>
@@ -60,9 +60,8 @@
                                             <td>{{$pregunta->enunciado}}</td>
                                             <td>{{$pregunta->tipo_preg}}</td>
                                             <td>
-                                                <button class="btn btn-warning" onclick="datosModal2('{{$pregunta}}', '{{$pregunta->opciones}}','{{url('modelos/pregunta/'.$pregunta->id.'/edit')}}')"><i class="fa fa-pencil-alt"></i></button>
-
-                                                <button class="btn btn-danger" onclick="datosModalEliminar('{{$pregunta->enunciado}}','{{url('modelos/pregunta/'.$pregunta->id)}}')"><i class="fa fa-trash"></i></button>
+                                                <button class="btn btn-warning"><i class="fa fa-pencil-alt"></i></button>
+                                                <button class="btn btn-danger" onclick="eliminarPreguntaM('{{$pregunta->enunciado}}','{{url('modelos/pregunta/'.$pregunta->id)}}')"><i class="fa fa-trash"></i></button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -72,7 +71,6 @@
                             </div>
 
                     </div>
-                    @include('modelos.modales.editPreg')
                     @include('modelos.modales.formPreg')
                     @include('modelos.modales.eliminar')
 
@@ -84,15 +82,92 @@
     </div>
 
     @push('scripts')
-        <script src="{{asset('js\propios\modalRegPreg.js')}}"></script>
-        <script src="{{asset('js\propios\modalEditPreg.js')}}"></script>
         <script>
 
-            function datosModalEliminar(nombre, url) {
+            function eliminarPreguntaM(nombre, url) {
                 $('#formulario').attr("action", url);
                 $('#titulo').html("Eliminar pregunta");
                 $('#enunciado').html("Realmente desea eliminar la pregunta: " + nombre + "?");
                 $('#eliminar').modal('show');
+            }
+
+
+
+            function nuevaPregunta() {
+                evaluar();
+                $('#formPreg').modal('show');
+            }
+
+
+
+            var cont = 0;
+            var contadorSeleccion = 0;
+            
+            $('#tipoP').change(evaluar);
+
+            
+            function eliminar(index) {
+                $("#fila" + index).remove();
+                cont--;
+            }
+
+            function esconder() {
+                vaciarT();
+                $('#checkInput').prop('checked',false);
+                $('#checkOtro').hide();
+                $('#contOpciones').hide();
+            }
+
+            function vaciarT() {
+                while (cont>0){
+                    eliminar(cont);
+                }
+
+            }
+
+            function vaciarTablaAbierta() {
+                //
+            }
+            function vaciarTablaCerrada() {
+                //
+            }
+
+            function evaluar() {
+                $('input[type=radio][name=tipoP]').change(function() {
+                    if (this.value == 1) {
+                        $('#tablaCerrada').hide();
+                        vaciarTablaCerrada();
+
+                        agregarEtiqueta();
+                        $('#tablaAbierta').show();
+
+
+                    }
+                    else {
+                        $('#tablaAbierta').hide();
+                        vaciarTablaAbierta();
+
+                        agregarSeleccion();
+                        $('#tablaCerrada').show();
+                    }
+                });
+            }
+            
+            function agregarOpcion(idMiniForm) {
+                var opcion = '<input id="opcion'+contadorOpcion+'" type="text" >';
+
+            }
+
+            function agregarEtiqueta() {
+                cont++;
+                var fila='<tr id="fila'+cont+'"><td><input class="form-control"  name="etiquetaT[]" /></td><td><select class="form-control" name="" id=""><option value="">Texto</option><option value="">Entero</option><option value="">Decimal</option><option value="">Fecha</option></select></td><td><input class="form-control"  name="minT[]" /></td><td><input class="form-control"  name="maxT[]" /></td><td><input name="obligatoriaT[]" type="checkbox"></td><td><button type="button" class="btn btn-danger btn-sm" onclick="eliminar('+cont+');"><i class="fa fa-trash" aria-hidden="true"></i></button></td></tr>';
+                $("#tablaA").append(fila);
+            }
+            
+            function agregarSeleccion() {
+                contadorSeleccion++;
+                var miniForm = '<div><input id="miniForm'+contadorSeleccion+'"><select class="form-control"><option value="Seleccion multiple">Selección Múltiple</option><option value="Seleccion unica">Selección única</option></select><button type="button" class="btn btn-success" onclick="agregarOpcion("miniForm'+contadorSeleccion+')"><i class="fa fa-plus"></i></button></div>';
+                $("#tablaC").append(miniForm);
             }
 
         </script>
