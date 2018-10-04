@@ -2,6 +2,7 @@
 
 namespace App\Modelos;
 
+use App\Campo;
 use Illuminate\Database\Eloquent\Model;
 
 class RespAbierta extends Model
@@ -12,6 +13,10 @@ class RespAbierta extends Model
     protected $fillable = [
         'descripcion',
         'ficha_resp_id',
-        'empresa_id'
+        'campo_id'
     ];
+
+    public function campo(){
+        return $this->belongsTo(Campo::class);
+    }
 }

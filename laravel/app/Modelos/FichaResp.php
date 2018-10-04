@@ -11,12 +11,11 @@ class FichaResp extends Model
     public $timestamps = false;
     protected $fillable = [
         'encuesta_id',
-        'pregunta_id',
-        'empresa_id'
+        'pregunta_id'
     ];
 
     public function resp_abierta(){
-        return $this->belongsTo(RespAbierta::class);
+        return $this->hasMany(RespAbierta::class);
     }
 
     public function resp_cerrada(){

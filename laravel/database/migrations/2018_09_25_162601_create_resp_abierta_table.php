@@ -19,7 +19,9 @@ class CreateRespAbiertaTable extends Migration
             //$table->timestamps();
 
             $table->unsignedInteger('ficha_resp_id');
+            $table->unsignedInteger('campo_id');
             $table->foreign('ficha_resp_id')->references('id')->on('ficha_resp')->onDelete('cascade');
+            $table->foreign('campo_id')->references('id')->on('campo')->onDelete('cascade');
 
         });
 

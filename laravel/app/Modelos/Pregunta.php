@@ -2,6 +2,7 @@
 
 namespace App\Modelos;
 
+use App\Cerrada;
 use Illuminate\Database\Eloquent\Model;
 
 class Pregunta extends Model
@@ -11,14 +12,14 @@ class Pregunta extends Model
     public $timestamps = false;
     protected $fillable = [
         'enunciado',
-        'tipo_preg',
-        'obligatoria',
-        'otro',
-        'tipo_dato',
-        'modelo_id',
+        'modelo_id'
     ];
 
     public function opciones(){
-        return $this->hasMany(Opcion::class);
+        return $this->hasMany(Cerrada::class);
+    }
+
+    public function campos(){
+        return $this->hasMany(Campo::class);
     }
 }

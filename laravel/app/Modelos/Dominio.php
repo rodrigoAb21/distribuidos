@@ -1,16 +1,18 @@
 <?php
 
-namespace App\Modelos;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Opcion extends Model
+class Dominio extends Model
 {
-    protected $table = 'opcion';
+    protected $table = 'dominio';
     protected $primaryKey = 'id';
     public $timestamps = false;
     protected $fillable = [
-        'texto',
-        'cerrada_id'
+        'tipoDato',
+        'min',
+        'max'
     ];
+
 }

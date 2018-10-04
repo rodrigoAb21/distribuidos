@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePreguntaTable extends Migration
+class CreateDominioTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreatePreguntaTable extends Migration
      */
     public function up()
     {
-        Schema::create('pregunta', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('enunciado');
-            //$table->timestamps();
 
-            $table->unsignedInteger('modelo_id');
-            $table->foreign('modelo_id')->references('id')->on('modelo')->onDelete('cascade');
+        Schema::create('dominio', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('tipoDato');
+            $table->string('min');
+            $table->string('max');
+
+            //$table->timestamps();
 
         });
     }
@@ -31,6 +32,6 @@ class CreatePreguntaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pregunta');
+        //
     }
 }
