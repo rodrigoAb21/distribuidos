@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Modelos;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,7 +10,7 @@ class Campo extends Model
     protected $primaryKey = 'id';
     public $timestamps = false;
     protected $fillable = [
-        'nombre',
+        'etiqueta',
         'obligatorio',
         'varios',
         'pregunta_id',

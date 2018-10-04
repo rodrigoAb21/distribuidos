@@ -1,8 +1,7 @@
 <?php
 
-namespace App;
+namespace App\Modelos;
 
-use App\Modelos\Opcion;
 use Illuminate\Database\Eloquent\Model;
 
 class Cerrada extends Model
@@ -16,7 +15,7 @@ class Cerrada extends Model
         'pregunta_id'
     ];
 
-    public function area(){
+    public function opciones(){
         return $this->hasMany(Opcion::class);
     }
 

@@ -2,7 +2,6 @@
 
 namespace App\Modelos;
 
-use App\Cerrada;
 use Illuminate\Database\Eloquent\Model;
 
 class Pregunta extends Model
@@ -15,7 +14,7 @@ class Pregunta extends Model
         'modelo_id'
     ];
 
-    public function opciones(){
+    public function cerradas(){
         return $this->hasMany(Cerrada::class);
     }
 

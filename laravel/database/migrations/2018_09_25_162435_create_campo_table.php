@@ -15,7 +15,7 @@ class CreateCampoTable extends Migration
     {
         Schema::create('campo', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nombre');
+            $table->string('etiqueta');
             $table->boolean('obligatorio');
             $table->boolean('varios');
 
