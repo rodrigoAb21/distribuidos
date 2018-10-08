@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="test.tuto_passport.PostActivity">
+    >
 
     <TextView
         android:id="@+id/post_title"
-        tools:text="Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -17,8 +16,8 @@
         app:layout_constraintRight_toRightOf="parent" />
 
     <Button
-        android:id="@+id/btn_posts"
-        android:text="Get Posts"
+        android:id="@+id/btn_getModelo"
+        android:text="Obtener Modelos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
