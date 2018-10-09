@@ -32,4 +32,8 @@ public interface ApiService {
     @GET("modelos")
     Call<ModeloResponse> modelos();
 
+    @POST("logout")
+    Call<String> logout();
+
+
 }

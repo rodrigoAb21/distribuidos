@@ -3,6 +3,7 @@ package com.distribuidos.uagrm.android;
 import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
 import android.support.transition.TransitionManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
