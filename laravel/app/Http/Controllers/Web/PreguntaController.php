@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 class PreguntaController extends Controller
 {
     public function nuevaPregunta(Request $request, $id){
-
+        dd($request);
     }
 
     public function editarPregunta(Request $request, $id){

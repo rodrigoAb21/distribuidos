@@ -56,26 +56,12 @@
 
 
                     <div id="tablaCerrada" >
-                        <div class="table-responsive text-center">
-                            <table id="tablaC" class="table table-bordered table-hover">
-                                <thead>
-                                <tr>
-                                    <th>Etiqueta</th>
-                                    <th>Tipo de dato</th>
-                                    <th>Min</th>
-                                    <th>Max</th>
-                                    <th>Oblig.</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
+                        <div id="tablaC">
 
-                                </tbody>
-                            </table>
                         </div>
                         <hr>
                         <div class="text-center">
-                            <button class="btn btn-default " type="button" onclick="agregarEtiqueta()"><i class="fa fa-plus"></i></button>
+                            <button class="btn btn-primary " type="button" onclick="agregarSeleccion()"><i class="fa fa-plus"></i></button>
                         </div>
                     </div>
 
