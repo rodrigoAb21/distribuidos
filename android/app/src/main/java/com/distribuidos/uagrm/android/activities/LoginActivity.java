@@ -34,7 +34,7 @@ import com.distribuidos.uagrm.android.entities.ApiError;
 import com.distribuidos.uagrm.android.network.ApiService;
 import com.distribuidos.uagrm.android.network.RetrofitBuilder;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG = "LoginActivity";
 
@@ -69,53 +69,7 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
 
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = tilEmail.getEditText().getText().toString();
-                String password = tilPassword.getEditText().getText().toString();
-
-                tilEmail.setError(null);
-                tilPassword.setError(null);
-
-                validator.clear();
-
-                if (validator.validate()) {
-                    showLoading();
-                    call = service.login(email, password);
-                    call.enqueue(new Callback<AccessToken>() {
-                        @Override
-                        public void onResponse(Call<AccessToken> call, Response<AccessToken> response) {
-
-                            Log.w(TAG, "onResponse: " + response);
-
-                            if (response.isSuccessful()) {
-                                tokenManager.saveToken(response.body());
-                                startActivity(new Intent(LoginActivity.this, ModeloActivity.class));
-                                finish();
-                            } else {
-                                if (response.code() == 422) {
-                                    handleErrors(response.errorBody());
-                                }
-                                if (response.code() == 401) {
-                                    ApiError apiError = Utils.converErrors(response.errorBody());
-                                    Toast.makeText(LoginActivity.this, apiError.getMessage(), Toast.LENGTH_LONG).show();
-                                }
-                                showForm();
-                            }
-
-                        }
-
-                        @Override
-                        public void onFailure(Call<AccessToken> call, Throwable t) {
-                            Log.w(TAG, "onFailure: " + t.getMessage());
-                            showForm();
-                        }
-                    });
-
-                }
-            }
-        });
+        login.setOnClickListener(this);
     }
 
     private void cargarElementos(){
@@ -166,6 +120,56 @@ public class LoginActivity extends AppCompatActivity {
         if (call != null) {
             call.cancel();
             call = null;
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_login:
+                String email = tilEmail.getEditText().getText().toString();
+                String password = tilPassword.getEditText().getText().toString();
+
+                tilEmail.setError(null);
+                tilPassword.setError(null);
+
+                validator.clear();
+
+                if (validator.validate()) {
+                    showLoading();
+                    call = service.login(email, password);
+                    call.enqueue(new Callback<AccessToken>() {
+                        @Override
+                        public void onResponse(Call<AccessToken> call, Response<AccessToken> response) {
+
+                            Log.w(TAG, "onResponse: " + response);
+
+                            if (response.isSuccessful()) {
+                                tokenManager.saveToken(response.body());
+                                startActivity(new Intent(LoginActivity.this, ModeloActivity.class));
+                                finish();
+                            } else {
+                                if (response.code() == 422) {
+                                    handleErrors(response.errorBody());
+                                }
+                                if (response.code() == 401) {
+                                    ApiError apiError = Utils.converErrors(response.errorBody());
+                                    Toast.makeText(LoginActivity.this, apiError.getMessage(), Toast.LENGTH_LONG).show();
+                                }
+                                showForm();
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<AccessToken> call, Throwable t) {
+                            Log.w(TAG, "onFailure: " + t.getMessage());
+                            showForm();
+                        }
+                    });
+
+                }
+                break;
         }
     }
 }
