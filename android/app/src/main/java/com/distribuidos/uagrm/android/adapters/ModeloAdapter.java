@@ -22,7 +22,7 @@ public class ModeloAdapter extends RecyclerView.Adapter<ModeloAdapter.ViewHolder
     @Override
     public ModeloAdapter.ViewHolderModelos onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_recycle, null, false);
+                .inflate(R.layout.row_modelo_adapter, null, false);
         return new ViewHolderModelos(view);
     }
 

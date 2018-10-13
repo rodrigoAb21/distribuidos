@@ -9,7 +9,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.Route;
 import retrofit2.Call;
-import com.distribuidos.uagrm.android.TokenManager;
+import com.distribuidos.uagrm.android.helpers.TokenManager;
 import com.distribuidos.uagrm.android.entities.AccessToken;
 
 public class CustomAuthenticator implements Authenticator {

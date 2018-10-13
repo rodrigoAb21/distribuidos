@@ -11,11 +11,11 @@ import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.moshi.MoshiConverterFactory;
 import com.distribuidos.uagrm.android.BuildConfig;
-import com.distribuidos.uagrm.android.TokenManager;
+import com.distribuidos.uagrm.android.helpers.TokenManager;
 
 public class RetrofitBuilder {
 
-    private static final String BASE_URL = "http://192.168.0.34/api/public/api/";
+    private static final String BASE_URL = "http://si2uagrm.nl/api/";
 
     private final static OkHttpClient client = buildClient();
     private final static Retrofit retrofit = buildRetrofit(client);

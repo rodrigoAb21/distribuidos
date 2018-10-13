@@ -19,7 +19,7 @@ class ModeloController extends Controller
 
 
     public function obtener($id){
-        $modelos = Modelo::with('preguntas', 'preguntas.cerradas', 'preguntas.campos','preguntas.campos.dominio','preguntas.cerradas.opciones')->get();
+        $modelos = Modelo::with('preguntas', 'preguntas.cerradas', 'preguntas.campos','preguntas.campos.dominio','preguntas.cerradas.opciones')->findOrFail($id);
         return response()->json(['data' => $modelos], 200, [], JSON_NUMERIC_CHECK);
 
 
