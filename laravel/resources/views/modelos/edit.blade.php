@@ -84,6 +84,39 @@
     @push('scripts')
         <script>
 
+            //----------- VARIABLES
+            var cont = 0;
+            var contadorSeleccion = 0;
+            var contadorOpcion = 0;
+            $('input[type=radio][name=tipoP]').change(function() {
+                if (this.value == 1) {
+                    abiertaSeleccionada();
+                }
+                else {
+                   cerradaSeleccionada();
+                }
+            });
+
+
+            function abiertaSeleccionada() {
+                $('#tablaCerrada').hide();
+                vaciarTablaAbierta();
+
+                $('#tablaAbierta').show();
+            }
+
+            function cerradaSeleccionada() {
+                $('#tablaAbierta').hide();
+                vaciarTablaCerrada();
+
+                $('#tablaCerrada').show();
+            }
+
+            function nuevaPregunta() {
+                abiertaSeleccionada();
+                $('#formPreg').modal('show');
+            }
+
             function eliminarPreguntaM(nombre, url) {
                 $('#formulario').attr("action", url);
                 $('#titulo').html("Eliminar pregunta");
@@ -91,77 +124,9 @@
                 $('#eliminar').modal('show');
             }
 
-
-
-            function nuevaPregunta() {
-
-                evaluar();
-                $('#formPreg').modal('show');
-            }
-
-
-
-            var cont = 0;
-            var contadorSeleccion = 0;
-            var contadorOpcion = 0;
-            //$('#tipoP').change(evaluar);
-
-            
             function eliminar(index) {
                 $("#fila" + index).remove();
                 cont--;
-            }
-
-            function esconder() {
-                vaciarT();
-                $('#checkInput').prop('checked',false);
-                $('#checkOtro').hide();
-                $('#contOpciones').hide();
-            }
-
-            function vaciarT() {
-                while (cont>0){
-                    eliminar(cont);
-                }
-
-            }
-
-            function vaciarTablaAbierta() {
-                //
-            }
-            function vaciarTablaCerrada() {
-                //
-            }
-
-            function evaluar() {
-                $('input[type=radio][name=tipoP]').change(function() {
-                    if (this.value == 1) {
-                        $('#tablaCerrada').hide();
-                        vaciarTablaCerrada();
-
-
-                        agregarEtiqueta();
-                        $('#tablaAbierta').show();
-
-
-                    }
-                    else {
-                        $('#tablaAbierta').hide();
-                        vaciarTablaAbierta();
-
-
-                        agregarSeleccion();
-                        $('#tablaCerrada').show();
-                    }
-                });
-            }
-            
-            function agregarOpcion(idSeleccion) {
-                contadorOpcion++;
-                var x= '<tr id="opcion'+contadorOpcion+'" class="row"><td><input type="text" name="selector'+idSeleccion+'[opcion][]"></td><td><button type="button" onclick="eliminarOpcion('+ contadorOpcion +')">x</button></td></tr>';
-                $("#opciones"+idSeleccion).append(x);
-
-
             }
 
             function agregarEtiqueta() {
@@ -169,31 +134,43 @@
                 var fila = '<tr id="fila'+cont+'"><td><input class="form-control"  name="etiquetaT[]" /></td><td><select class="form-control" name="" id=""><option value="">Texto</option><option value="">Entero</option><option value="">Decimal</option><option value="">Fecha</option></select></td><td><input class="form-control"  name="minT[]" /></td><td><input class="form-control"  name="maxT[]" /></td><td><input name="obligatoriaT[]" type="checkbox"></td><td><button type="button" class="btn btn-danger btn-sm" onclick="eliminar('+cont+');"><i class="fa fa-trash" aria-hidden="true"></i></button></td></tr>';
                 $("#tablaA").append(fila);
             }
-            
+
             function agregarSeleccion() {
                 contadorSeleccion++;
                 var ind=contadorSeleccion;
-                var miniForm = '<div id="seleccion'+contadorSeleccion+'" class="card-body" ><div class="mr-0 ml-auto pull-right"><button type="button" class="btn btn-warning" style="width: 30px;height: 30px;text-align: center;padding: 6px 0;font-size: 12px;line-height: 1.428571429;border-radius: 15px;margin-right: fill;" onclick="eliminarSeleccion('+contadorSeleccion +')"><i class="fa fa-times"></i></button></div><br><br><div class="mr-0 ml-auto pull-right"><input id="otro'+ind+'" name="selector'+ind+'[]" type="checkbox" onclick="agregarOtro('+ind+')"><label>Otros</label></div><div class="row"><input id="miniForm'+contadorSeleccion+'" name="selector'+ind+'[etiqueta]" ><span><select name="selector'+ind+'[tipoP]" class="form-control" ></span><option value="Seleccion multiple">Selección Múltiple</option><option value="Seleccion unica">Selección única</option></select></div><div><table id = "opciones'+ind+'"><tbody></tbody></table><button type="button" class="btn btn-success" onclick="agregarOpcion('+ ind +')"><i class="fa fa-plus"></i></button></div></div>';
+                var miniForm = '<div id="seleccion'+contadorSeleccion+'" class="card-body" ><div class="mr-0 ml-auto pull-right"><button type="button" class="btn btn-warning" style="width: 30px;height: 30px;text-align: center;padding: 6px 0;font-size: 12px;line-height: 1.428571429;border-radius: 15px;margin-right: fill;" onclick="eliminarSeleccion('+contadorSeleccion +')"><i class="fa fa-times"></i></button></div><br><br><div class="mr-0 ml-auto pull-right"><input id="otro'+ind+'" name="selector'+ind+'[]" type="checkbox" onclick="agregarOtro('+ind+')"><label>Otros</label></div> <div class="row"><input id="miniForm'+contadorSeleccion+'" name="selector'+ind+'[etiqueta]" ><span><select name="selector'+ind+'[tipoP]" class="form-control" class="mr-0 ml-auto pull-right" ></span><option value="Seleccion multiple">Selección Múltiple</option><option value="Seleccion unica">Selección única</option></select></div><div><table id = "opciones'+ind+'"><tbody></tbody></table><label id="labelMasOp'+ind+'" onclick="agregarOpcion('+ ind +')">Agregar opción </label></div></div>';
 
                 $("#tablaC").append(miniForm);
-                //Por defecto agregar una opcion?
-                //agregarOpcion(ind);
+            }
+
+            function agregarOpcion(idSeleccion) {
+                contadorOpcion++;
+                var x= '<tr id="opcion'+contadorOpcion+'" class="row"><td><input type="text" name="selector'+idSeleccion+'[opcion][]"></td><td><button type="button" onclick="eliminarOpcion('+ contadorOpcion +')">x</button></td></tr>';
+                $("#opciones"+idSeleccion).append(x);
             }
 
             function agregarOtro(idSeleccion) {
                 if( $("#otro"+idSeleccion).prop('checked') ) {
 
-                cont++;
-                var fila = '<table id="tablaOtros'+idSeleccion+'"><tr id="fila'+cont+'"><td><input  name="selector'+idSeleccion+'[otro]['+cont+'][entrada]" /></td><td><select class="form-control" name="selector'+idSeleccion+'[otro]['+cont+'][tipoDato]" id=""><option value="Texto">Texto</option><option value="Entero">Entero</option><option value="Decimal">Decimal</option><option value="Fecha">Fecha</option></select></td><td><input name="selector'+idSeleccion+'[otro]['+cont+'][min]"  /></td><td><input class="form-control"  name="selector'+idSeleccion+'[otro]['+cont+'][max]" /></td><td><input name="selector'+idSeleccion+'[otro]['+cont+'][obligatorio]" type="checkbox"></td><td><button type="button" class="btn btn-danger btn-sm" onclick="eliminar('+cont+');"><i class="fa fa-trash" aria-hidden="true"></i></button></td></tr></table>';
-                $("#seleccion"+idSeleccion).append(fila);
+                    cont++;
+                    var fila = '<div id="otros'+idSeleccion+'"><table id="tablaOtros'+idSeleccion+'"><tr id="fila'+cont+'"><td><input  name="selector'+idSeleccion+'[otro]['+cont+'][entrada]" /></td><td><select class="form-control" name="selector'+idSeleccion+'[otro]['+cont+'][tipoDato]" id=""><option value="Texto">Texto</option><option value="Entero">Entero</option><option value="Decimal">Decimal</option><option value="Fecha">Fecha</option></select></td><td><input name="selector'+idSeleccion+'[otro]['+cont+'][min]"  /></td><td><input class="form-control"  name="selector'+idSeleccion+'[otro]['+cont+'][max]" /></td><td><input name="selector'+idSeleccion+'[otro]['+cont+'][obligatorio]" type="checkbox"></td><td><input name="selector'+idSeleccion+'[otro]['+cont+'][varios]" type="checkbox"></td><td><button type="button" class="btn btn-danger btn-sm" onclick="eliminar('+cont+');"><i class="fa fa-trash" aria-hidden="true"></i></button></td></tr></table><label  onclick="masCamposOtro('+ idSeleccion +')">Agregar campo</label></div>';
+                    $("#seleccion"+idSeleccion).append(fila);
                 }else{
-                        $("#tablaOtros"+idSeleccion).remove();
-                        cont--;
+                    $("#otros"+idSeleccion).remove();
+                    cont--;
                 }
             }
 
+            function masCamposOtro(idSeleccion) {
+                cont++;
+                var fila = '<tr id="fila'+cont+'" ><td><input  name="selector'+idSeleccion+'[otro]['+cont+'][entrada]" /></td><td><select class="form-control" name="selector'+idSeleccion+'[otro]['+cont+'][tipoDato]" id=""><option value="Texto">Texto</option><option value="Entero">Entero</option><option value="Decimal">Decimal</option><option value="Fecha">Fecha</option></select></td><td><input name="selector'+idSeleccion+'[otro]['+cont+'][min]"  /></td><td><input class="form-control"  name="selector'+idSeleccion+'[otro]['+cont+'][max]" /></td><td><input name="selector'+idSeleccion+'[otro]['+cont+'][obligatorio]" type="checkbox"></td><td><input name="selector'+idSeleccion+'[otro]['+cont+'][varios]" type="checkbox"></td><td><button type="button" class="btn btn-danger btn-sm" onclick="eliminar('+cont+');"><i class="fa fa-trash" aria-hidden="true"></i></button></td></tr>';
+            $('#tablaOtros'+idSeleccion).append(fila);
 
-            
+            }
+
+
+
+
             function eliminarSeleccion(index) {
                 $("#seleccion" + index).remove();
                 cont--;
@@ -201,8 +178,26 @@
 
             function eliminarOpcion(index) {
                 $("#opcion"+index).remove();
+
             }
 
+            function vaciarTablaAbierta() {
+                $("#tablaAbierta").remove();
+                contador=0;
+                contadorSeleccion=0;
+                contadorOpcion=0;
+
+                var tabla = '<div id="tablaAbierta"><div class="table-responsive text-center"><table id="tablaA" class="table table-bordered table-hover"><thead><tr><th>Etiqueta</th><th>Tipo de dato</th><th>Min</th><th>Max</th><th>Oblig.</th><th></th></tr></thead><tbody></tbody></table></div><hr><div class="text-center"><button class="btn btn-default " type="button" onclick="agregarEtiqueta()"><i class="fa fa-plus"></i></button></div></div>';
+                $("#abierta").append(tabla);
+                agregarEtiqueta();
+            }
+
+            function vaciarTablaCerrada() {
+                $("#tablaCerrada").remove();
+                var tabla = '<div id="tablaCerrada"><div id="tablaC"></div><hr><div class="text-center"><button class="btn btn-primary" type="button" onclick="agregarSeleccion()">Más Secciones</button></div></div></div>';
+                $("#cerrada").append(tabla);
+                agregarSeleccion();
+            }
         </script>
     @endpush
 

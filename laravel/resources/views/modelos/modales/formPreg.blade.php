@@ -29,8 +29,10 @@
                     </div>
 
                     <hr>
+                    <div id="abierta">
 
-                    <div id="tablaAbierta" >
+                        <!--
+                        <div id="tablaAbierta" >
                         <div class="table-responsive text-center">
                             <table id="tablaA" class="table table-bordered table-hover">
                                 <thead>
@@ -52,22 +54,27 @@
                         <div class="text-center">
                             <button class="btn btn-default " type="button" onclick="agregarEtiqueta()"><i class="fa fa-plus"></i></button>
                         </div>
+                        </div>
+                        -->
                     </div>
 
-
-                    <div id="tablaCerrada" >
+                    <div id="cerrada">
+                        <!--
+                        <div id="tablaCerrada" >
                         <div id="tablaC">
 
                         </div>
                         <hr>
                         <div class="text-center">
-                            <button class="btn btn-primary " type="button" onclick="agregarSeleccion()"><i class="fa fa-plus"></i></button>
+                            <button class="btn btn-primary " type="button" onclick="agregarSeleccion()">Más Secciones</button>
                         </div>
+                        </div>
+                        -->
                     </div>
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="submit" class="btn btn-success">Guardar</button>
                 </div>
             </form>
         </div>
