@@ -126,26 +126,26 @@
 
             function eliminar(index) {
                 $("#fila" + index).remove();
-                cont--;
+
             }
 
             function agregarEtiqueta() {
                 cont++;
-                var fila = '<tr id="fila'+cont+'"><td><input class="form-control"  name="etiquetaT[]" /></td><td><select class="form-control" name="" id=""><option value="">Texto</option><option value="">Entero</option><option value="">Decimal</option><option value="">Fecha</option></select></td><td><input class="form-control"  name="minT[]" /></td><td><input class="form-control"  name="maxT[]" /></td><td><input name="obligatoriaT[]" type="checkbox"></td><td><button type="button" class="btn btn-danger btn-sm" onclick="eliminar('+cont+');"><i class="fa fa-trash" aria-hidden="true"></i></button></td></tr>';
+                var fila = '<tr id="fila'+cont+'"><td><input class="form-control"  name="etiquetas['+cont+'][etiqueta]" /></td><td><select class="form-control" name="etiquetas['+cont+'][tipoD]" id=""><option value="">Texto</option><option value="Entero">Entero</option><option value="Decimal">Decimal</option><option value="Fecha">Fecha</option></select></td><td><input name= "etiquetas['+cont+'][min]" class="form-control"/></td><td><input name="etiquetas['+cont+'][max]"class="form-control"/></td><td><input name = "etiquetas['+cont+'][obligatorio]" type="checkbox"></td><td><input name = "etiquetas['+cont+'][varios]" type="checkbox"></td><td><button type="button" class="btn btn-danger btn-sm" onclick="eliminar('+cont+');"><i class="fa fa-trash" aria-hidden="true"></i></button></td></tr>';
                 $("#tablaA").append(fila);
             }
 
             function agregarSeleccion() {
                 contadorSeleccion++;
                 var ind=contadorSeleccion;
-                var miniForm = '<div id="seleccion'+contadorSeleccion+'" class="card-body" ><div class="mr-0 ml-auto pull-right"><button type="button" class="btn btn-warning" style="width: 30px;height: 30px;text-align: center;padding: 6px 0;font-size: 12px;line-height: 1.428571429;border-radius: 15px;margin-right: fill;" onclick="eliminarSeleccion('+contadorSeleccion +')"><i class="fa fa-times"></i></button></div><br><br><div class="mr-0 ml-auto pull-right"><input id="otro'+ind+'" name="selector'+ind+'[]" type="checkbox" onclick="agregarOtro('+ind+')"><label>Otros</label></div> <div class="row"><input id="miniForm'+contadorSeleccion+'" name="selector'+ind+'[etiqueta]" ><span><select name="selector'+ind+'[tipoP]" class="form-control" class="mr-0 ml-auto pull-right" ></span><option value="Seleccion multiple">Selección Múltiple</option><option value="Seleccion unica">Selección única</option></select></div><div><table id = "opciones'+ind+'"><tbody></tbody></table><label id="labelMasOp'+ind+'" onclick="agregarOpcion('+ ind +')">Agregar opción </label></div></div>';
+                var miniForm = '<div id="seleccion'+contadorSeleccion+'" name="seleccion[]" class="card-body" ><div class="mr-0 ml-auto pull-right"><button type="button" class="btn btn-warning" style="width: 30px;height: 30px;text-align: center;padding: 6px 0;font-size: 12px;line-height: 1.428571429;border-radius: 15px;margin-right: fill;" onclick="eliminarSeleccion('+contadorSeleccion +')"><i class="fa fa-times"></i></button></div><br><br><div class="mr-0 ml-auto pull-right"><input id="otro'+ind+'" name="selector['+ind+']" type="checkbox" onclick="agregarOtro('+ind+')"><label>Otros</label></div> <div class="row"><input id="miniForm'+contadorSeleccion+'" name="selector['+ind+'][etiqueta]" ><span><select name="selector['+ind+'][tipoP]" class="form-control" class="mr-0 ml-auto pull-right" ></span><option value="Seleccion multiple">Selección Múltiple</option><option value="Seleccion unica">Selección única</option></select></div><div><table id = "opciones'+ind+'"><tbody></tbody></table><label id="labelMasOp'+ind+'" onclick="agregarOpcion('+ ind +')">Agregar opción </label></div></div>';
 
                 $("#tablaC").append(miniForm);
             }
 
             function agregarOpcion(idSeleccion) {
                 contadorOpcion++;
-                var x= '<tr id="opcion'+contadorOpcion+'" class="row"><td><input type="text" name="selector'+idSeleccion+'[opcion][]"></td><td><button type="button" onclick="eliminarOpcion('+ contadorOpcion +')">x</button></td></tr>';
+                var x= '<tr id="opcion'+contadorOpcion+'" class="row"><td><input type="text" name="selector['+idSeleccion+'][opcion][]"></td><td><button type="button" onclick="eliminarOpcion('+ contadorOpcion +')">x</button></td></tr>';
                 $("#opciones"+idSeleccion).append(x);
             }
 
@@ -153,17 +153,16 @@
                 if( $("#otro"+idSeleccion).prop('checked') ) {
 
                     cont++;
-                    var fila = '<div id="otros'+idSeleccion+'"><table id="tablaOtros'+idSeleccion+'"><tr id="fila'+cont+'"><td><input  name="selector'+idSeleccion+'[otro]['+cont+'][entrada]" /></td><td><select class="form-control" name="selector'+idSeleccion+'[otro]['+cont+'][tipoDato]" id=""><option value="Texto">Texto</option><option value="Entero">Entero</option><option value="Decimal">Decimal</option><option value="Fecha">Fecha</option></select></td><td><input name="selector'+idSeleccion+'[otro]['+cont+'][min]"  /></td><td><input class="form-control"  name="selector'+idSeleccion+'[otro]['+cont+'][max]" /></td><td><input name="selector'+idSeleccion+'[otro]['+cont+'][obligatorio]" type="checkbox"></td><td><input name="selector'+idSeleccion+'[otro]['+cont+'][varios]" type="checkbox"></td><td><button type="button" class="btn btn-danger btn-sm" onclick="eliminar('+cont+');"><i class="fa fa-trash" aria-hidden="true"></i></button></td></tr></table><label  onclick="masCamposOtro('+ idSeleccion +')">Agregar campo</label></div>';
+                    var fila = '<div id="otros'+idSeleccion+'"><table id="tablaOtros'+idSeleccion+'"></table><label  onclick="masCamposOtro('+ idSeleccion +')">Agregar campo</label></div>';
                     $("#seleccion"+idSeleccion).append(fila);
                 }else{
                     $("#otros"+idSeleccion).remove();
-                    cont--;
                 }
             }
 
             function masCamposOtro(idSeleccion) {
                 cont++;
-                var fila = '<tr id="fila'+cont+'" ><td><input  name="selector'+idSeleccion+'[otro]['+cont+'][entrada]" /></td><td><select class="form-control" name="selector'+idSeleccion+'[otro]['+cont+'][tipoDato]" id=""><option value="Texto">Texto</option><option value="Entero">Entero</option><option value="Decimal">Decimal</option><option value="Fecha">Fecha</option></select></td><td><input name="selector'+idSeleccion+'[otro]['+cont+'][min]"  /></td><td><input class="form-control"  name="selector'+idSeleccion+'[otro]['+cont+'][max]" /></td><td><input name="selector'+idSeleccion+'[otro]['+cont+'][obligatorio]" type="checkbox"></td><td><input name="selector'+idSeleccion+'[otro]['+cont+'][varios]" type="checkbox"></td><td><button type="button" class="btn btn-danger btn-sm" onclick="eliminar('+cont+');"><i class="fa fa-trash" aria-hidden="true"></i></button></td></tr>';
+                var fila = '<tr id="fila'+cont+'" ><td><input  name="selector['+idSeleccion+'][otro]['+cont+'][entrada]" /></td><td><select class="form-control" name="selector['+idSeleccion+'][otro]['+cont+'][tipoDato]" id=""><option value="Texto">Texto</option><option value="Entero">Entero</option><option value="Decimal">Decimal</option><option value="Fecha">Fecha</option></select></td><td><input name="selector['+idSeleccion+'][otro]['+cont+'][min]"  /></td><td><input class="form-control"  name="selector['+idSeleccion+'][otro]['+cont+'][max]" /></td><td><input name="selector['+idSeleccion+'][otro]['+cont+'][obligatorio]" type="checkbox"></td><td><input name="selector['+idSeleccion+'][otro]['+cont+'][varios]" type="checkbox"></td><td><button type="button" class="btn btn-danger btn-sm" onclick="eliminar('+cont+');"><i class="fa fa-trash" aria-hidden="true"></i></button></td></tr>';
             $('#tablaOtros'+idSeleccion).append(fila);
 
             }
@@ -173,12 +172,10 @@
 
             function eliminarSeleccion(index) {
                 $("#seleccion" + index).remove();
-                cont--;
             }
 
             function eliminarOpcion(index) {
                 $("#opcion"+index).remove();
-
             }
 
             function vaciarTablaAbierta() {

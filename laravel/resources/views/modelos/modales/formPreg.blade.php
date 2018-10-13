@@ -29,48 +29,9 @@
                     </div>
 
                     <hr>
-                    <div id="abierta">
+                    <div id="abierta"></div>
 
-                        <!--
-                        <div id="tablaAbierta" >
-                        <div class="table-responsive text-center">
-                            <table id="tablaA" class="table table-bordered table-hover">
-                                <thead>
-                                <tr>
-                                    <th>Etiqueta</th>
-                                    <th>Tipo de dato</th>
-                                    <th>Min</th>
-                                    <th>Max</th>
-                                    <th>Oblig.</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                </tbody>
-                            </table>
-                        </div>
-                        <hr>
-                        <div class="text-center">
-                            <button class="btn btn-default " type="button" onclick="agregarEtiqueta()"><i class="fa fa-plus"></i></button>
-                        </div>
-                        </div>
-                        -->
-                    </div>
-
-                    <div id="cerrada">
-                        <!--
-                        <div id="tablaCerrada" >
-                        <div id="tablaC">
-
-                        </div>
-                        <hr>
-                        <div class="text-center">
-                            <button class="btn btn-primary " type="button" onclick="agregarSeleccion()">Más Secciones</button>
-                        </div>
-                        </div>
-                        -->
-                    </div>
+                    <div id="cerrada"></div>
 
                 </div>
                 <div class="modal-footer">
