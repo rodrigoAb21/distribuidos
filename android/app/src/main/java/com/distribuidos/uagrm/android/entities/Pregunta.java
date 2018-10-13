@@ -1,13 +1,13 @@
 package com.distribuidos.uagrm.android.entities;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Pregunta {
     private int id;
     private String enunciado;
     private int modelo_id;
-    private ArrayList<Cerrada> cerradas;
-    private ArrayList<Campo> campos;
+    private List<Cerrada> cerradas;
+    private List<Campo> campos;
 
 
     public Pregunta() {
@@ -37,19 +37,19 @@ public class Pregunta {
         this.modelo_id = modelo_id;
     }
 
-    public ArrayList<Cerrada> getCerradas() {
+    public List<Cerrada> getCerradas() {
         return cerradas;
     }
 
-    public void setCerradas(ArrayList<Cerrada> cerradas) {
+    public void setCerradas(List<Cerrada> cerradas) {
         this.cerradas = cerradas;
     }
 
-    public ArrayList<Campo> getCampos() {
+    public List<Campo> getCampos() {
         return campos;
     }
 
-    public void setCampos(ArrayList<Campo> campos) {
+    public void setCampos(List<Campo> campos) {
         this.campos = campos;
     }
 }

@@ -1,13 +1,13 @@
 package com.distribuidos.uagrm.android.entities;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Cerrada {
     private int id;
     private String tipoSeleccion;
     private boolean obligatoria;
     private int pregunta_id;
-    private ArrayList<Opcion> opciones;
+    private List<Opcion> opciones;
 
     public Cerrada(){
     }
@@ -44,11 +44,11 @@ public class Cerrada {
         this.pregunta_id = pregunta_id;
     }
 
-    public ArrayList<Opcion> getOpciones() {
+    public List<Opcion> getOpciones() {
         return opciones;
     }
 
-    public void setOpciones(ArrayList<Opcion> opciones) {
+    public void setOpciones(List<Opcion> opciones) {
         this.opciones = opciones;
     }
 }

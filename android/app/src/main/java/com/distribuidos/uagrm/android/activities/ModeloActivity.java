@@ -16,15 +16,16 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import com.distribuidos.uagrm.android.R;
+import com.distribuidos.uagrm.android.entities.Modelo_cabecera;
 import com.distribuidos.uagrm.android.helpers.TokenManager;
 import com.distribuidos.uagrm.android.adapters.ModeloAdapter;
-import com.distribuidos.uagrm.android.entities.Modelo;
 import com.distribuidos.uagrm.android.responses.ModeloResponse;
 import com.distribuidos.uagrm.android.network.ApiService;
 import com.distribuidos.uagrm.android.network.RetrofitBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class ModeloActivity extends AppCompatActivity {
 
@@ -38,7 +39,7 @@ public class ModeloActivity extends AppCompatActivity {
     Call<ModeloResponse> call;
 
     Call<String> c2;
-    List<Modelo> listaModelos;
+    List<Modelo_cabecera> listaModelos;
 
 
     @Override

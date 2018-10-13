@@ -7,15 +7,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.distribuidos.uagrm.android.R;
-import com.distribuidos.uagrm.android.entities.Modelo;
+import com.distribuidos.uagrm.android.entities.Modelo_cabecera;
 
 import java.util.List;
 
+
 public class ModeloAdapter extends RecyclerView.Adapter<ModeloAdapter.ViewHolderModelos>{
 
-    List<Modelo> listaModelos;
+    List<Modelo_cabecera> listaModelos;
 
-    public ModeloAdapter(List<Modelo> listaModelos) {
+    public ModeloAdapter(List<Modelo_cabecera> listaModelos) {
         this.listaModelos = listaModelos;
     }
 
@@ -46,7 +47,7 @@ public class ModeloAdapter extends RecyclerView.Adapter<ModeloAdapter.ViewHolder
             descripcion = (TextView) itemView.findViewById(R.id.descripcion_item);
         }
 
-        public void asignarDatos(Modelo modelo){
+        public void asignarDatos(Modelo_cabecera modelo){
             this.nombre.setText(modelo.getNombre());
             this.descripcion.setText(modelo.getDescripcion());
         }

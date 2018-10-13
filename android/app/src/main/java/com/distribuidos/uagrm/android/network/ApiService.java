@@ -14,6 +14,9 @@ public interface ApiService {
     @FormUrlEncoded
     Call<AccessToken> login(@Field("username") String username, @Field("password") String password);
 
+    @POST("logout")
+    Call<String> logout();
+
 
     @POST("refresh")
     @FormUrlEncoded
@@ -22,8 +25,6 @@ public interface ApiService {
     @GET("modelos")
     Call<ModeloResponse> modelos();
 
-    @POST("logout")
-    Call<String> logout();
 
 
 }

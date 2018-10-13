@@ -1,6 +1,6 @@
 package com.distribuidos.uagrm.android.entities;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Modelo {
 
@@ -8,7 +8,7 @@ public class Modelo {
     private String nombre;
     private String estado;
     private String descripcion;
-    private ArrayList<Pregunta> preguntas;
+    private List<Pregunta> preguntas;
 
 
     public Modelo() {
@@ -46,11 +46,11 @@ public class Modelo {
         this.descripcion = descripcion;
     }
 
-    public ArrayList<Pregunta> getPreguntas() {
+    public List<Pregunta> getPreguntas() {
         return preguntas;
     }
 
-    public void setPreguntas(ArrayList<Pregunta> preguntas) {
+    public void setPreguntas(List<Pregunta> preguntas) {
         this.preguntas = preguntas;
     }
 }
