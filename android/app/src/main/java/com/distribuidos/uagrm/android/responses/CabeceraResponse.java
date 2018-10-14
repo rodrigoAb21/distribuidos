@@ -1,14 +1,14 @@
 package com.distribuidos.uagrm.android.responses;
 
 
-import com.distribuidos.uagrm.android.entities.Modelo_cabecera;
+import com.distribuidos.uagrm.android.entities.Cabecera;
 
 import java.util.List;
 
-public class ModeloResponse {
-    List<Modelo_cabecera> data;
+public class CabeceraResponse {
+    List<Cabecera> data;
 
-    public List<Modelo_cabecera> getData() {
+    public List<Cabecera> getData() {
         return data;
     }
 }

@@ -6,8 +6,8 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import com.distribuidos.uagrm.android.entities.AccessToken;
-import com.distribuidos.uagrm.android.responses.Modelo1Response;
 import com.distribuidos.uagrm.android.responses.ModeloResponse;
+import com.distribuidos.uagrm.android.responses.CabeceraResponse;
 
 public interface ApiService {
 
@@ -24,10 +24,10 @@ public interface ApiService {
     Call<AccessToken> refresh(@Field("refresh_token") String refreshToken);
 
     @GET("modelos")
-    Call<ModeloResponse> modelos();
+    Call<CabeceraResponse> modelos();
 
     @GET("modelos/1")
-    Call<Modelo1Response> modelo();
+    Call<ModeloResponse> modelo();
 
 
 }

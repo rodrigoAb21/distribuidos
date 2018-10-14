@@ -2,7 +2,7 @@ package com.distribuidos.uagrm.android.responses;
 
 import com.distribuidos.uagrm.android.entities.Modelo;
 
-public class Modelo1Response {
+public class ModeloResponse {
     Modelo data;
 
     public Modelo getData() {

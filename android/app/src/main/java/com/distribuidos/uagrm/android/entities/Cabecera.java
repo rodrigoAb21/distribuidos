@@ -1,12 +1,12 @@
 package com.distribuidos.uagrm.android.entities;
 
-public class Modelo_cabecera {
+public class Cabecera {
     int id;
     String nombre;
     String estado;
     String descripcion;
 
-    public Modelo_cabecera() {
+    public Cabecera() {
     }
 
     public int getId() {
