@@ -3,11 +3,11 @@ package com.distribuidos.uagrm.android.entities;
 import java.util.List;
 
 public class Cerrada {
-    private int id;
-    private String tipoSeleccion;
-    private boolean obligatoria;
-    private int pregunta_id;
-    private List<Opcion> opciones;
+    int id;
+    String tipoSeleccion;
+    int obligatoria;
+    int pregunta_id;
+    List<Opcion> opciones;
 
     public Cerrada(){
     }
@@ -28,11 +28,11 @@ public class Cerrada {
         this.tipoSeleccion = tipoSeleccion;
     }
 
-    public boolean isObligatoria() {
+    public int isObligatoria() {
         return obligatoria;
     }
 
-    public void setObligatoria(boolean obligatoria) {
+    public void setObligatoria(int obligatoria) {
         this.obligatoria = obligatoria;
     }
 

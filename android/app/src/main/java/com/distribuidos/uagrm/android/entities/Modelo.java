@@ -4,11 +4,11 @@ import java.util.List;
 
 public class Modelo {
 
-    private int id;
-    private String nombre;
-    private String estado;
-    private String descripcion;
-    private List<Pregunta> preguntas;
+    int id;
+    String nombre;
+    String estado;
+    String descripcion;
+    List<Pregunta> preguntas;
 
 
     public Modelo() {

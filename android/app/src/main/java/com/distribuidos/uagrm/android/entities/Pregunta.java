@@ -3,11 +3,11 @@ package com.distribuidos.uagrm.android.entities;
 import java.util.List;
 
 public class Pregunta {
-    private int id;
-    private String enunciado;
-    private int modelo_id;
-    private List<Cerrada> cerradas;
-    private List<Campo> campos;
+    int id;
+    String enunciado;
+    int modelo_id;
+    List<Cerrada> cerradas;
+    List<Campo> campos;
 
 
     public Pregunta() {

@@ -1,10 +1,10 @@
 package com.distribuidos.uagrm.android.entities;
 
 public class Modelo_cabecera {
-    private int id;
-    private String nombre;
-    private String estado;
-    private String descripcion;
+    int id;
+    String nombre;
+    String estado;
+    String descripcion;
 
     public Modelo_cabecera() {
     }

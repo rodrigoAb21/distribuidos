@@ -1,10 +1,10 @@
 package com.distribuidos.uagrm.android.entities;
 
 public class Dominio {
-    private int id;
-    private String tipoDato;
-    private String min;
-    private String max;
+    int id;
+    String tipoDato;
+    String min;
+    String max;
 
     public Dominio() {
     }

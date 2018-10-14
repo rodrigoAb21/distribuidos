@@ -1,13 +1,13 @@
 package com.distribuidos.uagrm.android.entities;
 
 public class Campo {
-    private int id;
-    private String etiqueta;
-    private boolean obligatorio;
-    private boolean varios;
-    private int pregunta_id;
-    private int dominio_id;
-    private Dominio dominio;
+    int id;
+    String etiqueta;
+    int obligatorio;
+    int varios;
+    int pregunta_id;
+    int dominio_id;
+    Dominio dominio;
 
     public Campo() {
     }
@@ -28,19 +28,19 @@ public class Campo {
         this.etiqueta = etiqueta;
     }
 
-    public boolean isObligatorio() {
+    public int getObligatorio() {
         return obligatorio;
     }
 
-    public void setObligatorio(boolean obligatorio) {
+    public void setObligatorio(int obligatorio) {
         this.obligatorio = obligatorio;
     }
 
-    public boolean isVarios() {
+    public int getVarios() {
         return varios;
     }
 
-    public void setVarios(boolean varios) {
+    public void setVarios(int varios) {
         this.varios = varios;
     }
 

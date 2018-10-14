@@ -1,9 +1,9 @@
 package com.distribuidos.uagrm.android.entities;
 
 public class Opcion {
-    private int id;
-    private String texto;
-    private int cerrada_id;
+    int id;
+    String texto;
+    int cerrada_id;
 
     public Opcion(){
     }
