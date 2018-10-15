@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -37,6 +40,8 @@ public class ModeloActivity extends AppCompatActivity {
     Call<CabeceraResponse> call;
     List<Cabecera> listaCabeceras;
 
+    Call<String> callLogout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +61,22 @@ public class ModeloActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_principal, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.item_menu_logout:
+                logout();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     private void cargarComponentes(){
 
@@ -114,6 +134,26 @@ public class ModeloActivity extends AppCompatActivity {
         }
     }
 
+
+    private void logout(){
+        callLogout = service.logout();
+        callLogout.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                Log.w("log-out", "onResponse: " + response );
+                if (response.isSuccessful()){
+                    tokenManager.deleteToken();
+                    startActivity(new Intent(ModeloActivity.this, LoginActivity.class));
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.w("log-out", "onFailure: " + t.getMessage() );
+            }
+        });
+    }
 
 
 }

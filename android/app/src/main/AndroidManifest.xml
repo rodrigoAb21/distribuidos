@@ -18,8 +18,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.ModeloActivity" />
-        <activity android:name=".activities.FormularioActivity"></activity>
+        <activity
+            android:name=".activities.ModeloActivity">
+
+        </activity>
+        <activity
+            android:name=".activities.FormularioActivity"
+            android:parentActivityName=".activities.ModeloActivity">
+        </activity>
     </application>
 
 </manifest>
