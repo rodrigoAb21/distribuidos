@@ -5,6 +5,8 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+
 import com.distribuidos.uagrm.android.entities.AccessToken;
 import com.distribuidos.uagrm.android.responses.ModeloResponse;
 import com.distribuidos.uagrm.android.responses.CabeceraResponse;
@@ -26,8 +28,8 @@ public interface ApiService {
     @GET("modelos")
     Call<CabeceraResponse> modelos();
 
-    @GET("modelos/1")
-    Call<ModeloResponse> modelo();
+    @GET("modelos/{id}")
+    Call<ModeloResponse> modelo(@Path("id") String id);
 
 
 }

@@ -67,10 +67,10 @@ public class ModeloActivity extends AppCompatActivity {
         adapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),
-                        "Titulo: " + listaCabeceras
-                                .get(recyclerView.getChildAdapterPosition(view))
-                                .getNombre(), Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(ModeloActivity.this, FormularioActivity.class);
+                intent.putExtra("id", "" + listaCabeceras.get(recyclerView.getChildAdapterPosition(view)).getId());
+                startActivity(intent);
             }
         });
         recyclerView.setAdapter(adapter);
