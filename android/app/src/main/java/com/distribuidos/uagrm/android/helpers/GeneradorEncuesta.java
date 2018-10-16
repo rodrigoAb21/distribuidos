@@ -123,9 +123,6 @@ public class GeneradorEncuesta {
                 case "Texto":
                     editText.setInputType(InputType.TYPE_CLASS_TEXT);
                     break;
-                case "Email":
-                    editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-                    break;
                 case "Entero":
                     editText.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_SIGNED);
                     break;
