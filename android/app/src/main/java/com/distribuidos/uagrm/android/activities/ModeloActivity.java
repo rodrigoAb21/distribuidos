@@ -83,7 +83,7 @@ public class ModeloActivity extends AppCompatActivity {
 
         CabeceraAdapter adapter = new CabeceraAdapter(listaCabeceras);
         recyclerView = (RecyclerView) findViewById(R.id.recycle_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
