@@ -39,7 +39,6 @@ public class ModeloActivity extends AppCompatActivity {
     TokenManager tokenManager;
     Call<CabeceraResponse> call;
     List<Cabecera> listaCabeceras;
-
     Call<String> callLogout;
 
 
@@ -74,12 +73,14 @@ public class ModeloActivity extends AppCompatActivity {
             case R.id.item_menu_logout:
                 logout();
                 return true;
+
+            case R.id.item_menu_refresh:
+                getModelos();
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void cargarComponentes(){
-
 
         CabeceraAdapter adapter = new CabeceraAdapter(listaCabeceras);
         recyclerView = (RecyclerView) findViewById(R.id.recycle_view);
@@ -99,8 +100,8 @@ public class ModeloActivity extends AppCompatActivity {
 
 
     private void getModelos(){
-        listaCabeceras = new ArrayList<>();
         call = service.modelos();
+        listaCabeceras = new ArrayList<>();
         call.enqueue(new Callback<CabeceraResponse>() {
             @Override
             public void onResponse(Call<CabeceraResponse> call, Response<CabeceraResponse> response) {

@@ -65,7 +65,6 @@ public class FormularioActivity extends AppCompatActivity {
     }
 
 
-
     private void getModelo() {
         call = service.modelo(modelo_id);
         call.enqueue(new Callback<ModeloResponse>() {
@@ -164,6 +163,16 @@ public class FormularioActivity extends AppCompatActivity {
 
         }
 
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(call != null){
+            call.cancel();
+            call = null;
+        }
     }
 
 
