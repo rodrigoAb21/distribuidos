@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/nombre_item"
-        android:fontFamily=""
+        android:textSize="16dp"
         android:textColor="#000"
         android:textStyle="bold"
         android:layout_marginVertical="5dp"
@@ -30,6 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/descripcion_item"
+        android:textSize="14dp"
         android:textColor="#000"
         android:layout_marginVertical="5dp"
         />
