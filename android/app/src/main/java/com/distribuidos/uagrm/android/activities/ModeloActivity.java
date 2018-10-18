@@ -95,8 +95,8 @@ public class ModeloActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(ModeloActivity.this, FormularioActivity.class);
-                Log.w("ID_ERROR", "IdsLocalRexyler: " + mLocals.get(recyclerView.getChildAdapterPosition(view)).getId_modelo());
-                intent.putExtra("id", mLocals.get(recyclerView.getChildAdapterPosition(view)).getId_modelo());
+                intent.putExtra("id_local", mLocals.get(recyclerView.getChildAdapterPosition(view)).getId());
+                intent.putExtra("id_api", mLocals.get(recyclerView.getChildAdapterPosition(view)).getId_modelo());
                 startActivity(intent);
             }
         });
@@ -166,17 +166,15 @@ public class ModeloActivity extends AppCompatActivity {
         List<Integer> idsLocal = new ArrayList<>();
         for (MLocal mLocal : mLocals){
             if (mLocal.getEstado().equals("Activo")){
-                Log.w("ID_ERROR", "IdsLocal: " + mLocal.getId_modelo() );
                 idsLocal.add(mLocal.getId_modelo());
-
             }
         }
 
         eliminar(apiList, idsLocal);
         agregar(apiList, idsLocal);
 
-        mLocals = dbHelper.getModelos();
-        Log.w("BDLocal", "Cantidad: " + mLocals.size() );
+        cargarComponentes();
+
     }
 
     private void agregar(List<Modelo> apiList, List<Integer> idsLocal) {

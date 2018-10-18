@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.widget.CardView;
 import android.text.InputType;
+import android.util.Log;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -13,21 +15,28 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.distribuidos.uagrm.android.db.DBHelper;
 import com.distribuidos.uagrm.android.entities.Campo;
 import com.distribuidos.uagrm.android.entities.Cerrada;
 import com.distribuidos.uagrm.android.entities.Modelo;
 import com.distribuidos.uagrm.android.entities.Opcion;
 import com.distribuidos.uagrm.android.entities.Pregunta;
+import com.distribuidos.uagrm.android.entities.RespAbierta;
+
 
 import java.util.List;
 
 public class GeneradorEncuesta {
     LinearLayout linearLayout; 
     Context context;
+    DBHelper dbHelper;
+    int id_ficha;
 
-    public GeneradorEncuesta(LinearLayout linearLayout, Context context) {
+    public GeneradorEncuesta(LinearLayout linearLayout, Context context, int id_ficha) {
         this.linearLayout = linearLayout;
         this.context = context;
+        this.dbHelper = new DBHelper(context);
+        this.id_ficha = id_ficha;
     }
 
     public void generarVista(Modelo modelo){
@@ -63,6 +72,23 @@ public class GeneradorEncuesta {
         agregarDivision(linearLayout);
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private void generarOpcionesUnicas(int id, List<Opcion> opciones, LinearLayout linearLayout) {
 
@@ -124,11 +150,12 @@ public class GeneradorEncuesta {
 
     private void generarCampos(List<Campo> campos, LinearLayout linearLayout){
 
-        for (Campo campo : campos){
+        for (final Campo campo : campos){
 
             //Agregando el editText que sera el input
-            EditText editText = new EditText(context);
-            editText.setId(campo.getId());
+            final EditText editText = new EditText(context);
+            editText.setId(100000+campo.getId());
+            editText.setTag("campo"+campo.getId());
             editText.setTextSize(15);
 
             switch (campo.getDominio().getTipoDato()){
@@ -153,6 +180,26 @@ public class GeneradorEncuesta {
                     editText.setInputType(InputType.TYPE_CLASS_DATETIME|InputType.TYPE_DATETIME_VARIATION_DATE);
                     break;
             }
+
+            editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if(!hasFocus){
+                        //Log.w("IDEdit", " --> "+editText.getId());
+                        RespAbierta respAbierta = dbHelper.getRespAbierta(String.valueOf(editText.getId()));
+                        if (respAbierta != null){
+                            respAbierta.setValor(editText.getText().toString());
+                            dbHelper.updateRespAbierta(respAbierta);
+                        }else {
+                            respAbierta = new RespAbierta();
+                            respAbierta.setId_view(String.valueOf(editText.getId()));
+                            respAbierta.setValor(editText.getText().toString());
+                            respAbierta.setId_ficha(id_ficha);
+                            dbHelper.addRespAbierta(respAbierta);
+                        }
+                    }
+                }
+            });
 
             linearLayout.addView(editText);
 
