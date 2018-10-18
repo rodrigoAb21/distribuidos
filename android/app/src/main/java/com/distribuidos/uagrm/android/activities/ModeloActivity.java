@@ -25,6 +25,7 @@ import com.distribuidos.uagrm.android.helpers.TokenManager;
 import com.distribuidos.uagrm.android.responses.CabeceraResponse;
 import com.distribuidos.uagrm.android.network.ApiService;
 import com.distribuidos.uagrm.android.network.RetrofitBuilder;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,6 +110,7 @@ public class ModeloActivity extends AppCompatActivity {
 
                 if(response.isSuccessful()){
                     listaCabeceras = response.body().getData();
+                    Log.w(TAG, "xxx: " + new Gson().toJson(response.body().getData().get(0)));
                     cargarComponentes();
                 }else {
                     tokenManager.deleteToken();
