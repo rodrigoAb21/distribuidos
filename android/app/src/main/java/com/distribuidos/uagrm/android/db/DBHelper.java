@@ -62,7 +62,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return x;
     }
-    
+
     // actualizar modelo
     public int updateModelo(MLocal mLocal){
         SQLiteDatabase db = this.getWritableDatabase();
