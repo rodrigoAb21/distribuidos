@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.distribuidos.uagrm.android.entities.MLocal;
 
@@ -94,7 +95,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public MLocal getModelo(int id){
         MLocal mLocal = new MLocal();
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM modelo WHERE id = "+ id;
+        Log.w("ID_ERROR", "id: "+id);
+        String query = "SELECT * FROM modelo WHERE id_modelo = " + id;
         Cursor cursor = db.rawQuery(query, null);
         if (cursor != null){
             cursor.moveToFirst();

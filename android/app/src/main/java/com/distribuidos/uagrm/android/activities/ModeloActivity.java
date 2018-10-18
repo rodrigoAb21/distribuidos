@@ -61,8 +61,6 @@ public class ModeloActivity extends AppCompatActivity {
         }
 
         service = RetrofitBuilder.createServiceWithAuth(ApiService.class, tokenManager);
-
-        getModelos();
         cargarComponentes();
 
     }
@@ -97,7 +95,8 @@ public class ModeloActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(ModeloActivity.this, FormularioActivity.class);
-                intent.putExtra("id", "" + mLocals.get(recyclerView.getChildAdapterPosition(view)).getId_modelo());
+                Log.w("ID_ERROR", "IdsLocalRexyler: " + mLocals.get(recyclerView.getChildAdapterPosition(view)).getId_modelo());
+                intent.putExtra("id", mLocals.get(recyclerView.getChildAdapterPosition(view)).getId_modelo());
                 startActivity(intent);
             }
         });
@@ -117,16 +116,10 @@ public class ModeloActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     listaModelos = response.body().getData();
                     actualizar(listaModelos);
-                    //                    String json = new Gson().toJson(response.body().getData());
-
-//                    Log.w(TAG, "xxx: " + json );
-//                    Log.w(TAG, "xxx: " + new Gson().fromJson(json, Modelo[].class)[0].getPreguntas().size());
-
                 }else {
                     tokenManager.deleteToken();
                     startActivity(new Intent(ModeloActivity.this, LoginActivity.class));
                     finish();
-
                 }
             }
 
@@ -173,9 +166,12 @@ public class ModeloActivity extends AppCompatActivity {
         List<Integer> idsLocal = new ArrayList<>();
         for (MLocal mLocal : mLocals){
             if (mLocal.getEstado().equals("Activo")){
+                Log.w("ID_ERROR", "IdsLocal: " + mLocal.getId_modelo() );
                 idsLocal.add(mLocal.getId_modelo());
+
             }
         }
+
         eliminar(apiList, idsLocal);
         agregar(apiList, idsLocal);
 

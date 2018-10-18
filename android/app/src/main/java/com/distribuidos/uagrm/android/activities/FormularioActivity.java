@@ -7,12 +7,15 @@ import android.util.Log;
 import android.widget.LinearLayout;
 
 import com.distribuidos.uagrm.android.R;
+import com.distribuidos.uagrm.android.db.DBHelper;
+import com.distribuidos.uagrm.android.entities.MLocal;
 import com.distribuidos.uagrm.android.entities.Modelo;
 import com.distribuidos.uagrm.android.helpers.GeneradorEncuesta;
 import com.distribuidos.uagrm.android.helpers.TokenManager;
 import com.distribuidos.uagrm.android.network.ApiService;
 import com.distribuidos.uagrm.android.network.RetrofitBuilder;
 import com.distribuidos.uagrm.android.responses.ModeloResponse;
+import com.google.gson.Gson;
 
 
 import retrofit2.Call;
@@ -24,8 +27,9 @@ public class FormularioActivity extends AppCompatActivity {
     ApiService service;
     TokenManager tokenManager;
     Call<ModeloResponse> call;
-    String modelo_id;
+    int modelo_id;
     GeneradorEncuesta generador;
+    DBHelper dbHelper;
     private static final String TAG = "FormularioActivity";
 
 
@@ -42,33 +46,21 @@ public class FormularioActivity extends AppCompatActivity {
 
         Bundle bundle = this.getIntent().getExtras();
         if (bundle != null){
-          modelo_id = bundle.getString("id");
+          modelo_id = bundle.getInt("id");
         }else {
             finish();
         }
 
-        service = RetrofitBuilder.createServiceWithAuth(ApiService.class, tokenManager);
+        dbHelper = new DBHelper(getApplicationContext());
         getModelo();
     }
 
 
     private void getModelo() {
-        call = service.modelo(modelo_id);
-        call.enqueue(new Callback<ModeloResponse>() {
-            @Override
-            public void onResponse(Call<ModeloResponse> call, Response<ModeloResponse> response) {
-                Log.w(TAG, "onResponse: " + response );
-                if (response.isSuccessful()){
-                    Modelo modelo = response.body().getData();
-                    generarVista(modelo);
-                }
-            }
+        MLocal mLocal = dbHelper.getModelo(modelo_id);
+        Modelo modelo = new Gson().fromJson(mLocal.getJson(),Modelo.class);
+        generarVista(modelo);
 
-            @Override
-            public void onFailure(Call<ModeloResponse> call, Throwable t) {
-                Log.w(TAG, "onFailure: " + t.getMessage() );
-            }
-        });
     }
 
 
