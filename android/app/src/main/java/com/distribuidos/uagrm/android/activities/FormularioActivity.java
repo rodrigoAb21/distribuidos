@@ -32,11 +32,13 @@ public class FormularioActivity extends AppCompatActivity {
     DBHelper dbHelper;
     private static final String TAG = "FormularioActivity";
     Ficha ficha;
+    private View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_formulario);
+        setView(getLayoutInflater().inflate(R.layout.activity_formulario, null));
+        setContentView(getView());
 
         tokenManager = TokenManager.getInstance(getSharedPreferences("prefs", MODE_PRIVATE));
         if(tokenManager.getToken() == null){
@@ -67,6 +69,14 @@ public class FormularioActivity extends AppCompatActivity {
         getModelo();
 
         getUltimaFicha(ficha);
+    }
+
+    private View getView() {
+        return view;
+    }
+
+    private void setView(View view) {
+        this.view = view;
     }
 
 
@@ -100,7 +110,9 @@ public class FormularioActivity extends AppCompatActivity {
         for(RespAbierta abierta : abiertas){
 //            int idDelEdit = getResources().getIdentifier(abierta.getId_view(), "id", getPackageName());
 //            Log.w("listaaaa", ""+idDelEdit);
-            EditText editText = (EditText) findViewById(Integer.parseInt(abierta.getId_view()));
+
+            
+            EditText editText = (EditText) getView().findViewWithTag(abierta.getTag());
             editText.setText(abierta.getValor());
         }
      }

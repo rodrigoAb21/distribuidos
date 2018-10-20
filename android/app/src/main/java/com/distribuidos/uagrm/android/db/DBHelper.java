@@ -46,7 +46,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     String query_create_abierta = "CREATE TABLE `resp_abierta` (" +
             " `id` INTEGER PRIMARY KEY AUTOINCREMENT," +
-            " `id_view` TEXT NOT NULL," +
+            " `tag` TEXT NOT NULL," +
             " `valor` TEXT NOT NULL," +
             " `id_ficha` INTEGER NOT NULL" +
             "); ";
@@ -261,7 +261,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put("id_view", respAbierta.getId_view());
+        values.put("tag", respAbierta.getTag());
         values.put("valor", respAbierta.getValor());
         values.put("id_ficha", respAbierta.getId_ficha());
 
@@ -297,7 +297,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 RespAbierta respAbierta = new RespAbierta();
 
                 respAbierta.setId(cursor.getInt(0));
-                respAbierta.setId_view(cursor.getString(1));
+                respAbierta.setTag(cursor.getString(1));
                 respAbierta.setValor(cursor.getString(2));
                 respAbierta.setId_ficha(cursor.getInt(3));
 
@@ -311,17 +311,17 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    public RespAbierta getRespAbierta(String id_view) {
+    public RespAbierta getRespAbierta(String tag) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "SELECT * FROM resp_abierta WHERE id_view = '" + id_view + "'";
+        String query = "SELECT * FROM resp_abierta WHERE tag = '" + tag + "'";
         Cursor cursor = db.rawQuery(query, null);
         if (cursor != null && cursor.getCount() > 0){
             cursor.moveToFirst();
 
             RespAbierta respAbierta = new RespAbierta();
             respAbierta.setId(cursor.getInt(0));
-            respAbierta.setId_view(cursor.getString(1));
+            respAbierta.setTag(cursor.getString(1));
             respAbierta.setValor(cursor.getString(2));
             respAbierta.setId_ficha(cursor.getInt(3));
 
@@ -405,7 +405,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 RespAbierta respAbierta = new RespAbierta();
 
                 respAbierta.setId(cursor.getInt(0));
-                respAbierta.setId_view(cursor.getString(1));
+//                respAbierta.setId_view(cursor.getString(1));
                 respAbierta.setValor(cursor.getString(2));
                 respAbierta.setId_ficha(cursor.getInt(3));
 

@@ -17,12 +17,12 @@ class Asignacion extends Model
         'encuestador_id',
         'modelo_id',
         'area_id',
-        'empresa_id'
+        'admin_id'
     ];
 
-    public function area(){
-        return $this->belongsTo(Area::class);
-    }
+//    public function area(){
+//        return $this->belongsTo(Area::class);
+//    }
 
     public function encuestas(){
         return $this->hasMany(Encuesta::class);

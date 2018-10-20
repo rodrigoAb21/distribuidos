@@ -2,7 +2,7 @@ package com.distribuidos.uagrm.android.entities;
 
 public class RespAbierta {
     private int id;
-    private String id_view;
+    private String tag;
     private String valor;
     private int id_ficha;
 
@@ -19,12 +19,12 @@ public class RespAbierta {
         this.id = id;
     }
 
-    public String getId_view() {
-        return id_view;
+    public String getTag() {
+        return tag;
     }
 
-    public void setId_view(String id_view) {
-        this.id_view = id_view;
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
     public String getValor() {

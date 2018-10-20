@@ -154,7 +154,6 @@ public class GeneradorEncuesta {
 
             //Agregando el editText que sera el input
             final EditText editText = new EditText(context);
-            editText.setId(100000+campo.getId());
             editText.setTag("campo"+campo.getId());
             editText.setTextSize(15);
 
@@ -186,13 +185,13 @@ public class GeneradorEncuesta {
                 public void onFocusChange(View v, boolean hasFocus) {
                     if(!hasFocus){
                         //Log.w("IDEdit", " --> "+editText.getId());
-                        RespAbierta respAbierta = dbHelper.getRespAbierta(String.valueOf(editText.getId()));
+                        RespAbierta respAbierta = dbHelper.getRespAbierta(editText.getTag().toString());
                         if (respAbierta != null){
                             respAbierta.setValor(editText.getText().toString());
                             dbHelper.updateRespAbierta(respAbierta);
                         }else {
                             respAbierta = new RespAbierta();
-                            respAbierta.setId_view(String.valueOf(editText.getId()));
+                            respAbierta.setTag(editText.getTag().toString());
                             respAbierta.setValor(editText.getText().toString());
                             respAbierta.setId_ficha(id_ficha);
                             dbHelper.addRespAbierta(respAbierta);
