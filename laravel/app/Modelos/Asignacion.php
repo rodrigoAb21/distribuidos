@@ -20,9 +20,9 @@ class Asignacion extends Model
         'admin_id'
     ];
 
-//    public function area(){
-//        return $this->belongsTo(Area::class);
-//    }
+    public function area(){
+        return $this->belongsTo(Area::class);
+    }
 
     public function encuestas(){
         return $this->hasMany(Encuesta::class);

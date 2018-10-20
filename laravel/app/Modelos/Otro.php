@@ -4,16 +4,14 @@ namespace App\Modelos;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Campo extends Model
+class Otro extends Model
 {
-    protected $table = 'campo';
+    protected $table = 'otro';
     protected $primaryKey = 'id';
     public $timestamps = false;
     protected $fillable = [
         'etiqueta',
-        'obligatorio',
-//        'varios',
-        'pregunta_id',
+        'cerrada_id',
         'dominio_id'
     ];
 
