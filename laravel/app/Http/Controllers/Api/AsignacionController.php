@@ -14,4 +14,8 @@ class AsignacionController extends Controller
 
         return response()->json(['data' => $asignaciones], 200, [], JSON_NUMERIC_CHECK);
     }
+
+
+
+    
 }
