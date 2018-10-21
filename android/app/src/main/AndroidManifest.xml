@@ -18,14 +18,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.AsignacionActivity" />
         <activity
-            android:name=".activities.ModeloActivity">
-
-        </activity>
+            android:name=".activities.EncuestaActivity"
+            android:parentActivityName=".activities.AsignacionActivity" />
         <activity
             android:name=".activities.FormularioActivity"
-            android:parentActivityName=".activities.ModeloActivity">
-        </activity>
+            android:parentActivityName=".activities.EncuestaActivity" />
+
+
     </application>
 
 </manifest>

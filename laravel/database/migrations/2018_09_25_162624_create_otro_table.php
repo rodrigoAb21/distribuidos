@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCampoTable extends Migration
+class CreateOtroTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,16 @@ class CreateCampoTable extends Migration
      */
     public function up()
     {
-        Schema::create('campo', function (Blueprint $table) {
+        Schema::create('otro', function (Blueprint $table) {
             $table->increments('id');
             $table->string('etiqueta');
-            $table->boolean('obligatorio');
 //            $table->boolean('varios');
 
             //$table->timestamps();
 
-            $table->unsignedInteger('pregunta_id');
+            $table->unsignedInteger('cerrada_id');
             $table->unsignedInteger('dominio_id');
-            $table->foreign('pregunta_id')->references('id')->on('pregunta')->onDelete('cascade');
+            $table->foreign('cerrada_id')->references('id')->on('cerrada')->onDelete('cascade');
             $table->foreign('dominio_id')->references('id')->on('dominio')->onDelete('cascade');
 
         });

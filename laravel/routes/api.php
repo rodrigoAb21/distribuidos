@@ -21,8 +21,6 @@ Route::post('refresh', 'Api\Auth\LoginController@refresh');
 
 Route::middleware('auth:api')->group(function () {
     Route::post('logout', 'Api\Auth\LoginController@logout');
-    Route::get('modelos', 'Api\ModeloController@obtenerTodos');
-    Route::get('modelos/{id}', 'Api\ModeloController@obtener');
-
+    Route::get('asignaciones', 'Api\AsignacionController@obtenerTodos');
 });
 

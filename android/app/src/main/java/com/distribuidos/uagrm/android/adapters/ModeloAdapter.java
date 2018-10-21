@@ -7,24 +7,25 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.distribuidos.uagrm.android.R;
-import com.distribuidos.uagrm.android.entities.Cabecera;
+import com.distribuidos.uagrm.android.entities.MLocal;
+
 
 import java.util.List;
 
 
-public class CabeceraAdapter
-        extends RecyclerView.Adapter<CabeceraAdapter.ViewHolderModelos>
+public class ModeloAdapter
+        extends RecyclerView.Adapter<ModeloAdapter.ViewHolderModelos>
         implements View.OnClickListener{
 
-    List<Cabecera> listaCabeceras;
+    List<MLocal> modelos;
     private View.OnClickListener listener;
 
-    public CabeceraAdapter(List<Cabecera> listaCabeceras) {
-        this.listaCabeceras = listaCabeceras;
+    public ModeloAdapter(List<MLocal> modelos) {
+        this.modelos = modelos;
     }
 
     @Override
-    public CabeceraAdapter.ViewHolderModelos onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ModeloAdapter.ViewHolderModelos onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.row_modelo_adapter, null, false);
 
@@ -34,13 +35,13 @@ public class CabeceraAdapter
     }
 
     @Override
-    public void onBindViewHolder(CabeceraAdapter.ViewHolderModelos holder, int position) {
-        holder.asignarDatos(listaCabeceras.get(position));
+    public void onBindViewHolder(ModeloAdapter.ViewHolderModelos holder, int position) {
+        holder.asignarDatos(modelos.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return listaCabeceras.size();
+        return modelos.size();
     }
 
     public void setOnClickListener(View.OnClickListener listener){
@@ -64,7 +65,7 @@ public class CabeceraAdapter
             descripcion = (TextView) itemView.findViewById(R.id.descripcion_item);
         }
 
-        public void asignarDatos(Cabecera modelo){
+        public void asignarDatos(MLocal modelo){
             this.nombre.setText(modelo.getNombre());
             this.descripcion.setText(modelo.getDescripcion());
         }

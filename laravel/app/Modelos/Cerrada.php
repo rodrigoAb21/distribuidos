@@ -19,4 +19,8 @@ class Cerrada extends Model
         return $this->hasMany(Opcion::class);
     }
 
+
+    public function otros(){
+        return $this->hasMany(Otro::class);
+    }
 }

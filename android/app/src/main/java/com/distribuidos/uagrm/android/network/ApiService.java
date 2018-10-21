@@ -10,6 +10,7 @@ import retrofit2.http.Path;
 import com.distribuidos.uagrm.android.entities.AccessToken;
 import com.distribuidos.uagrm.android.responses.ModeloResponse;
 import com.distribuidos.uagrm.android.responses.CabeceraResponse;
+import com.distribuidos.uagrm.android.responses.ModelosResponse;
 
 public interface ApiService {
 
@@ -26,7 +27,7 @@ public interface ApiService {
     Call<AccessToken> refresh(@Field("refresh_token") String refreshToken);
 
     @GET("modelos")
-    Call<CabeceraResponse> modelos();
+    Call<ModelosResponse> modelos();
 
     @GET("modelos/{id}")
     Call<ModeloResponse> modelo(@Path("id") String id);
