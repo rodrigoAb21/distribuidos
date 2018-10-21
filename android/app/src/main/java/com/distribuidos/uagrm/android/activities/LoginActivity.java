@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setupRules();
 
         if(tokenManager.getToken().getAccessToken() != null){
-            startActivity(new Intent(LoginActivity.this, ModeloActivity.class));
+            startActivity(new Intent(LoginActivity.this, AsignacionActivity.class));
             finish();
         }
 
@@ -146,7 +146,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                             if (response.isSuccessful()) {
                                 tokenManager.saveToken(response.body());
-                                startActivity(new Intent(LoginActivity.this, ModeloActivity.class));
+                                startActivity(new Intent(LoginActivity.this, AsignacionActivity.class));
                                 finish();
                             } else {
                                 if (response.code() == 422) {

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp"
+    app:cardUseCompatPadding="true"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Modelo: "
+                android:textSize="16dp"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:layout_marginVertical="5dp"
+                />
+            <TextView
+                android:id="@+id/asignacion_nombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre de una encuesta"
+                android:textSize="14dp"
+                android:textColor="#000"
+                android:layout_marginVertical="5dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginRight="20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Area: "
+                    android:textSize="16dp"
+                    android:textColor="#000"
+                    android:textStyle="bold"
+                    android:layout_marginVertical="5dp"
+                    />
+                <TextView
+                    android:id="@+id/asignacion_area"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Area nombre"
+                    android:textSize="14dp"
+                    android:textColor="#000"
+                    android:layout_marginVertical="5dp"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cant: "
+                    android:textSize="16dp"
+                    android:textColor="#000"
+                    android:textStyle="bold"
+                    android:layout_marginVertical="5dp"
+                    />
+
+                <TextView
+                    android:id="@+id/asignacion_cantidad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1000"
+                    android:textSize="14dp"
+                    android:textColor="#000"
+                    android:layout_marginVertical="5dp"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Descripcion: "
+            android:textSize="16dp"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:layout_marginVertical="5dp"
+            />
+
+        <TextView
+            android:id="@+id/asignacion_descripcion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Soy una descripcion."
+            android:textSize="14dp"
+            android:textColor="#000"
+            android:layout_marginVertical="5dp"
+            />
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

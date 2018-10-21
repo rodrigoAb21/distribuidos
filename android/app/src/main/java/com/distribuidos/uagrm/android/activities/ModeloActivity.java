@@ -77,10 +77,11 @@ public class ModeloActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.item_menu_logout:
                 logout();
-                return true;
+                break;
 
-            case R.id.item_menu_refresh:
+            case R.id.item_menu_sync:
                 getModelos();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
