@@ -33,7 +33,7 @@ class PreguntaController extends Controller
                 $campo = new Campo();
                 $campo->etiqueta = $etiqueta['etiqueta'];
                 $campo->obligatorio = (array_key_exists("obligatorio",$etiqueta));
-                $campo->varios = (array_key_exists("obligatorio",$etiqueta));
+               // $campo->varios = (array_key_exists("obligatorio",$etiqueta));
                 $campo->pregunta_id = $pregunta->id;
                 $campo->dominio_id = $dominio->id;
                 $campo->save();
@@ -47,8 +47,17 @@ class PreguntaController extends Controller
                     $cerrada->obligatoria = "false";
                     $cerrada->pregunta_id = $id;
                     $cerrada->save();
-                    //dd($selector);
+
+                    foreach ($selector['opcion'] as $opcion){
+                        $op = new Opcion();
+                        $op->texto = $opcion;
+                        $op->cerrada_id = $cerrada->id;
+                        $op->save();
+                    }
+
+                    if(array_key_exists("otro", $selector)){
                     foreach ($selector['otro'] as $otro) {
+                       // dd($otro['entrada']);
                         $dominio = new Dominio();
                         $dominio->tipoDato = $otro['tipoDato'];
                         $dominio->min = $otro['min'];
@@ -58,10 +67,11 @@ class PreguntaController extends Controller
 
                         $campoOtro = new Otro();
                         $campoOtro->etiqueta = $otro['entrada'];
-                        $campoOtro->varios = (array_key_exists("varios", $otro));
+                        //$campoOtro->varios = (array_key_exists("varios", $otro));
                         $campoOtro->cerrada_id = $cerrada->id;
                         $campoOtro->dominio_id = $dominio->id;
                         $campoOtro->save();
+                    }
                     }
             }
         }

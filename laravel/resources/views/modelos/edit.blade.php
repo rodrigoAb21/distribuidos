@@ -37,6 +37,7 @@
                         <hr>
 
 
+
                         <button class="btn btn-success" type="button" onclick="nuevaPregunta()">
                             <i class="fa fa-plus"></i>
                             Nueva pregunta
@@ -131,7 +132,7 @@
 
             function agregarEtiqueta() {
                 cont++;
-                var fila = '<tr id="fila'+cont+'"><td><input class="form-control"  name="etiquetas['+cont+'][etiqueta]" /></td><td><select class="form-control" name="etiquetas['+cont+'][tipoD]" id=""><option value="Texto">Texto</option><option value="Entero">Entero</option><option value="Decimal">Decimal</option><option value="Fecha">Fecha</option></select></td><td><input name= "etiquetas['+cont+'][min]" class="form-control"/></td><td><input name="etiquetas['+cont+'][max]"class="form-control"/></td><td><input name = "etiquetas['+cont+'][obligatorio]" type="checkbox"></td><td><input name = "etiquetas['+cont+'][varios]" type="checkbox"></td><td><button type="button" class="btn btn-danger btn-sm" onclick="eliminar('+cont+');"><i class="fa fa-trash" aria-hidden="true"></i></button></td></tr>';
+                var fila = '<tr id="fila'+cont+'"><td><input class="form-control"  name="etiquetas['+cont+'][etiqueta]" /></td><td><select class="form-control" name="etiquetas['+cont+'][tipoD]" id=""><option value="Texto">Texto</option><option value="Entero">Entero</option><option value="Decimal">Decimal</option><option value="Fecha">Fecha</option></select></td><td><input name= "etiquetas['+cont+'][min]" class="form-control"/></td><td><input name="etiquetas['+cont+'][max]"class="form-control"/></td><td><input name = "etiquetas['+cont+'][obligatorio]" type="checkbox"></td><td><button type="button" class="btn btn-danger btn-sm" onclick="eliminar('+cont+');"><i class="fa fa-trash" aria-hidden="true"></i></button></td></tr>';
                 $("#tablaA").append(fila);
             }
 
@@ -162,7 +163,7 @@
 
             function masCamposOtro(idSeleccion) {
                 cont++;
-                var fila = '<tr id="fila'+cont+'" ><td><input  name="selector['+idSeleccion+'][otro]['+cont+'][entrada]" /></td><td><select class="form-control" name="selector['+idSeleccion+'][otro]['+cont+'][tipoDato]" id=""><option value="Texto">Texto</option><option value="Entero">Entero</option><option value="Decimal">Decimal</option><option value="Fecha">Fecha</option></select></td><td><input name="selector['+idSeleccion+'][otro]['+cont+'][min]"  /></td><td><input class="form-control"  name="selector['+idSeleccion+'][otro]['+cont+'][max]" /></td><td><input name="selector['+idSeleccion+'][otro]['+cont+'][varios]" type="checkbox"></td><td><button type="button" class="btn btn-danger btn-sm" onclick="eliminar('+cont+');"><i class="fa fa-trash" aria-hidden="true"></i></button></td></tr>';
+                var fila = '<tr id="fila'+cont+'" ><td><input  name="selector['+idSeleccion+'][otro]['+cont+'][entrada]" /></td><td><select class="form-control" name="selector['+idSeleccion+'][otro]['+cont+'][tipoDato]" id=""><option value="Texto">Texto</option><option value="Entero">Entero</option><option value="Decimal">Decimal</option><option value="Fecha">Fecha</option></select></td><td><input name="selector['+idSeleccion+'][otro]['+cont+'][min]"  /></td><td><input class="form-control"  name="selector['+idSeleccion+'][otro]['+cont+'][max]" /></td><td><button type="button" class="btn btn-danger btn-sm" onclick="eliminar('+cont+');"><i class="fa fa-trash" aria-hidden="true"></i></button></td></tr>';
             $('#tablaOtros'+idSeleccion).append(fila);
 
             }

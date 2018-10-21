@@ -10,6 +10,7 @@ class Cerrada extends Model
     protected $primaryKey = 'id';
     public $timestamps = false;
     protected $fillable = [
+        'etiqueta',
         'tipoSeleccion',
         'obligatoria',
         'pregunta_id'

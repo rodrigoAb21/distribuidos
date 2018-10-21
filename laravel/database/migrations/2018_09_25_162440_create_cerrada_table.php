@@ -15,6 +15,7 @@ class CreateCerradaTable extends Migration
     {
         Schema::create('cerrada', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('etiqueta');
             $table->string('tipoSeleccion');
             $table->boolean('obligatoria');
             //$table->timestamps();
