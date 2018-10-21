@@ -44,8 +44,8 @@ class PreguntaController extends Controller
                     $cerrada = new Cerrada();
                     $cerrada->etiqueta = $selector['etiqueta'];
                     $cerrada->tipoSeleccion= $selector['tipoP'];
-                    $cerrada->obligatoria = "false";
-                    $cerrada->pregunta_id = $id;
+                    $cerrada->obligatoria = false;
+                    $cerrada->pregunta_id = $pregunta->id;
                     $cerrada->save();
 
                     foreach ($selector['opcion'] as $opcion){
