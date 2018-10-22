@@ -20,6 +20,7 @@ import com.distribuidos.uagrm.android.entities.Campo;
 import com.distribuidos.uagrm.android.entities.Cerrada;
 import com.distribuidos.uagrm.android.entities.Modelo;
 import com.distribuidos.uagrm.android.entities.Opcion;
+import com.distribuidos.uagrm.android.entities.Otro;
 import com.distribuidos.uagrm.android.entities.Pregunta;
 import com.distribuidos.uagrm.android.entities.RespAbierta;
 
@@ -30,13 +31,13 @@ public class GeneradorEncuesta {
     LinearLayout linearLayout; 
     Context context;
     DBHelper dbHelper;
-    int id_ficha;
+//    int id_ficha;
 
-    public GeneradorEncuesta(LinearLayout linearLayout, Context context, int id_ficha) {
+    public GeneradorEncuesta(LinearLayout linearLayout, Context context) {
         this.linearLayout = linearLayout;
         this.context = context;
         this.dbHelper = new DBHelper(context);
-        this.id_ficha = id_ficha;
+//        this.id_ficha = id_ficha;
     }
 
     public void generarVista(Modelo modelo){
@@ -64,6 +65,8 @@ public class GeneradorEncuesta {
                     //Creamos el radioGroup
                     generarOpcionesUnicas(cerrada.getId(), cerrada.getOpciones(), linearLayoutRepetido);
                 }
+
+                generarOtros(cerrada.getOtros(), linearLayoutRepetido);
             }
             generarCampos(pregunta.getCampos(), linearLayoutRepetido);
 
@@ -180,30 +183,82 @@ public class GeneradorEncuesta {
                     break;
             }
 
-            editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if(!hasFocus){
-                        //Log.w("IDEdit", " --> "+editText.getId());
-                        RespAbierta respAbierta = dbHelper.getRespAbierta(editText.getTag().toString());
-                        if (respAbierta != null){
-                            respAbierta.setValor(editText.getText().toString());
-                            dbHelper.updateRespAbierta(respAbierta);
-                        }else {
-                            respAbierta = new RespAbierta();
-                            respAbierta.setTag(editText.getTag().toString());
-                            respAbierta.setValor(editText.getText().toString());
-                            respAbierta.setId_ficha(id_ficha);
-                            dbHelper.addRespAbierta(respAbierta);
-                        }
-                    }
-                }
-            });
+//            editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//                @Override
+//                public void onFocusChange(View v, boolean hasFocus) {
+//                    if(!hasFocus){
+//                        //Log.w("IDEdit", " --> "+editText.getId());
+//                        RespAbierta respAbierta = dbHelper.getRespAbierta(editText.getTag().toString());
+//                        if (respAbierta != null){
+//                            respAbierta.setValor(editText.getText().toString());
+//                            dbHelper.updateRespAbierta(respAbierta);
+//                        }else {
+//                            respAbierta = new RespAbierta();
+//                            respAbierta.setTag(editText.getTag().toString());
+//                            respAbierta.setValor(editText.getText().toString());
+////                            respAbierta.setId_ficha(id_ficha);
+//                            dbHelper.addRespAbierta(respAbierta);
+//                        }
+//                    }
+//                }
+//            });
 
             linearLayout.addView(editText);
 
         }
 
+    }
+
+    private void generarOtros(List<Otro> otros, LinearLayout linearLayout){
+        for (final Otro otro : otros){
+
+            //Agregando el editText que sera el input
+            final EditText editText = new EditText(context);
+//            editText.setTag("campo"+otro.getId());
+            editText.setTextSize(15);
+            editText.setHint(otro.getEtiqueta());
+            switch (otro.getDominio().getTipoDato()){
+                case "Otro":
+                    editText.setInputType(InputType.TYPE_CLASS_TEXT);
+                    break;
+                case "Email":
+                    editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                    break;
+                case "Entero":
+                    editText.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_SIGNED);
+                    break;
+                case "Decimal":
+                    editText.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL|InputType.TYPE_NUMBER_FLAG_SIGNED);
+                    break;
+                case "Fecha":
+                    editText.setHint("dd/MM/YYYY");
+                    editText.setInputType(InputType.TYPE_CLASS_DATETIME|InputType.TYPE_DATETIME_VARIATION_DATE);
+                    break;
+            }
+
+//            editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//                @Override
+//                public void onFocusChange(View v, boolean hasFocus) {
+//                    if(!hasFocus){
+//                        //Log.w("IDEdit", " --> "+editText.getId());
+//                        RespAbierta respAbierta = dbHelper.getRespAbierta(editText.getTag().toString());
+//                        if (respAbierta != null){
+//                            respAbierta.setValor(editText.getText().toString());
+//                            dbHelper.updateRespAbierta(respAbierta);
+//                        }else {
+//                            respAbierta = new RespAbierta();
+//                            respAbierta.setTag(editText.getTag().toString());
+//                            respAbierta.setValor(editText.getText().toString());
+////                            respAbierta.setId_ficha(id_ficha);
+//                            dbHelper.addRespAbierta(respAbierta);
+//                        }
+//                    }
+//                }
+//            });
+
+            linearLayout.addView(editText);
+
+        }
     }
 
 

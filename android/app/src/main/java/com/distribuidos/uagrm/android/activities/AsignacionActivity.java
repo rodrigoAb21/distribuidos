@@ -93,7 +93,10 @@ public class AsignacionActivity extends AppCompatActivity {
         adapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(AsignacionActivity.this, EncuestaActivity.class));
+                Intent intent = new Intent(AsignacionActivity.this, EncuestaActivity.class);
+                intent.putExtra("id_local", asignacionesLocales.get(recyclerView.getChildAdapterPosition(view)).getId());
+                intent.putExtra("json_local", asignacionesLocales.get(recyclerView.getChildAdapterPosition(view)).getJson());
+                startActivity(intent);
             }
         });
         recyclerView.setAdapter(adapter);
@@ -108,7 +111,6 @@ public class AsignacionActivity extends AppCompatActivity {
             public void onResponse(Call<AsignacionResponse> call, Response<AsignacionResponse> response) {
                 Log.w("llego ok: ", ""+response);
                 if (response.isSuccessful()){
-                    Log.w("llego ok: ", "Pude entrar!!");
                     asignaciones = response.body().getData();
                     sincronizar(asignaciones);
                 }else{

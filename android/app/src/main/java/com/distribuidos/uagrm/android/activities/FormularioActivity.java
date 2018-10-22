@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 
 import com.distribuidos.uagrm.android.R;
 import com.distribuidos.uagrm.android.db.DBHelper;
+import com.distribuidos.uagrm.android.entities.Asignacion;
 import com.distribuidos.uagrm.android.entities.Ficha;
 import com.distribuidos.uagrm.android.entities.MLocal;
 import com.distribuidos.uagrm.android.entities.Modelo;
@@ -25,51 +26,37 @@ import java.util.List;
 public class FormularioActivity extends AppCompatActivity {
 
 //
-//    TokenManager tokenManager;
-//    int id_modelo_local;
-//    int id_modelo_api;
-//    GeneradorEncuesta generador;
-//    DBHelper dbHelper;
+    TokenManager tokenManager;
+    String json_local;
+    Asignacion asignacion;
+    GeneradorEncuesta generador;
+    DBHelper dbHelper;
 //    private static final String TAG = "FormularioActivity";
 //    Ficha ficha;
 //    private View view;
 //
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setView(getLayoutInflater().inflate(R.layout.activity_formulario, null));
-//        setContentView(getView());
-//
-//        tokenManager = TokenManager.getInstance(getSharedPreferences("prefs", MODE_PRIVATE));
-//        if(tokenManager.getToken() == null){
-//            startActivity(new Intent(FormularioActivity.this, LoginActivity.class));
-//            finish();
-//        }
-//
-//        Bundle bundle = this.getIntent().getExtras();
-//        if (bundle != null){
-//          id_modelo_local = bundle.getInt("id_local");
-//          id_modelo_api = bundle.getInt("id_api");
-//        }else {
-//            finish();
-//        }
-//
-//        dbHelper = new DBHelper(getApplicationContext());
-//
-//
-//        ficha = dbHelper.getLastFicha(id_modelo_local);
-//        if(ficha == null){
-//            ficha = new Ficha();
-//            ficha.setId_modelo_local(id_modelo_local);
-//            ficha.setId_modelo_local(id_modelo_api);
-//            long id = dbHelper.addFicha(ficha);
-//            ficha.setId((int) id);
-//        }
-//
-//        getModelo();
-//
-//        getUltimaFicha(ficha);
-//    }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_formulario);
+
+        tokenManager = TokenManager.getInstance(getSharedPreferences("prefs", MODE_PRIVATE));
+        if(tokenManager.getToken() == null){
+            startActivity(new Intent(FormularioActivity.this, LoginActivity.class));
+            finish();
+        }
+
+        Bundle bundle = this.getIntent().getExtras();
+        if (bundle != null){
+          json_local = bundle.getString("json_local");
+        }else {
+            finish();
+        }
+
+        dbHelper = new DBHelper(getApplicationContext());
+        getModelo();
+
+    }
 //
 //    private View getView() {
 //        return view;
@@ -80,19 +67,18 @@ public class FormularioActivity extends AppCompatActivity {
 //    }
 //
 //
-//    private void getModelo() {
-//        MLocal mLocal = dbHelper.getModelo(id_modelo_local);
-//        Modelo modelo = new Gson().fromJson(mLocal.getJson(),Modelo.class);
-//        generarVista(modelo);
-//
-//    }
-//
-//
-//    private void generarVista(Modelo modelo){
-//        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linear_layout);
-//        generador = new GeneradorEncuesta(linearLayout, getApplicationContext(),ficha.getId());
-//        generador.generarVista(modelo);
-//    }
+    private void getModelo() {
+        asignacion = new Gson().fromJson(json_local,Asignacion.class);
+        generarVista(asignacion.getModelo());
+
+    }
+
+
+    private void generarVista(Modelo modelo){
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linear_layout);
+        generador = new GeneradorEncuesta(linearLayout, getApplicationContext());
+        generador.generarVista(modelo);
+    }
 //
 //    private void getUltimaFicha(Ficha ficha){
 //        if (ficha != null){

@@ -1,6 +1,6 @@
 package com.distribuidos.uagrm.android.entities;
 
-class Otro {
+public class Otro {
     int id;
     String etiqueta;
     int cerrada_id;
