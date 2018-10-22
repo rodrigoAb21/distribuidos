@@ -15,7 +15,7 @@
     android:padding="8dp"
     android:orientation="vertical">
     <TextView
-        android:id="@+id/nombre_item"
+        android:id="@+id/asignacion_nombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Nombre"
@@ -26,7 +26,7 @@
         />
 
     <TextView
-        android:id="@+id/descripcion_item"
+        android:id="@+id/asignacion_descripcion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Descripcion"

@@ -4,7 +4,7 @@ public class Asignacion {
     int id;
     int cantidad;
     String hora_inicio;
-    String hora_fin;
+    String hora_final;
     int encuestador_id;
     int admin_id;
     Area area;
@@ -37,12 +37,12 @@ public class Asignacion {
         this.hora_inicio = hora_inicio;
     }
 
-    public String getHora_fin() {
-        return hora_fin;
+    public String getHora_final() {
+        return hora_final;
     }
 
-    public void setHora_fin(String hora_fin) {
-        this.hora_fin = hora_fin;
+    public void setHora_final(String hora_final) {
+        this.hora_final = hora_final;
     }
 
     public Modelo getModelo() {
@@ -76,4 +76,5 @@ public class Asignacion {
     public void setAdmin_id(int admin_id) {
         this.admin_id = admin_id;
     }
+
 }

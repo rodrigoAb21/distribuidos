@@ -24,11 +24,12 @@ public class AsignacionAdapter
 
     @Override
     public AsignacionAdapter.ViewHolderAsignaciones onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_asignacion_adapter, null, false);
+        View view = LayoutInflater.from(parent.getContext()).
+                inflate(R.layout.row_asignacion_adapter, parent, false);
 
         view.setOnClickListener(this);
 
-        return null;
+        return new ViewHolderAsignaciones(view);
     }
 
     @Override
@@ -41,7 +42,7 @@ public class AsignacionAdapter
         return asignaciones.size();
     }
 
-    public void setOnClickListener(View.OnClickListener listener) {
+    public void setOnClickListener(View.OnClickListener listener){
         this.listener = listener;
     }
 

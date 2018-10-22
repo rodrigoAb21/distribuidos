@@ -36,7 +36,7 @@ public class ModeloAdapter
 
     @Override
     public void onBindViewHolder(ModeloAdapter.ViewHolderModelos holder, int position) {
-        holder.asignarDatos(modelos.get(position));
+//        holder.asignarDatos(modelos.get(position));
     }
 
     @Override
@@ -61,13 +61,13 @@ public class ModeloAdapter
 
         public ViewHolderModelos(View itemView) {
             super(itemView);
-            nombre = (TextView) itemView.findViewById(R.id.nombre_item);
-            descripcion = (TextView) itemView.findViewById(R.id.descripcion_item);
+//            nombre = (TextView) itemView.findViewById(R.id.nombre_item);
+//            descripcion = (TextView) itemView.findViewById(R.id.descripcion_item);
         }
 
-        public void asignarDatos(MLocal modelo){
-            this.nombre.setText(modelo.getNombre());
-            this.descripcion.setText(modelo.getDescripcion());
-        }
+//        public void asignarDatos(MLocal modelo){
+//            this.nombre.setText(modelo.getNombre());
+//            this.descripcion.setText(modelo.getDescripcion());
+//        }
     }
 }

@@ -119,10 +119,11 @@ public class DBHelper extends SQLiteOpenHelper {
         return x;
     }
 
-    public int deleteAsignacion(int id){
+    public int deleteAsignacion(int asignacion_id){
         SQLiteDatabase db = this.getWritableDatabase();
 
-        int x = db.delete("asignacion", "id = ?", new String[]{String.valueOf(id)});
+        int x = db.delete("asignacion", "asignacion_id = ?",
+                new String[]{String.valueOf(asignacion_id)});
         db.close();
 
         return x;
