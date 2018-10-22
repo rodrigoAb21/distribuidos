@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.distribuidos.uagrm.android.entities.Asignacion;
 import com.distribuidos.uagrm.android.entities.AsignacionLocal;
+import com.distribuidos.uagrm.android.entities.Encuesta;
 import com.distribuidos.uagrm.android.entities.Ficha;
 import com.distribuidos.uagrm.android.entities.MLocal;
 import com.distribuidos.uagrm.android.entities.RespAbierta;
@@ -34,12 +35,19 @@ public class DBHelper extends SQLiteOpenHelper {
             "); ";
 
 
+    String query_create_encuesta = "CREATE TABLE `encuesta` (" +
+            " `id` INTEGER PRIMARY KEY AUTOINCREMENT," +
+            " `fecha` TEXT NOT NULL," +
+            " `estado` TEXT NOT NULL," +
+            " `asignacion_id` INTEGER NOT NULL" +
+            "); ";
+
+
 
     String query_create_ficha = "CREATE TABLE `ficha` (" +
             " `id` INTEGER PRIMARY KEY AUTOINCREMENT," +
-            " `id_modelo_api` INTEGER NOT NULL," +
-            " `id_modelo_local` INTEGER NOT NULL," +
-            " `estado` TEXT NOT NULL" +
+            " `encuesta_id` INTEGER NOT NULL," +
+            " `pregunta_id` INTEGER NOT NULL" +
             "); ";
 
     String query_create_cerrada = "CREATE TABLE `resp_cerrada` (" +
@@ -53,7 +61,8 @@ public class DBHelper extends SQLiteOpenHelper {
             " `id` INTEGER PRIMARY KEY AUTOINCREMENT," +
             " `tag` TEXT NOT NULL," +
             " `valor` TEXT NOT NULL," +
-            " `id_ficha` INTEGER NOT NULL" +
+            " `ficha_id` INTEGER NOT NULL," +
+            " `campo_id` INTEGER NOT NULL" +
             "); ";
 
 
@@ -67,9 +76,10 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(query_create_asignacion);
-//        db.execSQL(query_create_ficha);
+        db.execSQL(query_create_encuesta);
+        db.execSQL(query_create_ficha);
 //        db.execSQL(query_create_cerrada);
-//        db.execSQL(query_create_abierta);
+        db.execSQL(query_create_abierta);
     }
 
     @Override
@@ -81,6 +91,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
     // Funciones
+
+    // ------------------------------   ASIGNACION   -------------------------------------------
 
     public long addAsignacion(AsignacionLocal asignacion){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -157,7 +169,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return null;
     }
 
-
     public List<AsignacionLocal> getAsignaciones(){
         List<AsignacionLocal> asignaciones = new ArrayList<>();
 
@@ -186,8 +197,148 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
 
+    // ------------------------------   ENCUESTA   -------------------------------------------
 
-    //CRUD ficha
+    public long addEncuesta(Encuesta encuesta){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("fecha", encuesta.getFecha());
+        values.put("estado", encuesta.getEstado());
+        values.put("asignacion_id", encuesta.getAsignacion_id());
+
+        long x = db.insert("encuesta", null, values);
+        db.close();
+
+        return x;
+    }
+
+    public int updateEncuesta(Encuesta encuesta){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("fecha", encuesta.getFecha());
+        values.put("estado", encuesta.getEstado());
+        values.put("asignacion_id", encuesta.getAsignacion_id());
+
+        int x = db.update("encuesta", values, "id = ?",
+                new String[]{String.valueOf(encuesta.getId())});
+
+        db.close();
+
+        return x;
+
+    }
+
+    public int deleteEncuesta(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int x = db.delete("encuesta", "id = ?",
+                new String[]{String.valueOf(id)});
+        db.close();
+
+        return x;
+    }
+
+    public Encuesta getEncuesta(int id){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM encuesta WHERE id = " + id;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor != null && cursor.getCount() > 0){
+            cursor.moveToFirst();
+
+            Encuesta encuesta = new Encuesta();
+            encuesta.setId(cursor.getInt(0));
+            encuesta.setFecha(cursor.getString(1));
+            encuesta.setEstado(cursor.getString(2));
+            encuesta.setAsignacion_id(cursor.getInt(3));
+
+            db.close();
+            return encuesta;
+
+        }
+
+        db.close();
+
+        return null;
+    }
+
+    public Encuesta getLastEncuesta(int asignacion_id){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM encuesta WHERE estado = 'En Proceso' AND asignacion_id = " + asignacion_id;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor != null && cursor.getCount() > 0){
+            cursor.moveToFirst();
+
+            Encuesta encuesta = new Encuesta();
+            encuesta.setId(cursor.getInt(0));
+            encuesta.setFecha(cursor.getString(1));
+            encuesta.setEstado(cursor.getString(2));
+            encuesta.setAsignacion_id(cursor.getInt(3));
+
+            db.close();
+            return encuesta;
+
+        }
+
+        db.close();
+
+        return null;
+    }
+
+    public List<Encuesta> getEncuestas(int asignacion_id){
+        List<Encuesta> encuestas = new ArrayList<>();
+
+        String query = "SELECT * FROM encuesta WHERE asignacion_id = " + asignacion_id + " AND estado != 'En proceso' ORDER BY id DESC";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst() && cursor.getCount() > 0){
+            do {
+                Encuesta encuesta = new Encuesta();
+
+                encuesta.setId(cursor.getInt(0));
+                encuesta.setFecha(cursor.getString(1));
+                encuesta.setEstado(cursor.getString(2));
+                encuesta.setAsignacion_id(cursor.getInt(3));
+
+                encuestas.add(encuesta);
+            }
+            while (cursor.moveToNext());
+        }
+        db.close();
+        return encuestas;
+    }
+
+    public List<Encuesta> getEncuestasFinalizadas(int asignacion_id){
+        List<Encuesta> encuestas = new ArrayList<>();
+
+        String query = "SELECT * FROM encuesta WHERE asignacion_id = " + asignacion_id + " AND estado = 'Finalizada'";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst() && cursor.getCount() > 0){
+            do {
+                Encuesta encuesta = new Encuesta();
+
+                encuesta.setId(cursor.getInt(0));
+                encuesta.setFecha(cursor.getString(1));
+                encuesta.setEstado(cursor.getString(2));
+                encuesta.setAsignacion_id(cursor.getInt(3));
+
+                encuestas.add(encuesta);
+            }
+            while (cursor.moveToNext());
+        }
+        db.close();
+        return encuestas;
+    }
+
+
+    // ------------------------------   FICHA   -------------------------------------------
+
 
     // insertar un nuevo modelo
     public long addFicha(Ficha ficha){

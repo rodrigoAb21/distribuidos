@@ -3,11 +3,16 @@ package com.distribuidos.uagrm.android.activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.distribuidos.uagrm.android.R;
+import com.distribuidos.uagrm.android.adapters.EncuestaAdapter;
 import com.distribuidos.uagrm.android.db.DBHelper;
 import com.distribuidos.uagrm.android.entities.Asignacion;
 import com.distribuidos.uagrm.android.entities.AsignacionLocal;
@@ -16,6 +21,7 @@ import com.distribuidos.uagrm.android.helpers.TokenManager;
 
 import java.util.List;
 
+
 public class EncuestaActivity extends AppCompatActivity {
 
     TokenManager tokenManager;
@@ -23,6 +29,8 @@ public class EncuestaActivity extends AppCompatActivity {
     int id_local;
     AsignacionLocal asignacionLocal;
     DBHelper dbHelper;
+    List<Encuesta> encuestas;
+    RecyclerView recyclerView;
 
 
     @Override
@@ -45,12 +53,29 @@ public class EncuestaActivity extends AppCompatActivity {
             finish();
         }
 
+        Log.w("idLocal", ""+id_local);
+
         dbHelper = new DBHelper(getApplicationContext());
         asignacionLocal = dbHelper.getAsignacion(id_local);
-
-
+        cargarComponentes();
     }
 
+
+    private void cargarComponentes(){
+        encuestas = dbHelper.getEncuestas(asignacionLocal.getAsignacion_id());
+
+        EncuestaAdapter adapter = new EncuestaAdapter(encuestas);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view_encuestas);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        recyclerView.setAdapter(adapter);
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -79,10 +104,6 @@ public class EncuestaActivity extends AppCompatActivity {
         intent.putExtra("json_local", asignacionLocal.getJson());
         startActivity(intent);
     }
-
-
-
-
 
 
 }

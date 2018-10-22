@@ -23,16 +23,17 @@ public class EncuestaAdapter
     }
 
     @Override
-    public ViewHolderEncuestas onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_encuesta_adapter, null, false);
+    public EncuestaAdapter.ViewHolderEncuestas onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).
+                inflate(R.layout.row_encuesta_adapter, parent, false);
 
         view.setOnClickListener(this);
 
-        return null;
+        return new ViewHolderEncuestas(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolderEncuestas holder, int position) {
+    public void onBindViewHolder(EncuestaAdapter.ViewHolderEncuestas holder, int position) {
         holder.asignarDatos(encuestas.get(position));
     }
 
