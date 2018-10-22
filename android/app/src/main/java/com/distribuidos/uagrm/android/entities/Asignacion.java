@@ -5,10 +5,10 @@ public class Asignacion {
     int cantidad;
     String hora_inicio;
     String hora_fin;
-    Modelo modelo;
-    Area area;
     int encuestador_id;
     int admin_id;
+    Area area;
+    Modelo modelo;
 
     public Asignacion() {
     }

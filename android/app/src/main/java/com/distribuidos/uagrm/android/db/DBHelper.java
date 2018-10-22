@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.distribuidos.uagrm.android.entities.Asignacion;
+import com.distribuidos.uagrm.android.entities.AsignacionLocal;
 import com.distribuidos.uagrm.android.entities.Ficha;
 import com.distribuidos.uagrm.android.entities.MLocal;
 import com.distribuidos.uagrm.android.entities.RespAbierta;
@@ -21,14 +23,17 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "distribuidos";
 
     // Tablas
-    String query_create_modelo = "CREATE TABLE `modelo` (" +
+    String query_create_asignacion = "CREATE TABLE `asignacion` (" +
             " `id` INTEGER PRIMARY KEY AUTOINCREMENT," +
-            " `id_modelo` INTEGER NOT NULL," +
-            " `nombre` TEXT NOT NULL," +
+            " `asignacion_id` INTEGER NOT NULL," +
+            " `modelo` TEXT NOT NULL," +
+            " `area` TEXT NOT NULL," +
+            " `cantidad` INTEGER NOT NULL," +
             " `descripcion` TEXT," +
-            " `estado` TEXT NOT NULL," +
             " `json` TEXT NOT NULL" +
             "); ";
+
+
 
     String query_create_ficha = "CREATE TABLE `ficha` (" +
             " `id` INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -61,111 +66,121 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(query_create_modelo);
-        db.execSQL(query_create_ficha);
-        db.execSQL(query_create_cerrada);
-        db.execSQL(query_create_abierta);
+        db.execSQL(query_create_asignacion);
+//        db.execSQL(query_create_ficha);
+//        db.execSQL(query_create_cerrada);
+//        db.execSQL(query_create_abierta);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        String query = "DROP TABLE IF EXISTS modelo";
+        String query = "DROP TABLE IF EXISTS asignacion";
         db.execSQL(query);
         onCreate(db);
     }
 
 
-    // Funciones para la tabla modelo
+    // Funciones
 
-    // insertar un nuevo modelo
-    public long addModelo(MLocal mLocal){
+    public long addAsignacion(AsignacionLocal asignacion){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("id_modelo", mLocal.getId_modelo());
-        values.put("nombre", mLocal.getNombre());
-        values.put("descripcion", mLocal.getDescripcion());
-        values.put("estado", mLocal.getEstado());
-        values.put("json", mLocal.getJson());
 
-        long x = db.insert("modelo", null, values);
+        values.put("asignacion_id", asignacion.getAsignacion_id());
+        values.put("modelo", asignacion.getModelo());
+        values.put("area", asignacion.getArea());
+        values.put("cantidad", asignacion.getCantidad());
+        values.put("descripcion", asignacion.getDescripcion());
+        values.put("json", asignacion.getJson());
+
+
+        long x = db.insert("asignacion", null, values);
         db.close();
 
         return x;
     }
 
-    // actualizar modelo
-    public int updateModelo(MLocal mLocal){
+    public int updateAsignacion(AsignacionLocal asignacion){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("id_modelo", mLocal.getId_modelo());
-        values.put("nombre", mLocal.getNombre());
-        values.put("descripcion", mLocal.getDescripcion());
-        values.put("estado", mLocal.getEstado());
-        values.put("json", mLocal.getJson());
 
-        int x = db.update("modelo", values, "id = ?",
-                new String[]{String.valueOf(mLocal.getId())});
+        values.put("asignacion_id", asignacion.getAsignacion_id());
+        values.put("modelo", asignacion.getModelo());
+        values.put("area", asignacion.getArea());
+        values.put("cantidad", asignacion.getCantidad());
+        values.put("descripcion", asignacion.getDescripcion());
+        values.put("json", asignacion.getJson());
+
+        int x = db.update("asignacion", values, "id = ?",
+                new String[]{String.valueOf(asignacion.getId())});
+
         db.close();
 
         return x;
     }
 
-    // eliminar modelo
-    public int deleteModelo(int id){
+    public int deleteAsignacion(int id){
         SQLiteDatabase db = this.getWritableDatabase();
 
-        int x = db.delete("modelo", "id = ?", new String[]{String.valueOf(id)});
+        int x = db.delete("asignacion", "id = ?", new String[]{String.valueOf(id)});
         db.close();
 
         return x;
     }
 
-    // obtener un modelo por id
-    public MLocal getModelo(int id){
-        MLocal mLocal = new MLocal();
+    public AsignacionLocal getAsignacion(int id){
+
         SQLiteDatabase db = this.getReadableDatabase();
-        Log.w("ID_ERROR", "id: "+id);
-        String query = "SELECT * FROM modelo WHERE id = " + id;
+
+        String query = "SELECT * FROM asignacion WHERE id = " + id;
         Cursor cursor = db.rawQuery(query, null);
-        if (cursor != null){
+        if (cursor != null && cursor.getCount() > 0){
             cursor.moveToFirst();
 
-            mLocal.setId(cursor.getInt(0));
-            mLocal.setId_modelo(cursor.getInt(1));
-            mLocal.setNombre(cursor.getString(2));
-            mLocal.setDescripcion(cursor.getString(3));
-            mLocal.setEstado(cursor.getString(4));
-            mLocal.setJson(cursor.getString(5));
+            AsignacionLocal asignacion = new AsignacionLocal();
+            asignacion.setId(cursor.getInt(0));
+            asignacion.setAsignacion_id(cursor.getInt(1));
+            asignacion.setModelo(cursor.getString(2));
+            asignacion.setArea(cursor.getString(3));
+            asignacion.setCantidad(cursor.getInt(4));
+            asignacion.setDescripcion(cursor.getString(5));
+            asignacion.setJson(cursor.getString(6));
+
+            db.close();
+            return asignacion;
+
         }
 
         db.close();
 
-        return mLocal;
+        return null;
     }
 
-    // obtener todos los modelos
-    public List<MLocal> getModelos(){
-        List<MLocal> modelos = new ArrayList<>();
 
-        String query = "SELECT * FROM modelo";
+    public List<AsignacionLocal> getAsignaciones(){
+        List<AsignacionLocal> asignaciones = new ArrayList<>();
+
+        String query = "SELECT * FROM asignacion";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
-        if (cursor.moveToFirst()){
+        if (cursor.moveToFirst() && cursor.getCount() > 0){
             do {
-                MLocal mLocal = new MLocal();
-                mLocal.setId(cursor.getInt(0));
-                mLocal.setId_modelo(cursor.getInt(1));
-                mLocal.setNombre(cursor.getString(2));
-                mLocal.setDescripcion(cursor.getString(3));
-                mLocal.setEstado(cursor.getString(4));
-                mLocal.setJson(cursor.getString(5));
+                AsignacionLocal asignacion = new AsignacionLocal();
 
-                modelos.add(mLocal);
+                asignacion.setId(cursor.getInt(0));
+                asignacion.setAsignacion_id(cursor.getInt(1));
+                asignacion.setModelo(cursor.getString(2));
+                asignacion.setArea(cursor.getString(3));
+                asignacion.setCantidad(cursor.getInt(4));
+                asignacion.setDescripcion(cursor.getString(5));
+                asignacion.setJson(cursor.getString(6));
+
+                asignaciones.add(asignacion);
             }
             while (cursor.moveToNext());
         }
         db.close();
-        return modelos;
+        return asignaciones;
     }
 
 

@@ -4,10 +4,12 @@ import java.util.List;
 
 public class Cerrada {
     int id;
+    String etiqueta;
     String tipoSeleccion;
     int obligatoria;
     int pregunta_id;
     List<Opcion> opciones;
+    List<Otro> otros;
 
     public Cerrada(){
     }
@@ -50,6 +52,23 @@ public class Cerrada {
 
     public void setOpciones(List<Opcion> opciones) {
         this.opciones = opciones;
+    }
+
+
+    public String getEtiqueta() {
+        return etiqueta;
+    }
+
+    public void setEtiqueta(String etiqueta) {
+        this.etiqueta = etiqueta;
+    }
+
+    public List<Otro> getOtros() {
+        return otros;
+    }
+
+    public void setOtros(List<Otro> otros) {
+        this.otros = otros;
     }
 }
 

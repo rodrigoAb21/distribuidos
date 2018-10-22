@@ -9,9 +9,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.distribuidos.uagrm.android.R;
+import com.distribuidos.uagrm.android.entities.AsignacionLocal;
 import com.distribuidos.uagrm.android.helpers.TokenManager;
 import com.distribuidos.uagrm.android.network.ApiService;
 import com.distribuidos.uagrm.android.network.RetrofitBuilder;
+import com.distribuidos.uagrm.android.responses.AsignacionResponse;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,6 +24,8 @@ import retrofit2.Response;
 public class AsignacionActivity extends AppCompatActivity {
 
     Call<String> call_logout;
+    Call<AsignacionResponse> call_asignacion;
+    List<AsignacionLocal> asignacionesLocales;
     ApiService service;
     TokenManager tokenManager;
 
