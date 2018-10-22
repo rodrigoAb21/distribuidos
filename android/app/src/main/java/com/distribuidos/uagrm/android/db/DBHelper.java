@@ -50,6 +50,8 @@ public class DBHelper extends SQLiteOpenHelper {
             " `pregunta_id` INTEGER NOT NULL" +
             "); ";
 
+
+
     String query_create_cerrada = "CREATE TABLE `resp_cerrada` (" +
             " `id` INTEGER PRIMARY KEY AUTOINCREMENT," +
             " `id_view` TEXT NOT NULL," +
@@ -337,17 +339,16 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
+
+
     // ------------------------------   FICHA   -------------------------------------------
 
-
-    // insertar un nuevo modelo
     public long addFicha(Ficha ficha){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put("id_modelo_api", ficha.getId_modelo_api());
-        values.put("id_modelo_local", ficha.getId_modelo_local());
-        values.put("estado", "No finalizada");
+        values.put("encuesta_id", ficha.getEncuesta_id());
+        values.put("pregunta_id", ficha.getPregunta_id());
 
         long x = db.insert("ficha", null, values);
         db.close();
@@ -355,33 +356,28 @@ public class DBHelper extends SQLiteOpenHelper {
         return x;
     }
 
-    public int updateficha(Ficha ficha){
+    public int deleteFicha(int id){
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
 
-        values.put("estado", ficha.getEstado());
-
-        int x = db.update("ficha", values, "id = ?",
-                new String[]{String.valueOf(ficha.getId())});
+        int x = db.delete("ficha", "id = ?",
+                new String[]{String.valueOf(id)});
         db.close();
 
         return x;
     }
 
-    // obtener la ultima ficha en editar por id del modelo local
-    public Ficha getLastFicha(int id_modelo_local){
+    public Ficha getFicha(int id){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "SELECT * FROM ficha WHERE id_modelo_local = " + id_modelo_local + " AND estado = 'No finalizada'";
+        String query = "SELECT * FROM ficha WHERE id = " + id;
         Cursor cursor = db.rawQuery(query, null);
         if (cursor != null && cursor.getCount() > 0){
             cursor.moveToFirst();
 
             Ficha ficha = new Ficha();
             ficha.setId(cursor.getInt(0));
-            ficha.setId_modelo_api(cursor.getInt(1));
-            ficha.setId_modelo_local(cursor.getInt(2));
-            ficha.setEstado(cursor.getString(3));
+            ficha.setEncuesta_id(cursor.getInt(1));
+            ficha.setPregunta_id(cursor.getInt(2));
 
             db.close();
             return ficha;
@@ -393,44 +389,42 @@ public class DBHelper extends SQLiteOpenHelper {
         return null;
     }
 
+    public List<Ficha> getFichas(int encuesta_id){
+        List<Ficha> fichas = new ArrayList<>();
+
+        String query = "SELECT * FROM ficha WHERE encuesta_id = " + encuesta_id;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst() && cursor.getCount() > 0){
+            do {
+                Ficha ficha = new Ficha();
+                ficha.setId(cursor.getInt(0));
+                ficha.setEncuesta_id(cursor.getInt(1));
+                ficha.setPregunta_id(cursor.getInt(2));
+
+                fichas.add(ficha);
+            }
+            while (cursor.moveToNext());
+        }
+        db.close();
+        return fichas;
+    }
 
 
 
 
 
 
+    // ------------------------------   RESP ABIERTA   ----------------------------------------
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //CRUD ficha
-
-    // insertar un nuevo modelo
     public long addRespAbierta(RespAbierta respAbierta){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         values.put("tag", respAbierta.getTag());
         values.put("valor", respAbierta.getValor());
-        values.put("id_ficha", respAbierta.getId_ficha());
+        values.put("ficha_id", respAbierta.getFicha_id());
+        values.put("campo_id", respAbierta.getCampo_id());
 
         long x = db.insert("resp_abierta", null, values);
         db.close();
@@ -451,11 +445,20 @@ public class DBHelper extends SQLiteOpenHelper {
         return x;
     }
 
-    // obtener todas las Respuestas Abiertas
-    public List<RespAbierta> getRespAbiertas(int id_ficha){
+    public int deleteRespAbierta(String tag){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int x = db.delete("ficha", "tag = ?",
+                new String[]{"'" + tag + "'"});
+        db.close();
+
+        return x;
+    }
+
+    public List<RespAbierta> getRespAbiertas(int ficha_id){
         List<RespAbierta> abiertaList = new ArrayList<>();
 
-        String query = "SELECT * FROM resp_abierta WHERE id_ficha = " + id_ficha;
+        String query = "SELECT * FROM resp_abierta WHERE ficha_id = " + ficha_id;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()){
@@ -466,7 +469,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 respAbierta.setId(cursor.getInt(0));
                 respAbierta.setTag(cursor.getString(1));
                 respAbierta.setValor(cursor.getString(2));
-                respAbierta.setId_ficha(cursor.getInt(3));
+                respAbierta.setFicha_id(cursor.getInt(3));
+                respAbierta.setCampo_id(cursor.getInt(4));
 
                 abiertaList.add(respAbierta);
             }
@@ -490,8 +494,8 @@ public class DBHelper extends SQLiteOpenHelper {
             respAbierta.setId(cursor.getInt(0));
             respAbierta.setTag(cursor.getString(1));
             respAbierta.setValor(cursor.getString(2));
-            respAbierta.setId_ficha(cursor.getInt(3));
-
+            respAbierta.setFicha_id(cursor.getInt(3));
+            respAbierta.setCampo_id(cursor.getInt(4));
 
             db.close();
             return respAbierta;
@@ -574,7 +578,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 respAbierta.setId(cursor.getInt(0));
 //                respAbierta.setId_view(cursor.getString(1));
                 respAbierta.setValor(cursor.getString(2));
-                respAbierta.setId_ficha(cursor.getInt(3));
+//                respAbierta.setId_ficha(cursor.getInt(3));
 
                 abiertaList.add(respAbierta);
             }

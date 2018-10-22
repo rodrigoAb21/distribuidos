@@ -4,7 +4,8 @@ public class RespAbierta {
     private int id;
     private String tag;
     private String valor;
-    private int id_ficha;
+    private int ficha_id;
+    private int campo_id;
 
 
     public RespAbierta(){
@@ -35,12 +36,20 @@ public class RespAbierta {
         this.valor = valor;
     }
 
-    public int getId_ficha() {
-        return id_ficha;
+    public int getFicha_id() {
+        return ficha_id;
     }
 
-    public void setId_ficha(int id_ficha) {
-        this.id_ficha = id_ficha;
+    public void setFicha_id(int ficha_id) {
+        this.ficha_id = ficha_id;
+    }
+
+    public int getCampo_id() {
+        return campo_id;
+    }
+
+    public void setCampo_id(int campo_id) {
+        this.campo_id = campo_id;
     }
 }
 

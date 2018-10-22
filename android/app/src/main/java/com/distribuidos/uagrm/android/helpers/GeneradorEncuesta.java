@@ -15,6 +15,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.distribuidos.uagrm.android.R;
 import com.distribuidos.uagrm.android.db.DBHelper;
 import com.distribuidos.uagrm.android.entities.Campo;
 import com.distribuidos.uagrm.android.entities.Cerrada;
@@ -31,12 +32,14 @@ public class GeneradorEncuesta {
     LinearLayout linearLayout; 
     Context context;
     DBHelper dbHelper;
+    View view;
 //    int id_ficha;
 
-    public GeneradorEncuesta(LinearLayout linearLayout, Context context) {
-        this.linearLayout = linearLayout;
+    public GeneradorEncuesta(Context context, View view) {
         this.context = context;
         this.dbHelper = new DBHelper(context);
+        this.view = view;
+        this.linearLayout = (LinearLayout) this.view.findViewById(R.id.linear_layout);;
 //        this.id_ficha = id_ficha;
     }
 
@@ -57,6 +60,10 @@ public class GeneradorEncuesta {
             generarEnunciado(pregunta, linearLayoutRepetido);
             for (Cerrada cerrada : pregunta.getCerradas()){
                 // Verificamos el tipo de seleccion
+
+
+                generarTituloSeccion(cerrada, linearLayoutRepetido);
+
                 if (cerrada.getTipoSeleccion().equals("Multiple")){
                     //Creamos el checkbox
                     generarOpcionesMultiples(cerrada.getOpciones(), linearLayoutRepetido);
@@ -84,7 +91,18 @@ public class GeneradorEncuesta {
 
 
 
+    private void generarTituloSeccion(Cerrada cerrada, LinearLayout linearLayout){
+        TextView textView = new TextView(context);
+        if (cerrada.isObligatoria() == 1){
+            textView.setText("*" + cerrada.getEtiqueta());
+        }else{
+            textView.setText(cerrada.getEtiqueta());
+        }
+        textView.setTextSize(14);
+        textView.setTextColor(Color.BLACK);
+        linearLayout.addView(textView);
 
+    }
 
 
 
@@ -159,49 +177,45 @@ public class GeneradorEncuesta {
             final EditText editText = new EditText(context);
             editText.setTag("campo"+campo.getId());
             editText.setTextSize(15);
+            editText.setHint(campo.getEtiqueta());
 
             switch (campo.getDominio().getTipoDato()){
                 case "Texto":
-                    editText.setHint(campo.getEtiqueta());
                     editText.setInputType(InputType.TYPE_CLASS_TEXT);
                     break;
                 case "Email":
-                    editText.setHint(campo.getEtiqueta());
                     editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
                     break;
                 case "Entero":
-                    editText.setHint(campo.getEtiqueta());
                     editText.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_SIGNED);
                     break;
                 case "Decimal":
-                    editText.setHint(campo.getEtiqueta());
                     editText.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL|InputType.TYPE_NUMBER_FLAG_SIGNED);
                     break;
                 case "Fecha":
-                    editText.setHint("dd/MM/YYYY");
                     editText.setInputType(InputType.TYPE_CLASS_DATETIME|InputType.TYPE_DATETIME_VARIATION_DATE);
                     break;
             }
 
-//            editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//                @Override
-//                public void onFocusChange(View v, boolean hasFocus) {
-//                    if(!hasFocus){
-//                        //Log.w("IDEdit", " --> "+editText.getId());
-//                        RespAbierta respAbierta = dbHelper.getRespAbierta(editText.getTag().toString());
-//                        if (respAbierta != null){
-//                            respAbierta.setValor(editText.getText().toString());
-//                            dbHelper.updateRespAbierta(respAbierta);
-//                        }else {
-//                            respAbierta = new RespAbierta();
-//                            respAbierta.setTag(editText.getTag().toString());
-//                            respAbierta.setValor(editText.getText().toString());
-////                            respAbierta.setId_ficha(id_ficha);
-//                            dbHelper.addRespAbierta(respAbierta);
-//                        }
-//                    }
-//                }
-//            });
+            editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if(!hasFocus){
+                        //Log.w("IDEdit", " --> "+editText.getId());
+                        RespAbierta respAbierta = dbHelper.getRespAbierta(editText.getTag().toString());
+                        if (respAbierta != null){
+                            respAbierta.setValor(editText.getText().toString());
+                            dbHelper.updateRespAbierta(respAbierta);
+                        }else {
+                            respAbierta = new RespAbierta();
+                            respAbierta.setTag(editText.getTag().toString());
+                            respAbierta.setValor(editText.getText().toString());
+//                            respAbierta.setId_ficha(id_ficha);
+                            dbHelper.addRespAbierta(respAbierta);
+                        }
+                    }
+                }
+            });
 
             linearLayout.addView(editText);
 
@@ -260,6 +274,43 @@ public class GeneradorEncuesta {
 
         }
     }
+
+
+
+
+
+
+
+
+
+//    private void getUltimaFicha(Ficha ficha){
+//        if (ficha != null){
+//            List<RespAbierta> abiertas = dbHelper.getRespAbiertas(ficha.getId());
+//            if(abiertas.size() > 0){
+//                cargarUltimo(abiertas);
+//            }else{
+//                Log.w("listaaaa", "Esta enviando vacio!!");
+//            }
+//        }
+//    }
+//
+//
+
+
+
+
+    public void cargarUltimo(List<RespAbierta> abiertas){
+        for(RespAbierta abierta : abiertas){
+            EditText editText = (EditText) view.findViewWithTag(abierta.getTag());
+            editText.setText(abierta.getValor());
+        }
+     }
+
+
+
+
+
+
 
 
 }

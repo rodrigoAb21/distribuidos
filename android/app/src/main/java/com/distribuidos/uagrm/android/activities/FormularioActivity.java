@@ -33,12 +33,13 @@ public class FormularioActivity extends AppCompatActivity {
     DBHelper dbHelper;
 //    private static final String TAG = "FormularioActivity";
 //    Ficha ficha;
-//    private View view;
+    private View view;
 //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_formulario);
+        setView(getLayoutInflater().inflate(R.layout.activity_formulario, null));
+        setContentView(getView());
 
         tokenManager = TokenManager.getInstance(getSharedPreferences("prefs", MODE_PRIVATE));
         if(tokenManager.getToken() == null){
@@ -57,16 +58,16 @@ public class FormularioActivity extends AppCompatActivity {
         getModelo();
 
     }
-//
-//    private View getView() {
-//        return view;
-//    }
-//
-//    private void setView(View view) {
-//        this.view = view;
-//    }
-//
-//
+
+    private View getView() {
+        return view;
+    }
+
+    private void setView(View view) {
+        this.view = view;
+    }
+
+
     private void getModelo() {
         asignacion = new Gson().fromJson(json_local,Asignacion.class);
         generarVista(asignacion.getModelo());
@@ -75,33 +76,8 @@ public class FormularioActivity extends AppCompatActivity {
 
 
     private void generarVista(Modelo modelo){
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linear_layout);
-        generador = new GeneradorEncuesta(linearLayout, getApplicationContext());
+        generador = new GeneradorEncuesta(getApplicationContext(), getView());
         generador.generarVista(modelo);
     }
-//
-//    private void getUltimaFicha(Ficha ficha){
-//        if (ficha != null){
-//            List<RespAbierta> abiertas = dbHelper.getRespAbiertas(ficha.getId());
-//            if(abiertas.size() > 0){
-//                cargarUltimo(abiertas);
-//            }else{
-//                Log.w("listaaaa", "Esta enviando vacio!!");
-//            }
-//        }
-//    }
-//
-//
-//    public void cargarUltimo(List<RespAbierta> abiertas){
-//        for(RespAbierta abierta : abiertas){
-////            int idDelEdit = getResources().getIdentifier(abierta.getId_view(), "id", getPackageName());
-////            Log.w("listaaaa", ""+idDelEdit);
-//
-//
-//            EditText editText = (EditText) getView().findViewWithTag(abierta.getTag());
-//            editText.setText(abierta.getValor());
-//        }
-//     }
-//
 
 }
