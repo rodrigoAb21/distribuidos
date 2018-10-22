@@ -15,15 +15,15 @@ class CreateEncuestaTable extends Migration
     {
         Schema::create('encuesta', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('fecha');
-            $table->double('longitud');
-            $table->double('latitud');
+            $table->string('fecha');
+            $table->string('estado');
+
+            //$table->double('longitud');
+            //$table->double('latitud');
             //$table->timestamps();
 
             $table->unsignedInteger('asignacion_id');
-            $table->unsignedInteger('encuestado_id');
             $table->foreign('asignacion_id')->references('id')->on('asignacion')->onDelete('cascade');
-            $table->foreign('encuestado_id')->references('id')->on('encuestado')->onDelete('cascade');
 
         });
     }

@@ -2,12 +2,12 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Nueva Pregunta</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Editar Pregunta</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="formulario_edit" action="" method="POST">
+            <form id="formulario_edit" action="{{url('/modelos/pregunta/'.$pregunta->id.'/edit')}}" method="POST">
                 {{method_field('PATCH')}}
                 {{csrf_field()}}
 

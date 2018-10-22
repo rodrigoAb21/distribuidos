@@ -12,7 +12,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="mr-0 ml-auto pull-right">
+                            <div class="mr-0 ml-auto pull-right" id="tipoPregunta">
                                 <input type="radio" name="tipoP" value="1" checked>
                                 <label>Abierta</label>
                                 <input type="radio" name="tipoP" value="0">

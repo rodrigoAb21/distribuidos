@@ -61,7 +61,7 @@
                                             <td>{{$pregunta->enunciado}}</td>
                                             <td>{{$pregunta->tipo_preg}}</td>
                                             <td>
-                                                <button class="btn btn-warning"><i class="fa fa-pencil-alt"></i></button>
+                                                <button class="btn btn-warning" type="button" onclick="editarPreguntaM('{{Pregunta::with('cerradas','campos')->where()->get()}}',)"><i class="fa fa-pencil-alt"></i></button>
                                                 <button class="btn btn-danger" onclick="eliminarPreguntaM('{{$pregunta->enunciado}}','{{url('modelos/pregunta/'.$pregunta->id)}}')"><i class="fa fa-trash"></i></button>
                                             </td>
                                         </tr>
@@ -73,6 +73,7 @@
 
                     </div>
                     @include('modelos.modales.formPreg')
+                    @include('modelos.modales.editPreg')
                     @include('modelos.modales.eliminar')
 
 
@@ -196,6 +197,15 @@
                 $("#cerrada").append(tabla);
                 agregarSeleccion();
             }
+
+            function editarPreguntaM(pregunta) {
+                console.log(pregunta);
+                //$('#formPreg').modal('show');
+                //if(pregunta)
+
+            }
+
+
         </script>
     @endpush
 
