@@ -12,8 +12,10 @@ import com.distribuidos.uagrm.android.entities.AsignacionLocal;
 import com.distribuidos.uagrm.android.entities.Encuesta;
 import com.distribuidos.uagrm.android.entities.Ficha;
 import com.distribuidos.uagrm.android.entities.MLocal;
+import com.distribuidos.uagrm.android.entities.Otro;
 import com.distribuidos.uagrm.android.entities.RespAbierta;
 import com.distribuidos.uagrm.android.entities.RespCerrada;
+import com.distribuidos.uagrm.android.entities.RespOtro;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,13 +54,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
 
-    String query_create_cerrada = "CREATE TABLE `resp_cerrada` (" +
-            " `id` INTEGER PRIMARY KEY AUTOINCREMENT," +
-            " `id_view` TEXT NOT NULL," +
-            " `estado` INTEGER NOT NULL," +
-            " `id_ficha` INTEGER NOT NULL" +
-            "); ";
-
     String query_create_abierta = "CREATE TABLE `resp_abierta` (" +
             " `id` INTEGER PRIMARY KEY AUTOINCREMENT," +
             " `tag` TEXT NOT NULL," +
@@ -67,6 +62,21 @@ public class DBHelper extends SQLiteOpenHelper {
             " `campo_id` INTEGER NOT NULL" +
             "); ";
 
+
+    String query_create_cerrada = "CREATE TABLE `resp_cerrada` (" +
+            " `id` INTEGER PRIMARY KEY AUTOINCREMENT," +
+            " `tag` TEXT NOT NULL," +
+            " `ficha_id` INTEGER NOT NULL," +
+            " `opcion_id` INTEGER NOT NULL" +
+            "); ";
+
+    String query_create_otro = "CREATE TABLE `resp_otro` (" +
+            " `id` INTEGER PRIMARY KEY AUTOINCREMENT," +
+            " `tag` TEXT NOT NULL," +
+            " `valor` TEXT NOT NULL," +
+            " `ficha_id` INTEGER NOT NULL," +
+            " `otro_id` INTEGER NOT NULL" +
+            "); ";
 
 
 
@@ -82,6 +92,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(query_create_ficha);
 //        db.execSQL(query_create_cerrada);
         db.execSQL(query_create_abierta);
+        db.execSQL(query_create_otro);
     }
 
     @Override
@@ -271,7 +282,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "SELECT * FROM encuesta WHERE estado = 'En proceso' AND asignacion_id = " + asignacion_id;
+        String query = "SELECT * FROM encuesta WHERE estado = 'En proceso' AND asignacion_id = "
+                + asignacion_id;
         Cursor cursor = db.rawQuery(query, null);
         if (cursor != null && cursor.getCount() > 0){
             cursor.moveToFirst();
@@ -562,9 +574,138 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
 
+        // ------------------------------   RESP CERRADA  ----------------------------------------
 
 
 
+
+
+
+
+
+
+
+
+
+
+        // --------------------------------   RESP OTRO  ----------------------------------------
+
+    public long addRespOtro(RespOtro respOtro){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("tag", respOtro.getTag());
+        values.put("valor", respOtro.getValor());
+        values.put("ficha_id", respOtro.getFicha_id());
+        values.put("otro_id", respOtro.getOtro_id());
+
+        long x = db.insert("resp_otro", null, values);
+        db.close();
+
+        return x;
+    }
+
+    public int updateRespOtro(RespOtro respOtro){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("valor", respOtro.getValor());
+
+        int x = db.update("resp_otro", values, "id = ?",
+                new String[]{String.valueOf(respOtro.getId())});
+        db.close();
+
+        return x;
+    }
+
+    public int deleteRespOtro(String tag){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int x = db.delete("resp_otro", "tag = ?",
+                new String[]{"'" + tag + "'"});
+        db.close();
+
+        return x;
+    }
+
+    public List<RespOtro> getRespOtros(int ficha_id){
+        List<RespOtro> otroList = new ArrayList<>();
+
+        String query = "SELECT * FROM resp_otro WHERE ficha_id = " + ficha_id;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()){
+            do {
+
+                RespOtro respOtro = new RespOtro();
+
+                respOtro.setId(cursor.getInt(0));
+                respOtro.setTag(cursor.getString(1));
+                respOtro.setValor(cursor.getString(2));
+                respOtro.setFicha_id(cursor.getInt(3));
+                respOtro.setOtro_id(cursor.getInt(4));
+
+                otroList.add(respOtro);
+            }
+            while (cursor.moveToNext());
+        }
+        db.close();
+
+        return otroList;
+    }
+
+
+    public RespOtro getRespOtro(String tag) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM resp_otro WHERE tag = '" + tag + "'";
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor != null && cursor.getCount() > 0){
+            cursor.moveToFirst();
+
+            RespOtro respOtro = new RespOtro();
+            respOtro.setId(cursor.getInt(0));
+            respOtro.setTag(cursor.getString(1));
+            respOtro.setValor(cursor.getString(2));
+            respOtro.setFicha_id(cursor.getInt(3));
+            respOtro.setOtro_id(cursor.getInt(4));
+
+
+            db.close();
+            return respOtro;
+
+        }
+
+        db.close();
+
+        return null;
+    }
+
+    public RespOtro getRespOtro(int ficha_id, int opcion_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM resp_otro WHERE ficha_id = " + ficha_id + " " +
+                "AND opcion_id = " + opcion_id;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor != null && cursor.getCount() > 0){
+            cursor.moveToFirst();
+
+            RespOtro respOtro = new RespOtro();
+            respOtro.setId(cursor.getInt(0));
+            respOtro.setTag(cursor.getString(1));
+            respOtro.setValor(cursor.getString(2));
+            respOtro.setFicha_id(cursor.getInt(3));
+            respOtro.setOtro_id(cursor.getInt(4));
+
+            db.close();
+            return respOtro;
+
+        }
+
+        db.close();
+
+        return null;
+    }
 
 
 

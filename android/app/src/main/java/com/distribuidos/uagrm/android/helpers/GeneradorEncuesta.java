@@ -26,6 +26,7 @@ import com.distribuidos.uagrm.android.entities.Opcion;
 import com.distribuidos.uagrm.android.entities.Otro;
 import com.distribuidos.uagrm.android.entities.Pregunta;
 import com.distribuidos.uagrm.android.entities.RespAbierta;
+import com.distribuidos.uagrm.android.entities.RespOtro;
 
 
 import java.util.ArrayList;
@@ -77,7 +78,7 @@ public class GeneradorEncuesta {
                     generarOpcionesUnicas(cerrada.getId(), cerrada.getOpciones(), linearLayoutRepetido);
                 }
 
-                generarOtros(cerrada.getOtros(), linearLayoutRepetido);
+                generarOtros(cerrada.getOtros(),pregunta.getId(), encuesta_id, linearLayoutRepetido);
             }
             // Abiertas
             generarCampos(pregunta.getCampos(), pregunta.getId(), encuesta_id, linearLayoutRepetido);
@@ -166,7 +167,7 @@ public class GeneradorEncuesta {
             final EditText editText = new EditText(context);
             editText.setTag(encuesta_id + "-" + pregunta_id + "-" + campo.getId() + "-");
 
-            Log.w("tagss", editText.getTag().toString());
+//            Log.w("tagss_campo", editText.getTag().toString());
 
             editText.setTextSize(15);
             editText.setHint(campo.getEtiqueta());
@@ -217,12 +218,15 @@ public class GeneradorEncuesta {
                                 dbHelper.deleteRespAbierta(editText.getTag().toString());
                             }
                         }else {
-                            respAbierta = new RespAbierta();
-                            respAbierta.setTag(editText.getTag().toString());
-                            respAbierta.setValor(editText.getText().toString());
-                            respAbierta.setFicha_id(ficha.getId());
-                            respAbierta.setCampo_id(ids.get(2));
-                            dbHelper.addRespAbierta(respAbierta);
+                            if (!editText.getText().toString().trim().equals("")){
+                                respAbierta = new RespAbierta();
+                                respAbierta.setTag(editText.getTag().toString());
+                                respAbierta.setValor(editText.getText().toString());
+                                respAbierta.setFicha_id(ficha.getId());
+                                respAbierta.setCampo_id(ids.get(2));
+                                dbHelper.addRespAbierta(respAbierta);
+                            }
+
                         }
                     }
                 }
@@ -234,58 +238,79 @@ public class GeneradorEncuesta {
 
     }
 
-    private void generarOtros(List<Otro> otros, LinearLayout linearLayout){
+    private void generarOtros(List<Otro> otros, int pregunta_id, int encuesta_id, LinearLayout linearLayout){
         for (final Otro otro : otros){
 
             //Agregando el editText que sera el input
-            final EditText editText = new EditText(context);
-//            editText.setTag("campo"+otro.getId());
-            editText.setTextSize(15);
-            editText.setHint(otro.getEtiqueta());
+            final EditText editText2 = new EditText(context);
+            editText2.setTag(encuesta_id + "-" + pregunta_id + "-" + otro.getId() + "-");
+
+//            Log.w("tagss_otro", editText.getTag().toString());
+
+            editText2.setTextSize(15);
+            editText2.setHint(otro.getEtiqueta());
             switch (otro.getDominio().getTipoDato()){
                 case "Otro":
-                    editText.setInputType(InputType.TYPE_CLASS_TEXT);
+                    editText2.setInputType(InputType.TYPE_CLASS_TEXT);
                     break;
                 case "Email":
-                    editText.setInputType(InputType.TYPE_CLASS_TEXT |
+                    editText2.setInputType(InputType.TYPE_CLASS_TEXT |
                             InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
                     break;
                 case "Entero":
-                    editText.setInputType(InputType.TYPE_CLASS_NUMBER|
+                    editText2.setInputType(InputType.TYPE_CLASS_NUMBER|
                             InputType.TYPE_NUMBER_FLAG_SIGNED);
                     break;
                 case "Decimal":
-                    editText.setInputType(InputType.TYPE_CLASS_NUMBER|
+                    editText2.setInputType(InputType.TYPE_CLASS_NUMBER|
                             InputType.TYPE_NUMBER_FLAG_DECIMAL|InputType.TYPE_NUMBER_FLAG_SIGNED);
                     break;
                 case "Fecha":
-                    editText.setHint("dd/MM/YYYY");
-                    editText.setInputType(InputType.TYPE_CLASS_DATETIME|
+                    editText2.setHint("dd/MM/YYYY");
+                    editText2.setInputType(InputType.TYPE_CLASS_DATETIME|
                             InputType.TYPE_DATETIME_VARIATION_DATE);
                     break;
             }
 
-//            editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//                @Override
-//                public void onFocusChange(View v, boolean hasFocus) {
-//                    if(!hasFocus){
-//                        //Log.w("IDEdit", " --> "+editText.getId());
-//                        RespAbierta respAbierta = dbHelper.getRespAbierta(editText.getTag().toString());
-//                        if (respAbierta != null){
-//                            respAbierta.setValor(editText.getText().toString());
-//                            dbHelper.updateRespAbierta(respAbierta);
-//                        }else {
-//                            respAbierta = new RespAbierta();
-//                            respAbierta.setTag(editText.getTag().toString());
-//                            respAbierta.setValor(editText.getText().toString());
-////                            respAbierta.setId_ficha(id_ficha);
-//                            dbHelper.addRespAbierta(respAbierta);
-//                        }
-//                    }
-//                }
-//            });
+            editText2.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if(!hasFocus){
+//                       ID's = [encuesta, pregunta, otro]
+                        List<Integer> ids = getIds(editText2.getTag().toString());
 
-            linearLayout.addView(editText);
+                        Ficha ficha = dbHelper.getFicha(ids.get(0), ids.get(1));
+                        if (ficha == null){
+                            ficha = new Ficha();
+                            ficha.setEncuesta_id(ids.get(0));
+                            ficha.setPregunta_id(ids.get(1));
+                            ficha.setId((int) dbHelper.addFicha(ficha));
+                        }
+
+                        RespOtro respOtro = dbHelper.getRespOtro(editText2.getTag().toString());
+                        if (respOtro != null){
+                            if (!editText2.getText().toString().trim().equals("")){
+                                respOtro.setValor(editText2.getText().toString());
+                                dbHelper.updateRespOtro(respOtro);
+                            }else {
+                                dbHelper.deleteRespOtro(editText2.getTag().toString());
+                            }
+                        }else {
+                            if (!editText2.getText().toString().trim().equals("")){
+                                respOtro = new RespOtro();
+                                respOtro.setTag(editText2.getTag().toString());
+                                respOtro.setValor(editText2.getText().toString());
+                                respOtro.setFicha_id(ficha.getId());
+                                respOtro.setOtro_id(ids.get(2));
+                                long i = dbHelper.addRespOtro(respOtro);
+                                Log.w("tagss_insertando", ""+i);
+                            }
+                        }
+                    }
+                }
+            });
+
+            linearLayout.addView(editText2);
 
         }
     }
@@ -316,12 +341,21 @@ public class GeneradorEncuesta {
 
     public void cargarUltimo(int encuesta_id){
         List<Ficha> fichas = dbHelper.getFichas(encuesta_id);
+
         for(Ficha ficha : fichas){
             List<RespAbierta> abiertas = dbHelper.getRespAbiertas(ficha.getId());
+            List<RespOtro> otros = dbHelper.getRespOtros(ficha.getId());
 
             for(RespAbierta abierta : abiertas){
                 EditText editText = (EditText) view.findViewWithTag(abierta.getTag());
                 editText.setText(abierta.getValor());
+            }
+
+//            Log.w("tagss_otros", ""+otros.size());
+            for(RespOtro respOtro : otros){
+
+                EditText editText = (EditText) view.findViewWithTag(respOtro.getTag());
+                editText.setText(respOtro.getValor());
             }
         }
 
