@@ -271,7 +271,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "SELECT * FROM encuesta WHERE estado = 'En Proceso' AND asignacion_id = " + asignacion_id;
+        String query = "SELECT * FROM encuesta WHERE estado = 'En proceso' AND asignacion_id = " + asignacion_id;
         Cursor cursor = db.rawQuery(query, null);
         if (cursor != null && cursor.getCount() > 0){
             cursor.moveToFirst();

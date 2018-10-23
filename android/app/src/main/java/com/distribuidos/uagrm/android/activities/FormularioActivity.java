@@ -80,16 +80,18 @@ public class FormularioActivity extends AppCompatActivity {
 
     private void generarVista(Modelo modelo){
         generador = new GeneradorEncuesta(getApplicationContext(), getView());
-        generador.generarVista(modelo);
+
+        Log.w("asignacion_id", ""+asignacion.getId());
+
         Encuesta encuesta = dbHelper.getLastEncuesta(asignacion.getId());
-
-        Date date = Calendar.getInstance().getTime();
-
-        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy HH:mm");
-        String fecha = df.format(date);
 
         if (encuesta == null){
             encuesta = new Encuesta();
+
+                Date date = Calendar.getInstance().getTime();
+                SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy HH:mm");
+                String fecha = df.format(date);
+
             encuesta.setFecha(fecha);
             encuesta.setEstado("En proceso");
             encuesta.setAsignacion_id(asignacion.getId());
@@ -97,6 +99,9 @@ public class FormularioActivity extends AppCompatActivity {
             long id = dbHelper.addEncuesta(encuesta);
             encuesta.setId((int) id);
         }
+
+        generador.generarVista(modelo, encuesta.getId());
+        generador.cargarUltimo(encuesta.getId());
     }
 
 }
