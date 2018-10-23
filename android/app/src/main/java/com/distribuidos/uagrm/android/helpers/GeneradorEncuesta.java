@@ -77,7 +77,7 @@ public class GeneradorEncuesta {
                 }else{
 
                     //Creamos el radioGroup
-                    generarOpcionesUnicas(cerrada.getId(), cerrada.getOpciones(), linearLayoutRepetido);
+                    generarOpcionesUnicas(cerrada.getId(), cerrada.getOpciones(),pregunta.getId(), encuesta_id, linearLayoutRepetido);
                 }
 
                 generarOtros(cerrada.getOtros(),pregunta.getId(), encuesta_id, linearLayoutRepetido);
@@ -106,7 +106,7 @@ public class GeneradorEncuesta {
 
         for (Opcion opcion : opciones){
             final CheckBox checkBox = new CheckBox(context);
-            checkBox.setTag(encuesta_id + "-" + pregunta_id + "-" + opcion.getId() + "-");
+            checkBox.setTag(encuesta_id + "-" + pregunta_id + "-" + opcion.getId() + "-1-");
             checkBox.setText(opcion.getTexto());
             checkBox.setTextSize(14);
 
@@ -146,19 +146,49 @@ public class GeneradorEncuesta {
     }
 
 
-    private void generarOpcionesUnicas(int id, List<Opcion> opciones, LinearLayout linearLayout) {
+    private void generarOpcionesUnicas(int id, List<Opcion> opciones, final int pregunta_id, final int encuesta_id, LinearLayout linearLayout) {
 
         RadioGroup radioGroup = new RadioGroup(context);
         radioGroup.setId(id);
         radioGroup.setOrientation(RadioGroup.VERTICAL);
 
         //Creamos los radioButtons
-        for (Opcion opcion : opciones){
+        for (final Opcion opcion : opciones){
 
-            RadioButton radioButton = new RadioButton(context);
-            radioButton.setId(opcion.getId());
+            final RadioButton radioButton = new RadioButton(context);
             radioButton.setText(opcion.getTexto());
+            radioButton.setTag(encuesta_id + "-" + pregunta_id + "-" + opcion.getId() + "-0-");
             radioButton.setTextSize(14);
+
+            radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    List<Integer> ids = getIds(radioButton.getTag().toString());
+
+                    Ficha ficha = dbHelper.getFicha(ids.get(0), ids.get(1));
+                    if (ficha == null){
+                        ficha = new Ficha();
+                        ficha.setEncuesta_id(ids.get(0));
+                        ficha.setPregunta_id(ids.get(1));
+                        ficha.setId((int) dbHelper.addFicha(ficha));
+                    }
+
+                    RespCerrada cerrada = dbHelper.getRespCerrada(radioButton.getTag().toString());
+                    if (isChecked){
+                        if (cerrada == null){
+                            cerrada = new RespCerrada();
+                            cerrada.setTag(radioButton.getTag().toString());
+                            cerrada.setFicha_id(ficha.getId());
+                            cerrada.setOpcion_id(ids.get(2));
+
+                            dbHelper.addRespCerrada(cerrada);
+                        }
+                    }else {
+                        dbHelper.deleteRespCerrada(radioButton.getTag().toString());
+                    }
+                }
+            });
+
             radioGroup.addView(radioButton);
 
 
@@ -181,7 +211,6 @@ public class GeneradorEncuesta {
 
     }
 
-
     private void generarEnunciado(Pregunta pregunta, LinearLayout linearLayout){
 
         TextView textView = new TextView(context);
@@ -202,7 +231,6 @@ public class GeneradorEncuesta {
             final EditText editText = new EditText(context);
             editText.setTag(encuesta_id + "-" + pregunta_id + "-" + campo.getId() + "-");
 
-//            Log.w("tagss_campo", editText.getTag().toString());
 
             editText.setTextSize(15);
             editText.setHint(campo.getEtiqueta());
@@ -280,8 +308,6 @@ public class GeneradorEncuesta {
             final EditText editText2 = new EditText(context);
             editText2.setTag(encuesta_id + "-" + pregunta_id + "-" + otro.getId() + "-");
 
-//            Log.w("tagss_otro", editText.getTag().toString());
-
             editText2.setTextSize(15);
             editText2.setHint(otro.getEtiqueta());
             switch (otro.getDominio().getTipoDato()){
@@ -337,8 +363,7 @@ public class GeneradorEncuesta {
                                 respOtro.setValor(editText2.getText().toString());
                                 respOtro.setFicha_id(ficha.getId());
                                 respOtro.setOtro_id(ids.get(2));
-                                long i = dbHelper.addRespOtro(respOtro);
-                                Log.w("tagss_insertando", ""+i);
+                                dbHelper.addRespOtro(respOtro);
                             }
                         }
                     }
@@ -388,17 +413,23 @@ public class GeneradorEncuesta {
                 editText.setText(abierta.getValor());
             }
 
-//            Log.w("tagss_otros", ""+otros.size());
+
             for(RespOtro respOtro : otros){
 
                 EditText editText = (EditText) view.findViewWithTag(respOtro.getTag());
                 editText.setText(respOtro.getValor());
             }
 
-            Log.w("ccc", ""+cerradas.size() );
+
             for (RespCerrada cerrada : cerradas){
-                CheckBox checkBox = (CheckBox) view.findViewWithTag(cerrada.getTag());
-                checkBox.setChecked(true);
+                List<Integer> list = getIds(cerrada.getTag());
+                if (list.get(3) == 1){
+                    CheckBox checkBox = (CheckBox) view.findViewWithTag(cerrada.getTag());
+                    checkBox.setChecked(true);
+                }else{
+                    RadioButton radioButton = (RadioButton) view.findViewWithTag(cerrada.getTag());
+                    radioButton.setChecked(true);
+                }
              }
 
         }
