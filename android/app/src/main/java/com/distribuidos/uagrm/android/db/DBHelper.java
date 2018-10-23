@@ -295,7 +295,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public List<Encuesta> getEncuestas(int asignacion_id){
         List<Encuesta> encuestas = new ArrayList<>();
 
-        String query = "SELECT * FROM encuesta WHERE asignacion_id = " + asignacion_id + " AND estado != 'En proceso' ORDER BY id DESC";
+        String query = "SELECT * FROM encuesta WHERE asignacion_id = " + asignacion_id + 
+                " AND estado != 'En proceso' ORDER BY id DESC";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst() && cursor.getCount() > 0){
@@ -318,7 +319,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public List<Encuesta> getEncuestasFinalizadas(int asignacion_id){
         List<Encuesta> encuestas = new ArrayList<>();
 
-        String query = "SELECT * FROM encuesta WHERE asignacion_id = " + asignacion_id + " AND estado = 'Finalizada'";
+        String query = "SELECT * FROM encuesta WHERE asignacion_id = " + asignacion_id + 
+                " AND estado = 'Finalizada'";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst() && cursor.getCount() > 0){
@@ -370,6 +372,30 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String query = "SELECT * FROM ficha WHERE id = " + id;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor != null && cursor.getCount() > 0){
+            cursor.moveToFirst();
+
+            Ficha ficha = new Ficha();
+            ficha.setId(cursor.getInt(0));
+            ficha.setEncuesta_id(cursor.getInt(1));
+            ficha.setPregunta_id(cursor.getInt(2));
+
+            db.close();
+            return ficha;
+
+        }
+
+        db.close();
+
+        return null;
+    }
+
+    public Ficha getFicha(int encuesta_id, int pregunta_id){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM ficha WHERE encuesta_id = " + encuesta_id + 
+                " AND pregunta_id = " + pregunta_id;
         Cursor cursor = db.rawQuery(query, null);
         if (cursor != null && cursor.getCount() > 0){
             cursor.moveToFirst();
@@ -486,6 +512,32 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String query = "SELECT * FROM resp_abierta WHERE tag = '" + tag + "'";
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor != null && cursor.getCount() > 0){
+            cursor.moveToFirst();
+
+            RespAbierta respAbierta = new RespAbierta();
+            respAbierta.setId(cursor.getInt(0));
+            respAbierta.setTag(cursor.getString(1));
+            respAbierta.setValor(cursor.getString(2));
+            respAbierta.setFicha_id(cursor.getInt(3));
+            respAbierta.setCampo_id(cursor.getInt(4));
+
+            db.close();
+            return respAbierta;
+
+        }
+
+        db.close();
+
+        return null;
+    }
+
+    public RespAbierta getRespAbierta(int ficha_id, int campo_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM resp_abierta WHERE ficha_id = " + ficha_id + " " +
+                "AND campo_id = " + campo_id;
         Cursor cursor = db.rawQuery(query, null);
         if (cursor != null && cursor.getCount() > 0){
             cursor.moveToFirst();

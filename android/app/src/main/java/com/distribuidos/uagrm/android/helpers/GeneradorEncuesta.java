@@ -26,6 +26,7 @@ import com.distribuidos.uagrm.android.entities.Pregunta;
 import com.distribuidos.uagrm.android.entities.RespAbierta;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GeneradorEncuesta {
@@ -33,14 +34,14 @@ public class GeneradorEncuesta {
     Context context;
     DBHelper dbHelper;
     View view;
-//    int id_ficha;
+
 
     public GeneradorEncuesta(Context context, View view) {
         this.context = context;
         this.dbHelper = new DBHelper(context);
         this.view = view;
         this.linearLayout = (LinearLayout) this.view.findViewById(R.id.linear_layout);;
-//        this.id_ficha = id_ficha;
+
     }
 
     public void generarVista(Modelo modelo){
@@ -83,14 +84,6 @@ public class GeneradorEncuesta {
 
     }
 
-
-
-
-
-
-
-
-
     private void generarTituloSeccion(Cerrada cerrada, LinearLayout linearLayout){
         TextView textView = new TextView(context);
         if (cerrada.isObligatoria() == 1){
@@ -103,13 +96,6 @@ public class GeneradorEncuesta {
         linearLayout.addView(textView);
 
     }
-
-
-
-
-
-
-
 
     private void generarOpcionesUnicas(int id, List<Opcion> opciones, LinearLayout linearLayout) {
 
@@ -137,7 +123,8 @@ public class GeneradorEncuesta {
 
         ImageView divider = new ImageView(context);
         LinearLayout.LayoutParams lp =
-                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
         lp.setMargins(1, 18, 1, 18);
         divider.setLayoutParams(lp);
         divider.setBackgroundColor(Color.WHITE);
@@ -184,16 +171,20 @@ public class GeneradorEncuesta {
                     editText.setInputType(InputType.TYPE_CLASS_TEXT);
                     break;
                 case "Email":
-                    editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                    editText.setInputType(InputType.TYPE_CLASS_TEXT |
+                            InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
                     break;
                 case "Entero":
-                    editText.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_SIGNED);
+                    editText.setInputType(InputType.TYPE_CLASS_NUMBER|
+                            InputType.TYPE_NUMBER_FLAG_SIGNED);
                     break;
                 case "Decimal":
-                    editText.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL|InputType.TYPE_NUMBER_FLAG_SIGNED);
+                    editText.setInputType(InputType.TYPE_CLASS_NUMBER|
+                            InputType.TYPE_NUMBER_FLAG_DECIMAL|InputType.TYPE_NUMBER_FLAG_SIGNED);
                     break;
                 case "Fecha":
-                    editText.setInputType(InputType.TYPE_CLASS_DATETIME|InputType.TYPE_DATETIME_VARIATION_DATE);
+                    editText.setInputType(InputType.TYPE_CLASS_DATETIME|
+                            InputType.TYPE_DATETIME_VARIATION_DATE);
                     break;
             }
 
@@ -201,7 +192,6 @@ public class GeneradorEncuesta {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
                     if(!hasFocus){
-                        //Log.w("IDEdit", " --> "+editText.getId());
                         RespAbierta respAbierta = dbHelper.getRespAbierta(editText.getTag().toString());
                         if (respAbierta != null){
                             respAbierta.setValor(editText.getText().toString());
@@ -210,7 +200,6 @@ public class GeneradorEncuesta {
                             respAbierta = new RespAbierta();
                             respAbierta.setTag(editText.getTag().toString());
                             respAbierta.setValor(editText.getText().toString());
-//                            respAbierta.setId_ficha(id_ficha);
                             dbHelper.addRespAbierta(respAbierta);
                         }
                     }
@@ -236,17 +225,21 @@ public class GeneradorEncuesta {
                     editText.setInputType(InputType.TYPE_CLASS_TEXT);
                     break;
                 case "Email":
-                    editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                    editText.setInputType(InputType.TYPE_CLASS_TEXT |
+                            InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
                     break;
                 case "Entero":
-                    editText.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_SIGNED);
+                    editText.setInputType(InputType.TYPE_CLASS_NUMBER|
+                            InputType.TYPE_NUMBER_FLAG_SIGNED);
                     break;
                 case "Decimal":
-                    editText.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL|InputType.TYPE_NUMBER_FLAG_SIGNED);
+                    editText.setInputType(InputType.TYPE_CLASS_NUMBER|
+                            InputType.TYPE_NUMBER_FLAG_DECIMAL|InputType.TYPE_NUMBER_FLAG_SIGNED);
                     break;
                 case "Fecha":
                     editText.setHint("dd/MM/YYYY");
-                    editText.setInputType(InputType.TYPE_CLASS_DATETIME|InputType.TYPE_DATETIME_VARIATION_DATE);
+                    editText.setInputType(InputType.TYPE_CLASS_DATETIME|
+                            InputType.TYPE_DATETIME_VARIATION_DATE);
                     break;
             }
 
@@ -304,9 +297,26 @@ public class GeneradorEncuesta {
             EditText editText = (EditText) view.findViewWithTag(abierta.getTag());
             editText.setText(abierta.getValor());
         }
+
+
      }
 
 
+
+     public List<Integer> getIds(String tag){
+         List<Integer> list = new ArrayList<>();
+         String num = "";
+         for (char c : tag.toCharArray()){
+             if(c == '-') {
+                 list.add(Integer.parseInt(num));
+                 num = "";
+             }else{
+                 num = num + c;
+             }
+         }
+
+         return list;
+     }
 
 
 
