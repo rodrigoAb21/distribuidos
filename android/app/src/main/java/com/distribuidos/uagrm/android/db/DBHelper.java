@@ -90,8 +90,8 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(query_create_asignacion);
         db.execSQL(query_create_encuesta);
         db.execSQL(query_create_ficha);
-//        db.execSQL(query_create_cerrada);
         db.execSQL(query_create_abierta);
+        db.execSQL(query_create_cerrada);
         db.execSQL(query_create_otro);
     }
 
@@ -486,8 +486,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public int deleteRespAbierta(String tag){
         SQLiteDatabase db = this.getWritableDatabase();
 
-        int x = db.delete("ficha", "tag = ?",
-                new String[]{"'" + tag + "'"});
+        int x = db.delete("resp_abierta", "tag = ?",
+                new String[]{tag});
         db.close();
 
         return x;
@@ -574,7 +574,104 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
 
-        // ------------------------------   RESP CERRADA  ----------------------------------------
+
+
+    // ------------------------------   RESP CERRADA  ----------------------------------------
+    public long addRespCerrada(RespCerrada respCerrada){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("tag", respCerrada.getTag());
+        values.put("ficha_id", respCerrada.getFicha_id());
+        values.put("opcion_id", respCerrada.getOpcion_id());
+
+        long x = db.insert("resp_cerrada", null, values);
+        db.close();
+
+        return x;
+    }
+
+    public int deleteRespCerrada(String tag){
+        SQLiteDatabase db = this.getWritableDatabase();
+        int x = db.delete("resp_cerrada", "tag = ?",
+                new String[]{tag});
+        db.close();
+        return x;
+    }
+
+    public List<RespCerrada> getRespCerradas(int ficha_id){
+        List<RespCerrada> cerradas = new ArrayList<>();
+
+        String query = "SELECT * FROM resp_cerrada WHERE ficha_id = " + ficha_id;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()){
+            do {
+
+                RespCerrada respCerrada = new RespCerrada();
+                respCerrada.setId(cursor.getInt(0));
+                respCerrada.setTag(cursor.getString(1));
+                respCerrada.setFicha_id(cursor.getInt(2));
+                respCerrada.setOpcion_id(cursor.getInt(3));
+
+                cerradas.add(respCerrada);
+            }
+            while (cursor.moveToNext());
+        }
+        db.close();
+
+        return cerradas;
+    }
+
+
+    public RespCerrada getRespCerrada(String tag) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM resp_cerrada WHERE tag = '" + tag + "'";
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor != null && cursor.getCount() > 0){
+            cursor.moveToFirst();
+
+            RespCerrada respCerrada = new RespCerrada();
+            respCerrada.setId(cursor.getInt(0));
+            respCerrada.setTag(cursor.getString(1));
+            respCerrada.setFicha_id(cursor.getInt(2));
+            respCerrada.setOpcion_id(cursor.getInt(3));
+
+            db.close();
+            return respCerrada;
+
+        }
+
+        db.close();
+
+        return null;
+    }
+
+    public RespCerrada getRespCerrada(int ficha_id, int opcion_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM resp_cerrada WHERE ficha_id = " + ficha_id + " " +
+                "AND opcion_id = " + opcion_id;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor != null && cursor.getCount() > 0){
+            cursor.moveToFirst();
+
+            RespCerrada respCerrada = new RespCerrada();
+            respCerrada.setId(cursor.getInt(0));
+            respCerrada.setTag(cursor.getString(1));
+            respCerrada.setFicha_id(cursor.getInt(2));
+            respCerrada.setOpcion_id(cursor.getInt(3));
+
+            db.close();
+            return respCerrada;
+
+        }
+
+        db.close();
+
+        return null;
+    }
 
 
 
@@ -622,7 +719,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         int x = db.delete("resp_otro", "tag = ?",
-                new String[]{"'" + tag + "'"});
+                new String[]{tag});
         db.close();
 
         return x;
@@ -681,11 +778,11 @@ public class DBHelper extends SQLiteOpenHelper {
         return null;
     }
 
-    public RespOtro getRespOtro(int ficha_id, int opcion_id) {
+    public RespOtro getRespOtro(int ficha_id, int otro_id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String query = "SELECT * FROM resp_otro WHERE ficha_id = " + ficha_id + " " +
-                "AND opcion_id = " + opcion_id;
+                "AND otro_id = " + otro_id;
         Cursor cursor = db.rawQuery(query, null);
         if (cursor != null && cursor.getCount() > 0){
             cursor.moveToFirst();
@@ -712,75 +809,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-    //CRUD ficha
-
-    // insertar un nuevo modelo
-    public long addRespCerrada(RespCerrada respCerrada){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        values.put("id_view", respCerrada.getId_view());
-        values.put("estado", respCerrada.getEstado());
-        values.put("id_ficha", respCerrada.getId_ficha());
-
-        long x = db.insert("resp_cerrada", null, values);
-        db.close();
-
-        return x;
-    }
-
-    public int updateRespCerrada(RespCerrada respCerrada){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        values.put("id_view", respCerrada.getId_view());
-        values.put("estado", respCerrada.getEstado());
-        values.put("id_ficha", respCerrada.getId_ficha());
-
-        int x = db.update("resp_cerrada", values, "id = ?",
-                new String[]{String.valueOf(respCerrada.getId())});
-        db.close();
-
-        return x;
-    }
-
-    // obtener todas las Respuestas Abiertas
-    public List<RespAbierta> getRespCerradas(int id_ficha){
-        List<RespAbierta> abiertaList = new ArrayList<>();
-
-        String query = "SELECT * FROM resp_cerrada WHERE id_ficha = " + id_ficha;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(query, null);
-        if (cursor.moveToFirst()){
-            do {
-
-                RespAbierta respAbierta = new RespAbierta();
-
-                respAbierta.setId(cursor.getInt(0));
-//                respAbierta.setId_view(cursor.getString(1));
-                respAbierta.setValor(cursor.getString(2));
-//                respAbierta.setId_ficha(cursor.getInt(3));
-
-                abiertaList.add(respAbierta);
-            }
-            while (cursor.moveToNext());
-        }
-        db.close();
-
-        return abiertaList;
-    }
 
 
 

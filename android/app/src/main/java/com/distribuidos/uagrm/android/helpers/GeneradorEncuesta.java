@@ -8,6 +8,7 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,6 +27,7 @@ import com.distribuidos.uagrm.android.entities.Opcion;
 import com.distribuidos.uagrm.android.entities.Otro;
 import com.distribuidos.uagrm.android.entities.Pregunta;
 import com.distribuidos.uagrm.android.entities.RespAbierta;
+import com.distribuidos.uagrm.android.entities.RespCerrada;
 import com.distribuidos.uagrm.android.entities.RespOtro;
 
 
@@ -71,7 +73,7 @@ public class GeneradorEncuesta {
 
                 if (cerrada.getTipoSeleccion().equals("Multiple")){
                     //Creamos el checkbox
-                    generarOpcionesMultiples(cerrada.getOpciones(), linearLayoutRepetido);
+                    generarOpcionesMultiples(cerrada.getOpciones(),pregunta.getId(), encuesta_id, linearLayoutRepetido);
                 }else{
 
                     //Creamos el radioGroup
@@ -99,6 +101,50 @@ public class GeneradorEncuesta {
         linearLayout.addView(textView);
 
     }
+
+    private void generarOpcionesMultiples(List<Opcion> opciones, int pregunta_id, int encuesta_id, LinearLayout linearLayout) {
+
+        for (Opcion opcion : opciones){
+            final CheckBox checkBox = new CheckBox(context);
+            checkBox.setTag(encuesta_id + "-" + pregunta_id + "-" + opcion.getId() + "-");
+            checkBox.setText(opcion.getTexto());
+            checkBox.setTextSize(14);
+
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    List<Integer> ids = getIds(checkBox.getTag().toString());
+
+                    Ficha ficha = dbHelper.getFicha(ids.get(0), ids.get(1));
+                    if (ficha == null){
+                        ficha = new Ficha();
+                        ficha.setEncuesta_id(ids.get(0));
+                        ficha.setPregunta_id(ids.get(1));
+                        ficha.setId((int) dbHelper.addFicha(ficha));
+                    }
+
+                    RespCerrada cerrada = dbHelper.getRespCerrada(checkBox.getTag().toString());
+                    if (isChecked){
+                        if (cerrada == null){
+                            cerrada = new RespCerrada();
+                            cerrada.setTag(checkBox.getTag().toString());
+                            cerrada.setFicha_id(ficha.getId());
+                            cerrada.setOpcion_id(ids.get(2));
+
+                            dbHelper.addRespCerrada(cerrada);
+                        }
+                    }else {
+                        dbHelper.deleteRespCerrada(checkBox.getTag().toString());
+                    }
+                }
+            });
+
+
+            linearLayout.addView(checkBox);
+        }
+
+    }
+
 
     private void generarOpcionesUnicas(int id, List<Opcion> opciones, LinearLayout linearLayout) {
 
@@ -135,17 +181,6 @@ public class GeneradorEncuesta {
 
     }
 
-    private void generarOpcionesMultiples(List<Opcion> opciones, LinearLayout linearLayout) {
-
-        for (Opcion opcion : opciones){
-            CheckBox checkBox = new CheckBox(context);
-            checkBox.setId(opcion.getId());
-            checkBox.setText(opcion.getTexto());
-            checkBox.setTextSize(14);
-            linearLayout.addView(checkBox);
-        }
-
-    }
 
     private void generarEnunciado(Pregunta pregunta, LinearLayout linearLayout){
 
@@ -345,6 +380,8 @@ public class GeneradorEncuesta {
         for(Ficha ficha : fichas){
             List<RespAbierta> abiertas = dbHelper.getRespAbiertas(ficha.getId());
             List<RespOtro> otros = dbHelper.getRespOtros(ficha.getId());
+            List<RespCerrada> cerradas = dbHelper.getRespCerradas(ficha.getId());
+
 
             for(RespAbierta abierta : abiertas){
                 EditText editText = (EditText) view.findViewWithTag(abierta.getTag());
@@ -357,6 +394,13 @@ public class GeneradorEncuesta {
                 EditText editText = (EditText) view.findViewWithTag(respOtro.getTag());
                 editText.setText(respOtro.getValor());
             }
+
+            Log.w("ccc", ""+cerradas.size() );
+            for (RespCerrada cerrada : cerradas){
+                CheckBox checkBox = (CheckBox) view.findViewWithTag(cerrada.getTag());
+                checkBox.setChecked(true);
+             }
+
         }
 
 

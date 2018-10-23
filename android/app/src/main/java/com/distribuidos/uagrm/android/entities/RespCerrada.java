@@ -2,9 +2,9 @@ package com.distribuidos.uagrm.android.entities;
 
 public class RespCerrada {
     private int id;
-    private String id_view;
-    private int estado;
-    private int id_ficha;
+    private String tag;
+    private int ficha_id;
+    private int opcion_id;
 
     public RespCerrada(){
 
@@ -18,27 +18,27 @@ public class RespCerrada {
         this.id = id;
     }
 
-    public String getId_view() {
-        return id_view;
+    public String getTag() {
+        return tag;
     }
 
-    public void setId_view(String id_view) {
-        this.id_view = id_view;
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
-    public int getEstado() {
-        return estado;
+    public int getFicha_id() {
+        return ficha_id;
     }
 
-    public void setEstado(int estado) {
-        this.estado = estado;
+    public void setFicha_id(int ficha_id) {
+        this.ficha_id = ficha_id;
     }
 
-    public int getId_ficha() {
-        return id_ficha;
+    public int getOpcion_id() {
+        return opcion_id;
     }
 
-    public void setId_ficha(int id_ficha) {
-        this.id_ficha = id_ficha;
+    public void setOpcion_id(int opcion_id) {
+        this.opcion_id = opcion_id;
     }
 }
