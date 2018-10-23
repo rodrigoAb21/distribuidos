@@ -10,9 +10,9 @@ class RespCerrada extends Model
     protected $primaryKey = 'id';
     public $timestamps = false;
     protected $fillable = [
+        'tag',
+        'ficha_id',
         'opcion_id',
-        'ficha_resp_id',
-        'empresa_id'
     ];
 
     public function opcion(){

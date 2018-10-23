@@ -1,6 +1,7 @@
 package com.distribuidos.uagrm.android.network;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -8,10 +9,15 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 import com.distribuidos.uagrm.android.entities.AccessToken;
+import com.distribuidos.uagrm.android.entities.EncuestaAPI;
+import com.distribuidos.uagrm.android.entities.Encuestas;
 import com.distribuidos.uagrm.android.responses.AsignacionResponse;
 import com.distribuidos.uagrm.android.responses.ModeloResponse;
 import com.distribuidos.uagrm.android.responses.CabeceraResponse;
 import com.distribuidos.uagrm.android.responses.ModelosResponse;
+import com.google.gson.Gson;
+
+import java.util.List;
 
 public interface ApiService {
 
@@ -29,6 +35,9 @@ public interface ApiService {
 
     @GET("asignaciones")
     Call<AsignacionResponse> asignaciones();
+
+    @POST("encuestas")
+    Call<String> enviarEncuestas(@Body Encuestas encuestas);
 
 
 

@@ -15,7 +15,7 @@ class Encuesta extends Model
         //'longitud',
         //'latitud',
         'asignacion_id',
-        'empresa_id'
+//        'empresa_id'
     ];
 
 

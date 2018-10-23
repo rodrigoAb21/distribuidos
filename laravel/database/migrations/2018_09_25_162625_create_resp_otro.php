@@ -13,16 +13,16 @@ class CreateRespAbiertaTable extends Migration
      */
     public function up()
     {
-        Schema::create('resp_abierta', function (Blueprint $table) {
+        Schema::create('resp_otro', function (Blueprint $table) {
             $table->increments('id');
             $table->string('tag');
             $table->string('valor');
             //$table->timestamps();
 
             $table->unsignedInteger('ficha_id');
-            $table->unsignedInteger('campo_id');
+            $table->unsignedInteger('opcion_id');
             $table->foreign('ficha_id')->references('id')->on('ficha_resp')->onDelete('cascade');
-            $table->foreign('campo_id')->references('id')->on('campo')->onDelete('cascade');
+            $table->foreign('opcion_id')->references('id')->on('opcion')->onDelete('cascade');
 
         });
 
