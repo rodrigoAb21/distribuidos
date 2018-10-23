@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -32,6 +35,7 @@ public class FormularioActivity extends AppCompatActivity {
 //
     TokenManager tokenManager;
     String json_local;
+    int id_local;
     Asignacion asignacion;
     GeneradorEncuesta generador;
     DBHelper dbHelper;
@@ -52,6 +56,8 @@ public class FormularioActivity extends AppCompatActivity {
         Bundle bundle = this.getIntent().getExtras();
         if (bundle != null){
           json_local = bundle.getString("json_local");
+          id_local = bundle.getInt("id_local");
+
         }else {
             finish();
         }
@@ -61,6 +67,36 @@ public class FormularioActivity extends AppCompatActivity {
         getModelo();
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_formulario, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+
+            case R.id.menu_btn_save:
+                guardar();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void guardar() {
+        Encuesta encuesta2 = dbHelper.getLastEncuesta(asignacion.getId());
+        dbHelper.updateEncuesta(encuesta2.getId(), "Finalizada");
+
+        Intent intent = new Intent(FormularioActivity.this, EncuestaActivity.class);
+        intent.putExtra("id_local", id_local);
+        startActivity(intent);
+        finish();
+    }
+
 
     private View getView() {
         return view;
@@ -81,7 +117,6 @@ public class FormularioActivity extends AppCompatActivity {
     private void generarVista(Modelo modelo){
         generador = new GeneradorEncuesta(getApplicationContext(), getView());
 
-        Log.w("asignacion_id", ""+asignacion.getId());
 
         Encuesta encuesta = dbHelper.getLastEncuesta(asignacion.getId());
 
@@ -103,5 +138,7 @@ public class FormularioActivity extends AppCompatActivity {
         generador.generarVista(modelo, encuesta.getId());
         generador.cargarUltimo(encuesta.getId());
     }
+
+
 
 }

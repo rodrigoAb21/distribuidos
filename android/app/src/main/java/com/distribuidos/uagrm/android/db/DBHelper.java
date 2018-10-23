@@ -226,16 +226,14 @@ public class DBHelper extends SQLiteOpenHelper {
         return x;
     }
 
-    public int updateEncuesta(Encuesta encuesta){
+    public int updateEncuesta(int id, String estado){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put("fecha", encuesta.getFecha());
-        values.put("estado", encuesta.getEstado());
-        values.put("asignacion_id", encuesta.getAsignacion_id());
+        values.put("estado", estado);
 
         int x = db.update("encuesta", values, "id = ?",
-                new String[]{String.valueOf(encuesta.getId())});
+                new String[]{String.valueOf(id)});
 
         db.close();
 

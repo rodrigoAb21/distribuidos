@@ -53,8 +53,6 @@ public class EncuestaActivity extends AppCompatActivity {
             finish();
         }
 
-        Log.w("idLocal", ""+id_local);
-
         dbHelper = new DBHelper(getApplicationContext());
         asignacionLocal = dbHelper.getAsignacion(id_local);
         cargarComponentes();
@@ -102,6 +100,7 @@ public class EncuestaActivity extends AppCompatActivity {
     private void nuevaEncuesta(){
         Intent intent = new Intent(EncuestaActivity.this, FormularioActivity.class);
         intent.putExtra("json_local", asignacionLocal.getJson());
+        intent.putExtra("id_local", id_local);
         startActivity(intent);
     }
 
