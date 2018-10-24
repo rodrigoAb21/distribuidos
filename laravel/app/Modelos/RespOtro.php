@@ -14,7 +14,7 @@ class RespOtro extends Model
         'tag',
         'valor',
         'ficha_id',
-        'opcion_id',
+        'otro_id',
     ];
 
 
