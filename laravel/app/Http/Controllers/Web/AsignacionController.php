@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Modelos\Asignacion;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class AsignacionController extends Controller
 {
@@ -14,6 +16,7 @@ class AsignacionController extends Controller
      */
     public function index()
     {
+        $asignaciones = Asignacion::findOrFail(Auth::id());
         return view('asignaciones.index');
     }
 

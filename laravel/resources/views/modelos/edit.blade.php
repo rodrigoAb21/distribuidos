@@ -9,7 +9,7 @@
                     </div>
                     <div class="card-body">
                         <form id="formId" action="{{url('/modelos/'.$modelo->id)}}" method="POST" autocomplete="off">
-                            {{--{{ method_field('PATCH') }}--}}
+                            {{ method_field('PATCH') }}
                             {{csrf_field()}}
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

@@ -34,66 +34,7 @@
                                             <button class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Encuesta Inmuebles</td>
-                                        <td>Pedro Toledo</td>
-                                        <td>El Centro 1</td>
-                                        <td><span class="label label-success">Activa</span></td>
-                                        <td>41/50</td>
-                                        <td>
 
-                                            <button class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Encuesta Prestamos</td>
-                                        <td>Marcos Quiroz</td>
-                                        <td>Arenales 2</td>
-                                        <td><span class="label label-success">Activa</span></td>
-                                        <td>22/70</td>
-                                        <td>
-
-                                            <button class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Encuesta Celulares</td>
-                                        <td>Maria Lopez</td>
-                                        <td>El Centro 1</td>
-                                        <td><span class="label label-success">Activa</span></td>
-                                        <td>45/100</td>
-                                        <td>
-
-                                            <button class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>Encuesta Moda</td>
-                                        <td>Pedro Toledo</td>
-                                        <td>Equipetrol 3</td>
-                                        <td><span class="label label-default">Finalizada</span></td>
-                                        <td>60/60</td>
-                                        <td>
-
-                                            <button class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>Encuesta Tecnologia</td>
-                                        <td>Esteban Fuentes</td>
-                                        <td>Parque Industrial 1</td>
-                                        <td><span class="label label-success">Activa</span></td>
-                                        <td>77/100</td>
-                                        <td>
-
-                                            <button class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash"></i></button>
-                                        </td>
-                                    </tr>
 
                                 @include('asignaciones.modal')
 
