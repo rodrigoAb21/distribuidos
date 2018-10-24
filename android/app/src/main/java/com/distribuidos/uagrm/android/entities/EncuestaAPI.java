@@ -1,12 +1,15 @@
 package com.distribuidos.uagrm.android.entities;
 
-public class Encuesta {
+import java.util.List;
+
+public class EncuestaAPI {
     int id;
     String fecha;
     String estado;
     int asignacion_id;
+    List<FichaAPI> fichas;
 
-    public Encuesta() {
+    public EncuestaAPI() {
     }
 
     public int getId() {
@@ -39,5 +42,13 @@ public class Encuesta {
 
     public void setAsignacion_id(int asignacion_id) {
         this.asignacion_id = asignacion_id;
+    }
+
+    public List<FichaAPI> getFichas() {
+        return fichas;
+    }
+
+    public void setFichas(List<FichaAPI> fichas) {
+        this.fichas = fichas;
     }
 }

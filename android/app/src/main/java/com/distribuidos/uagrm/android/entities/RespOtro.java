@@ -1,16 +1,17 @@
 package com.distribuidos.uagrm.android.entities;
 
-public class RespCerrada {
+public class RespOtro {
     private int id;
     private String tag;
+    private String valor;
     private int ficha_id;
-    private int opcion_id;
+    private int otro_id;
 
-    public RespCerrada(){
-
+    public RespOtro() {
     }
 
     public int getId() {
+
         return id;
     }
 
@@ -26,6 +27,14 @@ public class RespCerrada {
         this.tag = tag;
     }
 
+    public String getValor() {
+        return valor;
+    }
+
+    public void setValor(String valor) {
+        this.valor = valor;
+    }
+
     public int getFicha_id() {
         return ficha_id;
     }
@@ -34,11 +43,11 @@ public class RespCerrada {
         this.ficha_id = ficha_id;
     }
 
-    public int getOpcion_id() {
-        return opcion_id;
+    public int getOtro_id() {
+        return otro_id;
     }
 
-    public void setOpcion_id(int opcion_id) {
-        this.opcion_id = opcion_id;
+    public void setOtro_id(int otro_id) {
+        this.otro_id = otro_id;
     }
 }

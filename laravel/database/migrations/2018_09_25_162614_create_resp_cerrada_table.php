@@ -15,12 +15,13 @@ class CreateRespCerradaTable extends Migration
     {
         Schema::create('resp_cerrada', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('tag');
             //$table->timestamps();
 
+            $table->unsignedInteger('ficha_id');
             $table->unsignedInteger('opcion_id');
-            $table->unsignedInteger('ficha_resp_id');
+            $table->foreign('ficha_id')->references('id')->on('ficha_resp')->onDelete('cascade');
             $table->foreign('opcion_id')->references('id')->on('opcion')->onDelete('cascade');
-            $table->foreign('ficha_resp_id')->references('id')->on('ficha_resp')->onDelete('cascade');
 
         });
     }

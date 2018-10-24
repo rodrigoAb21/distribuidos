@@ -2,9 +2,9 @@ package com.distribuidos.uagrm.android.entities;
 
 public class Ficha {
     private int id;
-    private int id_modelo_api;
-    private int id_modelo_local;
-    private String estado;
+    private int encuesta_id;
+    private int pregunta_id;
+
 
     public Ficha() {
     }
@@ -17,27 +17,19 @@ public class Ficha {
         this.id = id;
     }
 
-    public int getId_modelo_api() {
-        return id_modelo_api;
+    public int getEncuesta_id() {
+        return encuesta_id;
     }
 
-    public void setId_modelo_api(int id_modelo_api) {
-        this.id_modelo_api = id_modelo_api;
+    public void setEncuesta_id(int encuesta_id) {
+        this.encuesta_id = encuesta_id;
     }
 
-    public int getId_modelo_local() {
-        return id_modelo_local;
+    public int getPregunta_id() {
+        return pregunta_id;
     }
 
-    public void setId_modelo_local(int id_modelo_local) {
-        this.id_modelo_local = id_modelo_local;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setPregunta_id(int pregunta_id) {
+        this.pregunta_id = pregunta_id;
     }
 }

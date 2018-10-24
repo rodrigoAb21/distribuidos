@@ -9,10 +9,13 @@ import android.util.Log;
 
 import com.distribuidos.uagrm.android.entities.Asignacion;
 import com.distribuidos.uagrm.android.entities.AsignacionLocal;
+import com.distribuidos.uagrm.android.entities.Encuesta;
 import com.distribuidos.uagrm.android.entities.Ficha;
 import com.distribuidos.uagrm.android.entities.MLocal;
+import com.distribuidos.uagrm.android.entities.Otro;
 import com.distribuidos.uagrm.android.entities.RespAbierta;
 import com.distribuidos.uagrm.android.entities.RespCerrada;
+import com.distribuidos.uagrm.android.entities.RespOtro;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,28 +37,46 @@ public class DBHelper extends SQLiteOpenHelper {
             "); ";
 
 
+    String query_create_encuesta = "CREATE TABLE `encuesta` (" +
+            " `id` INTEGER PRIMARY KEY AUTOINCREMENT," +
+            " `fecha` TEXT NOT NULL," +
+            " `estado` TEXT NOT NULL," +
+            " `asignacion_id` INTEGER NOT NULL" +
+            "); ";
+
+
 
     String query_create_ficha = "CREATE TABLE `ficha` (" +
             " `id` INTEGER PRIMARY KEY AUTOINCREMENT," +
-            " `id_modelo_api` INTEGER NOT NULL," +
-            " `id_modelo_local` INTEGER NOT NULL," +
-            " `estado` TEXT NOT NULL" +
+            " `encuesta_id` INTEGER NOT NULL," +
+            " `pregunta_id` INTEGER NOT NULL" +
             "); ";
 
-    String query_create_cerrada = "CREATE TABLE `resp_cerrada` (" +
-            " `id` INTEGER PRIMARY KEY AUTOINCREMENT," +
-            " `id_view` TEXT NOT NULL," +
-            " `estado` INTEGER NOT NULL," +
-            " `id_ficha` INTEGER NOT NULL" +
-            "); ";
+
 
     String query_create_abierta = "CREATE TABLE `resp_abierta` (" +
             " `id` INTEGER PRIMARY KEY AUTOINCREMENT," +
             " `tag` TEXT NOT NULL," +
             " `valor` TEXT NOT NULL," +
-            " `id_ficha` INTEGER NOT NULL" +
+            " `ficha_id` INTEGER NOT NULL," +
+            " `campo_id` INTEGER NOT NULL" +
             "); ";
 
+
+    String query_create_cerrada = "CREATE TABLE `resp_cerrada` (" +
+            " `id` INTEGER PRIMARY KEY AUTOINCREMENT," +
+            " `tag` TEXT NOT NULL," +
+            " `ficha_id` INTEGER NOT NULL," +
+            " `opcion_id` INTEGER NOT NULL" +
+            "); ";
+
+    String query_create_otro = "CREATE TABLE `resp_otro` (" +
+            " `id` INTEGER PRIMARY KEY AUTOINCREMENT," +
+            " `tag` TEXT NOT NULL," +
+            " `valor` TEXT NOT NULL," +
+            " `ficha_id` INTEGER NOT NULL," +
+            " `otro_id` INTEGER NOT NULL" +
+            "); ";
 
 
 
@@ -67,9 +88,11 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(query_create_asignacion);
-//        db.execSQL(query_create_ficha);
-//        db.execSQL(query_create_cerrada);
-//        db.execSQL(query_create_abierta);
+        db.execSQL(query_create_encuesta);
+        db.execSQL(query_create_ficha);
+        db.execSQL(query_create_abierta);
+        db.execSQL(query_create_cerrada);
+        db.execSQL(query_create_otro);
     }
 
     @Override
@@ -81,6 +104,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
     // Funciones
+
+    // ------------------------------   ASIGNACION   -------------------------------------------
 
     public long addAsignacion(AsignacionLocal asignacion){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -157,7 +182,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return null;
     }
 
-
     public List<AsignacionLocal> getAsignaciones(){
         List<AsignacionLocal> asignaciones = new ArrayList<>();
 
@@ -186,17 +210,157 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
 
+    // ------------------------------   ENCUESTA   -------------------------------------------
 
-    //CRUD ficha
+    public long addEncuesta(Encuesta encuesta){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
 
-    // insertar un nuevo modelo
+        values.put("fecha", encuesta.getFecha());
+        values.put("estado", encuesta.getEstado());
+        values.put("asignacion_id", encuesta.getAsignacion_id());
+
+        long x = db.insert("encuesta", null, values);
+        db.close();
+
+        return x;
+    }
+
+    public int updateEncuesta(int id, String estado){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("estado", estado);
+
+        int x = db.update("encuesta", values, "id = ?",
+                new String[]{String.valueOf(id)});
+
+        db.close();
+
+        return x;
+
+    }
+
+    public int deleteEncuesta(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int x = db.delete("encuesta", "id = ?",
+                new String[]{String.valueOf(id)});
+        db.close();
+
+        return x;
+    }
+
+    public Encuesta getEncuesta(int id){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM encuesta WHERE id = " + id;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor != null && cursor.getCount() > 0){
+            cursor.moveToFirst();
+
+            Encuesta encuesta = new Encuesta();
+            encuesta.setId(cursor.getInt(0));
+            encuesta.setFecha(cursor.getString(1));
+            encuesta.setEstado(cursor.getString(2));
+            encuesta.setAsignacion_id(cursor.getInt(3));
+
+            db.close();
+            return encuesta;
+
+        }
+
+        db.close();
+
+        return null;
+    }
+
+    public Encuesta getLastEncuesta(int asignacion_id){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM encuesta WHERE estado = 'En proceso' AND asignacion_id = "
+                + asignacion_id;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor != null && cursor.getCount() > 0){
+            cursor.moveToFirst();
+
+            Encuesta encuesta = new Encuesta();
+            encuesta.setId(cursor.getInt(0));
+            encuesta.setFecha(cursor.getString(1));
+            encuesta.setEstado(cursor.getString(2));
+            encuesta.setAsignacion_id(cursor.getInt(3));
+
+            db.close();
+            return encuesta;
+
+        }
+
+        db.close();
+
+        return null;
+    }
+
+    public List<Encuesta> getEncuestas(int asignacion_id){
+        List<Encuesta> encuestas = new ArrayList<>();
+
+        String query = "SELECT * FROM encuesta WHERE asignacion_id = " + asignacion_id + 
+                " AND estado != 'En proceso' ORDER BY id DESC";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst() && cursor.getCount() > 0){
+            do {
+                Encuesta encuesta = new Encuesta();
+
+                encuesta.setId(cursor.getInt(0));
+                encuesta.setFecha(cursor.getString(1));
+                encuesta.setEstado(cursor.getString(2));
+                encuesta.setAsignacion_id(cursor.getInt(3));
+
+                encuestas.add(encuesta);
+            }
+            while (cursor.moveToNext());
+        }
+        db.close();
+        return encuestas;
+    }
+
+    public List<Encuesta> getEncuestasFinalizadas(int asignacion_id){
+        List<Encuesta> encuestas = new ArrayList<>();
+
+        String query = "SELECT * FROM encuesta WHERE asignacion_id = " + asignacion_id + 
+                " AND estado = 'Finalizada'";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst() && cursor.getCount() > 0){
+            do {
+                Encuesta encuesta = new Encuesta();
+
+                encuesta.setId(cursor.getInt(0));
+                encuesta.setFecha(cursor.getString(1));
+                encuesta.setEstado(cursor.getString(2));
+                encuesta.setAsignacion_id(cursor.getInt(3));
+
+                encuestas.add(encuesta);
+            }
+            while (cursor.moveToNext());
+        }
+        db.close();
+        return encuestas;
+    }
+
+
+
+
+    // ------------------------------   FICHA   -------------------------------------------
+
     public long addFicha(Ficha ficha){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put("id_modelo_api", ficha.getId_modelo_api());
-        values.put("id_modelo_local", ficha.getId_modelo_local());
-        values.put("estado", "No finalizada");
+        values.put("encuesta_id", ficha.getEncuesta_id());
+        values.put("pregunta_id", ficha.getPregunta_id());
 
         long x = db.insert("ficha", null, values);
         db.close();
@@ -204,33 +368,28 @@ public class DBHelper extends SQLiteOpenHelper {
         return x;
     }
 
-    public int updateficha(Ficha ficha){
+    public int deleteFicha(int id){
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
 
-        values.put("estado", ficha.getEstado());
-
-        int x = db.update("ficha", values, "id = ?",
-                new String[]{String.valueOf(ficha.getId())});
+        int x = db.delete("ficha", "id = ?",
+                new String[]{String.valueOf(id)});
         db.close();
 
         return x;
     }
 
-    // obtener la ultima ficha en editar por id del modelo local
-    public Ficha getLastFicha(int id_modelo_local){
+    public Ficha getFicha(int id){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "SELECT * FROM ficha WHERE id_modelo_local = " + id_modelo_local + " AND estado = 'No finalizada'";
+        String query = "SELECT * FROM ficha WHERE id = " + id;
         Cursor cursor = db.rawQuery(query, null);
         if (cursor != null && cursor.getCount() > 0){
             cursor.moveToFirst();
 
             Ficha ficha = new Ficha();
             ficha.setId(cursor.getInt(0));
-            ficha.setId_modelo_api(cursor.getInt(1));
-            ficha.setId_modelo_local(cursor.getInt(2));
-            ficha.setEstado(cursor.getString(3));
+            ficha.setEncuesta_id(cursor.getInt(1));
+            ficha.setPregunta_id(cursor.getInt(2));
 
             db.close();
             return ficha;
@@ -242,44 +401,66 @@ public class DBHelper extends SQLiteOpenHelper {
         return null;
     }
 
+    public Ficha getFicha(int encuesta_id, int pregunta_id){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM ficha WHERE encuesta_id = " + encuesta_id + 
+                " AND pregunta_id = " + pregunta_id;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor != null && cursor.getCount() > 0){
+            cursor.moveToFirst();
+
+            Ficha ficha = new Ficha();
+            ficha.setId(cursor.getInt(0));
+            ficha.setEncuesta_id(cursor.getInt(1));
+            ficha.setPregunta_id(cursor.getInt(2));
+
+            db.close();
+            return ficha;
+
+        }
+
+        db.close();
+
+        return null;
+    }
+
+    public List<Ficha> getFichas(int encuesta_id){
+        List<Ficha> fichas = new ArrayList<>();
+
+        String query = "SELECT * FROM ficha WHERE encuesta_id = " + encuesta_id;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst() && cursor.getCount() > 0){
+            do {
+                Ficha ficha = new Ficha();
+                ficha.setId(cursor.getInt(0));
+                ficha.setEncuesta_id(cursor.getInt(1));
+                ficha.setPregunta_id(cursor.getInt(2));
+
+                fichas.add(ficha);
+            }
+            while (cursor.moveToNext());
+        }
+        db.close();
+        return fichas;
+    }
 
 
 
 
 
 
+    // ------------------------------   RESP ABIERTA   ----------------------------------------
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //CRUD ficha
-
-    // insertar un nuevo modelo
     public long addRespAbierta(RespAbierta respAbierta){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         values.put("tag", respAbierta.getTag());
         values.put("valor", respAbierta.getValor());
-        values.put("id_ficha", respAbierta.getId_ficha());
+        values.put("ficha_id", respAbierta.getFicha_id());
+        values.put("campo_id", respAbierta.getCampo_id());
 
         long x = db.insert("resp_abierta", null, values);
         db.close();
@@ -300,11 +481,20 @@ public class DBHelper extends SQLiteOpenHelper {
         return x;
     }
 
-    // obtener todas las Respuestas Abiertas
-    public List<RespAbierta> getRespAbiertas(int id_ficha){
+    public int deleteRespAbierta(String tag){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int x = db.delete("resp_abierta", "tag = ?",
+                new String[]{tag});
+        db.close();
+
+        return x;
+    }
+
+    public List<RespAbierta> getRespAbiertas(int ficha_id){
         List<RespAbierta> abiertaList = new ArrayList<>();
 
-        String query = "SELECT * FROM resp_abierta WHERE id_ficha = " + id_ficha;
+        String query = "SELECT * FROM resp_abierta WHERE ficha_id = " + ficha_id;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()){
@@ -315,7 +505,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 respAbierta.setId(cursor.getInt(0));
                 respAbierta.setTag(cursor.getString(1));
                 respAbierta.setValor(cursor.getString(2));
-                respAbierta.setId_ficha(cursor.getInt(3));
+                respAbierta.setFicha_id(cursor.getInt(3));
+                respAbierta.setCampo_id(cursor.getInt(4));
 
                 abiertaList.add(respAbierta);
             }
@@ -339,11 +530,139 @@ public class DBHelper extends SQLiteOpenHelper {
             respAbierta.setId(cursor.getInt(0));
             respAbierta.setTag(cursor.getString(1));
             respAbierta.setValor(cursor.getString(2));
-            respAbierta.setId_ficha(cursor.getInt(3));
-
+            respAbierta.setFicha_id(cursor.getInt(3));
+            respAbierta.setCampo_id(cursor.getInt(4));
 
             db.close();
             return respAbierta;
+
+        }
+
+        db.close();
+
+        return null;
+    }
+
+    public RespAbierta getRespAbierta(int ficha_id, int campo_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM resp_abierta WHERE ficha_id = " + ficha_id + " " +
+                "AND campo_id = " + campo_id;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor != null && cursor.getCount() > 0){
+            cursor.moveToFirst();
+
+            RespAbierta respAbierta = new RespAbierta();
+            respAbierta.setId(cursor.getInt(0));
+            respAbierta.setTag(cursor.getString(1));
+            respAbierta.setValor(cursor.getString(2));
+            respAbierta.setFicha_id(cursor.getInt(3));
+            respAbierta.setCampo_id(cursor.getInt(4));
+
+            db.close();
+            return respAbierta;
+
+        }
+
+        db.close();
+
+        return null;
+    }
+
+
+
+
+
+
+    // ------------------------------   RESP CERRADA  ----------------------------------------
+    public long addRespCerrada(RespCerrada respCerrada){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("tag", respCerrada.getTag());
+        values.put("ficha_id", respCerrada.getFicha_id());
+        values.put("opcion_id", respCerrada.getOpcion_id());
+
+        long x = db.insert("resp_cerrada", null, values);
+        db.close();
+
+        return x;
+    }
+
+    public int deleteRespCerrada(String tag){
+        SQLiteDatabase db = this.getWritableDatabase();
+        int x = db.delete("resp_cerrada", "tag = ?",
+                new String[]{tag});
+        db.close();
+        return x;
+    }
+
+    public List<RespCerrada> getRespCerradas(int ficha_id){
+        List<RespCerrada> cerradas = new ArrayList<>();
+
+        String query = "SELECT * FROM resp_cerrada WHERE ficha_id = " + ficha_id;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()){
+            do {
+
+                RespCerrada respCerrada = new RespCerrada();
+                respCerrada.setId(cursor.getInt(0));
+                respCerrada.setTag(cursor.getString(1));
+                respCerrada.setFicha_id(cursor.getInt(2));
+                respCerrada.setOpcion_id(cursor.getInt(3));
+
+                cerradas.add(respCerrada);
+            }
+            while (cursor.moveToNext());
+        }
+        db.close();
+
+        return cerradas;
+    }
+
+
+    public RespCerrada getRespCerrada(String tag) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM resp_cerrada WHERE tag = '" + tag + "'";
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor != null && cursor.getCount() > 0){
+            cursor.moveToFirst();
+
+            RespCerrada respCerrada = new RespCerrada();
+            respCerrada.setId(cursor.getInt(0));
+            respCerrada.setTag(cursor.getString(1));
+            respCerrada.setFicha_id(cursor.getInt(2));
+            respCerrada.setOpcion_id(cursor.getInt(3));
+
+            db.close();
+            return respCerrada;
+
+        }
+
+        db.close();
+
+        return null;
+    }
+
+    public RespCerrada getRespCerrada(int ficha_id, int opcion_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM resp_cerrada WHERE ficha_id = " + ficha_id + " " +
+                "AND opcion_id = " + opcion_id;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor != null && cursor.getCount() > 0){
+            cursor.moveToFirst();
+
+            RespCerrada respCerrada = new RespCerrada();
+            respCerrada.setId(cursor.getInt(0));
+            respCerrada.setTag(cursor.getString(1));
+            respCerrada.setFicha_id(cursor.getInt(2));
+            respCerrada.setOpcion_id(cursor.getInt(3));
+
+            db.close();
+            return respCerrada;
 
         }
 
@@ -364,75 +683,130 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
 
+        // --------------------------------   RESP OTRO  ----------------------------------------
 
-
-
-
-
-
-
-
-
-
-
-
-    //CRUD ficha
-
-    // insertar un nuevo modelo
-    public long addRespCerrada(RespCerrada respCerrada){
+    public long addRespOtro(RespOtro respOtro){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put("id_view", respCerrada.getId_view());
-        values.put("estado", respCerrada.getEstado());
-        values.put("id_ficha", respCerrada.getId_ficha());
+        values.put("tag", respOtro.getTag());
+        values.put("valor", respOtro.getValor());
+        values.put("ficha_id", respOtro.getFicha_id());
+        values.put("otro_id", respOtro.getOtro_id());
 
-        long x = db.insert("resp_cerrada", null, values);
+        long x = db.insert("resp_otro", null, values);
         db.close();
 
         return x;
     }
 
-    public int updateRespCerrada(RespCerrada respCerrada){
+    public int updateRespOtro(RespOtro respOtro){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put("id_view", respCerrada.getId_view());
-        values.put("estado", respCerrada.getEstado());
-        values.put("id_ficha", respCerrada.getId_ficha());
+        values.put("valor", respOtro.getValor());
 
-        int x = db.update("resp_cerrada", values, "id = ?",
-                new String[]{String.valueOf(respCerrada.getId())});
+        int x = db.update("resp_otro", values, "id = ?",
+                new String[]{String.valueOf(respOtro.getId())});
         db.close();
 
         return x;
     }
 
-    // obtener todas las Respuestas Abiertas
-    public List<RespAbierta> getRespCerradas(int id_ficha){
-        List<RespAbierta> abiertaList = new ArrayList<>();
+    public int deleteRespOtro(String tag){
+        SQLiteDatabase db = this.getWritableDatabase();
 
-        String query = "SELECT * FROM resp_cerrada WHERE id_ficha = " + id_ficha;
+        int x = db.delete("resp_otro", "tag = ?",
+                new String[]{tag});
+        db.close();
+
+        return x;
+    }
+
+    public List<RespOtro> getRespOtros(int ficha_id){
+        List<RespOtro> otroList = new ArrayList<>();
+
+        String query = "SELECT * FROM resp_otro WHERE ficha_id = " + ficha_id;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()){
             do {
 
-                RespAbierta respAbierta = new RespAbierta();
+                RespOtro respOtro = new RespOtro();
 
-                respAbierta.setId(cursor.getInt(0));
-//                respAbierta.setId_view(cursor.getString(1));
-                respAbierta.setValor(cursor.getString(2));
-                respAbierta.setId_ficha(cursor.getInt(3));
+                respOtro.setId(cursor.getInt(0));
+                respOtro.setTag(cursor.getString(1));
+                respOtro.setValor(cursor.getString(2));
+                respOtro.setFicha_id(cursor.getInt(3));
+                respOtro.setOtro_id(cursor.getInt(4));
 
-                abiertaList.add(respAbierta);
+                otroList.add(respOtro);
             }
             while (cursor.moveToNext());
         }
         db.close();
 
-        return abiertaList;
+        return otroList;
     }
+
+
+    public RespOtro getRespOtro(String tag) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM resp_otro WHERE tag = '" + tag + "'";
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor != null && cursor.getCount() > 0){
+            cursor.moveToFirst();
+
+            RespOtro respOtro = new RespOtro();
+            respOtro.setId(cursor.getInt(0));
+            respOtro.setTag(cursor.getString(1));
+            respOtro.setValor(cursor.getString(2));
+            respOtro.setFicha_id(cursor.getInt(3));
+            respOtro.setOtro_id(cursor.getInt(4));
+
+
+            db.close();
+            return respOtro;
+
+        }
+
+        db.close();
+
+        return null;
+    }
+
+    public RespOtro getRespOtro(int ficha_id, int otro_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM resp_otro WHERE ficha_id = " + ficha_id + " " +
+                "AND otro_id = " + otro_id;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor != null && cursor.getCount() > 0){
+            cursor.moveToFirst();
+
+            RespOtro respOtro = new RespOtro();
+            respOtro.setId(cursor.getInt(0));
+            respOtro.setTag(cursor.getString(1));
+            respOtro.setValor(cursor.getString(2));
+            respOtro.setFicha_id(cursor.getInt(3));
+            respOtro.setOtro_id(cursor.getInt(4));
+
+            db.close();
+            return respOtro;
+
+        }
+
+        db.close();
+
+        return null;
+    }
+
+
+
+
+
+
 
 
 

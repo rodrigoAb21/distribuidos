@@ -18,13 +18,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.AsignacionActivity" />
         <activity
+            android:label="Asignaciones"
+            android:name=".activities.AsignacionActivity"
+            />
+        <activity
+            android:label="Encuestas"
             android:name=".activities.EncuestaActivity"
             android:parentActivityName=".activities.AsignacionActivity" />
         <activity
-            android:name=".activities.FormularioActivity"
-            android:parentActivityName=".activities.EncuestaActivity" />
+            android:label="Nueva encuesta"
+            android:name=".activities.FormularioActivity" />
 
 
     </application>
