@@ -22,67 +22,20 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-
+                                @foreach($encuestadores as $encuestador)
                                 <tr>
-                                    <td>1</td>
-                                    <td>Juan Perez</td>
-                                    <td>8498657 SC</td>
-                                    <td>79896649</td>
-                                    <td>juanperez@gmail.com</td>
+                                    <td>{{$loop->iteration}}</td>
+                                    <td>{{$encuestador->nombre}}</td>
+                                    <td>{{$encuestador->ci}}</td>
+                                    <td>{{$encuestador->telefono}}</td>
+                                    <td>{{$encuestador->email}}</td>
                                     <td><span class="label label-success">Activo</span></td>
                                     <td>
-                                        <a href="{{url('encuestadores/1/edit')}}"><button class="btn btn-warning"><i class="fa fa-pencil-alt"></i></button></a>
+                                        <a href="{{url('encuestadores/'.$encuestador->id.'/edit')}}"><button class="btn btn-warning"><i class="fa fa-pencil-alt"></i></button></a>
                                         <button class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Jose Claros</td>
-                                    <td>8494516 SC</td>
-                                    <td>79895248</td>
-                                    <td>joseclaros@gmail.com</td>
-                                    <td><span class="label label-success">Activo</span></td>
-                                    <td>
-                                        <a href="{{url('encuestadores/1/edit')}}"><button class="btn btn-warning"><i class="fa fa-pencil-alt"></i></button></a>
-                                        <button class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Ricardo Montero</td>
-                                    <td>5186249 SC</td>
-                                    <td>72342342</td>
-                                    <td>ricardomontero@gmail.com</td>
-                                    <td><span class="label label-success">Activo</span></td>
-                                    <td>
-                                        <a href="{{url('encuestadores/1/edit')}}"><button class="btn btn-warning"><i class="fa fa-pencil-alt"></i></button></a>
-                                        <button class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Roberto Rosales</td>
-                                    <td>8546128 SC</td>
-                                    <td>79894384</td>
-                                    <td>robertorosales@gmail.com</td>
-                                    <td><span class="label label-success">Activo</span></td>
-                                    <td>
-                                        <a href="{{url('encuestadores/1/edit')}}"><button class="btn btn-warning"><i class="fa fa-pencil-alt"></i></button></a>
-                                        <button class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>Pedro Toledo</td>
-                                    <td>6548123 SC</td>
-                                    <td>72349548</td>
-                                    <td>pedrotoledo@gmail.com</td>
-                                    <td><span class="label label-success">Activo</span></td>
-                                    <td>
-                                        <a href="{{url('encuestadores/1/edit')}}"><button class="btn btn-warning"><i class="fa fa-pencil-alt"></i></button></a>
-                                        <button class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash"></i></button>
-                                    </td>
-                                </tr>
+                                @endforeach
 
                                 </tbody>
 
