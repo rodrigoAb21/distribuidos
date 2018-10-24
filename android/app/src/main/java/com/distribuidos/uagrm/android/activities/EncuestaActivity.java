@@ -44,7 +44,7 @@ public class EncuestaActivity extends AppCompatActivity {
     List<Encuesta> encuestas;
     RecyclerView recyclerView;
     ApiService service;
-    retrofit2.Call<String> call;
+    retrofit2.Call<Void> call;
 
 
     @Override
@@ -156,7 +156,7 @@ public class EncuestaActivity extends AppCompatActivity {
 
         Encuestas ee = new Encuestas();
         ee.setEncuestas(encuestasAPI);
-        Log.w("GSON_API", "" + new Gson().toJson(ee));
+//        Log.w("GSON_API", "" + new Gson().toJson(ee));
 
         return ee;
     }
@@ -166,14 +166,14 @@ public class EncuestaActivity extends AppCompatActivity {
 
 
         call = service.enviarEncuestas(getEncuestasFinalizadas());
-        call.enqueue(new Callback<String>() {
+        call.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(retrofit2.Call<String> call, Response<String> response) {
-                // Imaginemos q se envio LOL
+            public void onResponse(retrofit2.Call<Void> call, Response<Void> response) {
+                Log.w("SSS", response.toString() );
             }
 
             @Override
-            public void onFailure(retrofit2.Call<String> call, Throwable t) {
+            public void onFailure(retrofit2.Call<Void> call, Throwable t) {
                 Log.w("SSS_ERROR", t.getMessage());
             }
         });

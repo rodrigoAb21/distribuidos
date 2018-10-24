@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRespAbiertaTable extends Migration
+class CreateRespOtroTable extends Migration
 {
     /**
      * Run the migrations.
@@ -20,9 +20,9 @@ class CreateRespAbiertaTable extends Migration
             //$table->timestamps();
 
             $table->unsignedInteger('ficha_id');
-            $table->unsignedInteger('opcion_id');
+            $table->unsignedInteger('otro_id');
             $table->foreign('ficha_id')->references('id')->on('ficha_resp')->onDelete('cascade');
-            $table->foreign('opcion_id')->references('id')->on('opcion')->onDelete('cascade');
+            $table->foreign('otro_id')->references('id')->on('otro')->onDelete('cascade');
 
         });
 

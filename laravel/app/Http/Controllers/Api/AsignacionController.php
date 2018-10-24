@@ -9,6 +9,7 @@ use App\Modelos\Encuesta;
 use App\Modelos\FichaResp;
 use App\Modelos\RespAbierta;
 use App\Modelos\RespCerrada;
+use App\Modelos\RespOtro;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,58 +24,61 @@ class AsignacionController extends Controller
 
     public function guardar(Request $request){
 
-        $encuestas = $request['encuestas'];
+        try{
+            $encuestas = $request['encuestas'];
 
-        foreach ($encuestas as $encuest){
-            $encuesta = new Encuesta();
-            $encuesta->fecha = $encuest['fecha'];
-            $encuesta->estado = $encuest['estado'];
-            $encuesta->asignacion_id = $encuest['asignacion_id'];
-            $encuesta->save();
+            foreach ($encuestas as $encuest){
+                $encuesta = new Encuesta();
+                $encuesta->fecha = $encuest['fecha'];
+                $encuesta->estado = $encuest['estado'];
+                $encuesta->asignacion_id = $encuest['asignacion_id'];
+                $encuesta->save();
 
-            $fichas = $encuest['fichas'];
-            foreach ($fichas as $fich){
-                $ficha = new FichaResp();
-                $ficha->encuesta_id = $encuesta->id;
-                $ficha->pregunta_id = $fich['pregunta_id'];
-                $ficha->save();
+                $fichas = $encuest['fichas'];
+                foreach ($fichas as $fich){
+                    $ficha = new FichaResp();
+                    $ficha->encuesta_id = $encuesta->id;
+                    $ficha->pregunta_id = $fich['pregunta_id'];
+                    $ficha->save();
 
-                $abiertas = $fich['respAbiertas'];
-                foreach ($abiertas as $abi){
-                    $abierta = new RespAbierta();
-                    $abierta -> tag = $abi['tag'];
-                    $abierta -> valor = $abi['valor'];
-                    $abierta -> campo_id = $abi['campo_id'];
-                    $abierta -> ficha_id = $ficha -> id;
-                    $abierta -> save();
+                    $abiertas = $fich['respAbiertas'];
+                    foreach ($abiertas as $abi){
+                        $abierta = new RespAbierta();
+                        $abierta -> tag = $abi['tag'];
+                        $abierta -> valor = $abi['valor'];
+                        $abierta -> campo_id = $abi['campo_id'];
+                        $abierta -> ficha_id = $ficha -> id;
+                        $abierta -> save();
+                    }
+
+                    $cerradas = $fich['respCerradas'];
+                    foreach ($cerradas as $cer){
+                        $cerrada = new RespCerrada();
+                        $cerrada -> tag = $cer['tag'];
+                        $cerrada -> opcion_id = $cer['opcion_id'];
+                        $cerrada -> ficha_id = $ficha -> id;
+                        $cerrada->save();
+                    }
+
+                    $otros = $fich['respOtros'];
+                    foreach ($otros as $otro){
+                        $ottro = new RespOtro();
+                        $ottro -> tag = $otro['tag'];
+                        $ottro -> valor = $otro['valor'];
+                        $ottro -> otro_id = $otro['otro_id'];
+                        $ottro -> ficha_id = $ficha -> id;
+                        $ottro -> save();
+                    }
                 }
 
-                $cerradas = $fich['respCerradas'];
-                foreach ($cerradas as $cer){
-                    $cerrada = new RespCerrada();
-                    $cerrada -> tag = $cer['tag'];
-                    $cerrada -> opcion_id = $cer['opcion_id'];
-                    $cerrada -> ficha_id = $ficha -> id;
-                    $cerrada->save();
-
-
-                }
-
-                $otros = $fich['respOtros'];
-                foreach ($otros as $otro){
-                    $ottro = new RespAbierta();
-                    $ottro -> tag = $otro['tag'];
-                    $ottro -> valor = $otro['valor'];
-                    $ottro -> opcion_id = $otro['opcion_id'];
-                    $ottro -> ficha_id = $ficha -> id;
-                    $ottro -> save();
-                }
             }
-
+            return response()->json([], 204);
+        }catch (Exception $e){
+            return response()->json([], 500);
         }
 
 
-        return response()->json([], 200);
+
 
         
     }

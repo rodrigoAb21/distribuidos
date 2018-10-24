@@ -9,13 +9,9 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 import com.distribuidos.uagrm.android.entities.AccessToken;
-import com.distribuidos.uagrm.android.entities.EncuestaAPI;
 import com.distribuidos.uagrm.android.entities.Encuestas;
 import com.distribuidos.uagrm.android.responses.AsignacionResponse;
-import com.distribuidos.uagrm.android.responses.ModeloResponse;
-import com.distribuidos.uagrm.android.responses.CabeceraResponse;
-import com.distribuidos.uagrm.android.responses.ModelosResponse;
-import com.google.gson.Gson;
+
 
 import java.util.List;
 
@@ -37,7 +33,7 @@ public interface ApiService {
     Call<AsignacionResponse> asignaciones();
 
     @POST("encuestas")
-    Call<String> enviarEncuestas(@Body Encuestas encuestas);
+    Call<Void> enviarEncuestas(@Body Encuestas encuestas);
 
 
 
