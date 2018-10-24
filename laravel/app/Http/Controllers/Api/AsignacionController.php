@@ -29,7 +29,7 @@ class AsignacionController extends Controller
 
     public function guardar(Request $request){
 
-        $encuestas = $request-> encuestas;
+        $encuestas = $request['encuestas'];
 
         foreach ($encuestas as $encuest){
             $encuesta = new Encuesta();
