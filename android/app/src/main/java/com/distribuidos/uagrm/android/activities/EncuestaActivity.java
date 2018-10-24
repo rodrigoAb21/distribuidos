@@ -71,8 +71,6 @@ public class EncuestaActivity extends AppCompatActivity {
         dbHelper = new DBHelper(getApplicationContext());
         asignacionLocal = dbHelper.getAsignacion(id_local);
         cargarComponentes();
-
-        enviar();
     }
 
 
@@ -108,6 +106,7 @@ public class EncuestaActivity extends AppCompatActivity {
                 break;
 
             case R.id.menu_btn_enviar:
+                enviar();
                 break;
         }
         return super.onOptionsItemSelected(item);

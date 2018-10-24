@@ -6,6 +6,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Modelos\Asignacion;
 use App\Modelos\Encuesta;
+use App\Modelos\FichaResp;
+use App\Modelos\RespAbierta;
+use App\Modelos\RespCerrada;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,19 +31,56 @@ class AsignacionController extends Controller
 
         $encuestas = $request-> encuestas;
 
-        foreach ($encuestas as $encuesta){
-            $encuesta2 = new Encuesta();
-            $encuesta2->fecha = $encuesta['fecha'];
-            $encuesta2->estado = $encuesta['estado'];
-            $encuesta2->asignacion_id = $encuesta['asignacion_id'];
-            $encuesta2->save();
+        foreach ($encuestas as $encuest){
+            $encuesta = new Encuesta();
+            $encuesta->fecha = $encuest['fecha'];
+            $encuesta->estado = $encuest['estado'];
+            $encuesta->asignacion_id = $encuest['asignacion_id'];
+            $encuesta->save();
 
-            foreach ()
+            $fichas = $encuest['fichas'];
+            foreach ($fichas as $fich){
+                $ficha = new FichaResp();
+                $ficha->encuesta_id = $encuesta->id;
+                $ficha->pregunta_id = $fich['ficha_id'];
+                $ficha->save();
+
+                $abiertas = $fich['respAbiertas'];
+                foreach ($abiertas as $abi){
+                    $ottro = new RespAbierta();
+                    $ottro -> tag = $abi['tag'];
+                    $ottro -> valor = $abi['valor'];
+                    $ottro -> campo_id = $abi['campo_id'];
+                    $ottro -> ficha_id = $ficha -> id;
+                    $ottro -> save();
+                }
+
+                $cerradas = $ficha['respCerradas'];
+                foreach ($cerradas as $cer){
+                    $cerrada = new RespCerrada();
+                    $cerrada -> tag = $cer['tag'];
+                    $cerrada -> opcion_id = $cer['opcion_id'];
+                    $cerrada -> ficha_id = $ficha -> id;
+                    $cerrada->save();
+
+
+                }
+
+                $otros = $ficha['respOtros'];
+                foreach ($otros as $otro){
+                    $ottro = new RespAbierta();
+                    $ottro -> tag = $otro['tag'];
+                    $ottro -> valor = $otro['valor'];
+                    $ottro -> opcion_id = $otro['opcion_id'];
+                    $ottro -> ficha_id = $ficha -> id;
+                    $ottro -> save();
+                }
+            }
+
         }
 
 
         return response()->json([], 200);
-//        return response()->json(['data' => $request->all()], 200, [], JSON_NUMERIC_CHECK);
     }
     
 }

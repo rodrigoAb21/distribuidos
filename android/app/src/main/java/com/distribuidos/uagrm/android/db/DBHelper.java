@@ -144,14 +144,12 @@ public class DBHelper extends SQLiteOpenHelper {
         return x;
     }
 
-    public int deleteAsignacion(int asignacion_id){
+    public void deleteAsignacion(int asignacion_id){
         SQLiteDatabase db = this.getWritableDatabase();
 
-        int x = db.delete("asignacion", "asignacion_id = ?",
+        db.delete("asignacion", "asignacion_id = ?",
                 new String[]{String.valueOf(asignacion_id)});
         db.close();
-
-        return x;
     }
 
     public AsignacionLocal getAsignacion(int id){
@@ -174,7 +172,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
             db.close();
             return asignacion;
-
         }
 
         db.close();
@@ -241,14 +238,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    public int deleteEncuesta(int id){
+    public void deleteEncuesta(int id){
         SQLiteDatabase db = this.getWritableDatabase();
 
-        int x = db.delete("encuesta", "id = ?",
+        db.delete("encuesta", "id = ?",
                 new String[]{String.valueOf(id)});
         db.close();
-
-        return x;
     }
 
     public Encuesta getEncuesta(int id){
@@ -368,14 +363,12 @@ public class DBHelper extends SQLiteOpenHelper {
         return x;
     }
 
-    public int deleteFicha(int id){
+    public void deleteFicha(int id){
         SQLiteDatabase db = this.getWritableDatabase();
 
-        int x = db.delete("ficha", "id = ?",
+        db.delete("ficha", "id = ?",
                 new String[]{String.valueOf(id)});
         db.close();
-
-        return x;
     }
 
     public Ficha getFicha(int id){
@@ -481,14 +474,12 @@ public class DBHelper extends SQLiteOpenHelper {
         return x;
     }
 
-    public int deleteRespAbierta(String tag){
+    public void deleteRespAbierta(String tag){
         SQLiteDatabase db = this.getWritableDatabase();
 
-        int x = db.delete("resp_abierta", "tag = ?",
+        db.delete("resp_abierta", "tag = ?",
                 new String[]{tag});
         db.close();
-
-        return x;
     }
 
     public List<RespAbierta> getRespAbiertas(int ficha_id){
@@ -589,12 +580,12 @@ public class DBHelper extends SQLiteOpenHelper {
         return x;
     }
 
-    public int deleteRespCerrada(String tag){
+    public void deleteRespCerrada(String tag){
         SQLiteDatabase db = this.getWritableDatabase();
-        int x = db.delete("resp_cerrada", "tag = ?",
+        db.delete("resp_cerrada", "tag = ?",
                 new String[]{tag});
         db.close();
-        return x;
+
     }
 
     public List<RespCerrada> getRespCerradas(int ficha_id){
@@ -713,14 +704,13 @@ public class DBHelper extends SQLiteOpenHelper {
         return x;
     }
 
-    public int deleteRespOtro(String tag){
+    public void deleteRespOtro(String tag){
         SQLiteDatabase db = this.getWritableDatabase();
 
-        int x = db.delete("resp_otro", "tag = ?",
+        db.delete("resp_otro", "tag = ?",
                 new String[]{tag});
         db.close();
 
-        return x;
     }
 
     public List<RespOtro> getRespOtros(int ficha_id){
