@@ -2,26 +2,28 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Nueva Pregunta</h5>
+                <h5 class="modal-title" id="titulo"  >Nueva Pregunta</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{url('/modelos/'.$modelo->id.'/nuevaPregunta')}}" method="POST">
+            <form id="formularioPreg" action="{{url('/modelos/'.$modelo->id.'/nuevaPregunta')}}" method="POST">
+                <input type = "hidden"  id="metodo" name="_method" >
+                {{--{{method_field('PATCH')}}--}}
                 {{csrf_field()}}
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="mr-0 ml-auto pull-right" id="tipoPregunta">
-                                <input type="radio" name="tipoP" value="1" checked>
+                                <input id="radioButtonAbierta" type="radio" name="tipoP" value="1" checked>
                                 <label>Abierta</label>
-                                <input type="radio" name="tipoP" value="0">
+                                <input id="radioButtonCerrada" type="radio" name="tipoP" value="0">
                                 <label>Cerrada</label>
                             </div>
                             <br>
                             <div class="form-group">
                                 <label>Enunciado</label>
-                                <textarea name="enunciado" class="form-control" rows="2"></textarea>
+                                <textarea name="enunciado" id = "enunciadoPreg" class="form-control" rows="2"></textarea>
                             </div>
                         </div>
 
