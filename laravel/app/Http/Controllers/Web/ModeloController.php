@@ -68,8 +68,8 @@ class ModeloController extends Controller
     public function edit($id)
     {
         $modelo = Modelo::findOrFail($id);
-        // $preguntas = $modelo -> preguntas;
-        return view('modelos.edit',['modelo'=>$modelo]);
+        $preguntas = DB::table('pregunta')->where('modelo_id', $id)->orderBy('id', 'asc')->get();
+        return view('modelos.edit',['modelo'=>$modelo,'preguntas'=>$preguntas]);
     }
 
     /**
