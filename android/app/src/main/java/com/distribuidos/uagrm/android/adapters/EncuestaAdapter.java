@@ -55,17 +55,19 @@ public class EncuestaAdapter
 
     public class ViewHolderEncuestas extends RecyclerView.ViewHolder {
 
-        TextView id, fecha;
+        TextView id, estado, fecha;
 
         public ViewHolderEncuestas(View itemView) {
             super(itemView);
 
             this.id = (TextView) itemView.findViewById(R.id.encuesta_id);
+            this.estado = (TextView) itemView.findViewById(R.id.encuesta_estado);
             this.fecha = (TextView) itemView.findViewById(R.id.encuesta_fecha);
         }
 
         public void asignarDatos(Encuesta encuesta) {
             this.id.setText(String.valueOf(encuesta.getId()));
+            this.estado.setText(encuesta.getEstado());
             this.fecha.setText(encuesta.getFecha());
         }
     }

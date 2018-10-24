@@ -348,6 +348,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
 
+
+
     // ------------------------------   FICHA   -------------------------------------------
 
     public long addFicha(Ficha ficha){
