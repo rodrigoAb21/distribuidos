@@ -14,12 +14,6 @@ use Illuminate\Support\Facades\Auth;
 
 class AsignacionController extends Controller
 {
-    private $client;
-
-    public function __construct(){
-        $this -> client = Client::find(1);
-    }
-
 
     public function obtenerTodos(){
         $asignaciones = Asignacion::with('area','modelo','modelo.preguntas', 'modelo.preguntas.cerradas', 'modelo.preguntas.campos','modelo.preguntas.campos.dominio','modelo.preguntas.cerradas.opciones', 'modelo.preguntas.cerradas.otros', 'modelo.preguntas.cerradas.otros.dominio')->where('encuestador_id', '=', Auth::user()->id)->get();
@@ -42,20 +36,20 @@ class AsignacionController extends Controller
             foreach ($fichas as $fich){
                 $ficha = new FichaResp();
                 $ficha->encuesta_id = $encuesta->id;
-                $ficha->pregunta_id = $fich['ficha_id'];
+                $ficha->pregunta_id = $fich['pregunta_id'];
                 $ficha->save();
 
                 $abiertas = $fich['respAbiertas'];
                 foreach ($abiertas as $abi){
-                    $ottro = new RespAbierta();
-                    $ottro -> tag = $abi['tag'];
-                    $ottro -> valor = $abi['valor'];
-                    $ottro -> campo_id = $abi['campo_id'];
-                    $ottro -> ficha_id = $ficha -> id;
-                    $ottro -> save();
+                    $abierta = new RespAbierta();
+                    $abierta -> tag = $abi['tag'];
+                    $abierta -> valor = $abi['valor'];
+                    $abierta -> campo_id = $abi['campo_id'];
+                    $abierta -> ficha_id = $ficha -> id;
+                    $abierta -> save();
                 }
 
-                $cerradas = $ficha['respCerradas'];
+                $cerradas = $fich['respCerradas'];
                 foreach ($cerradas as $cer){
                     $cerrada = new RespCerrada();
                     $cerrada -> tag = $cer['tag'];
@@ -66,7 +60,7 @@ class AsignacionController extends Controller
 
                 }
 
-                $otros = $ficha['respOtros'];
+                $otros = $fich['respOtros'];
                 foreach ($otros as $otro){
                     $ottro = new RespAbierta();
                     $ottro -> tag = $otro['tag'];

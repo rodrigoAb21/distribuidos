@@ -169,7 +169,7 @@ public class EncuestaActivity extends AppCompatActivity {
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(retrofit2.Call<String> call, Response<String> response) {
-                Log.w("SSS", response.body() );
+                // Imaginemos q se envio LOL
             }
 
             @Override
