@@ -81,6 +81,8 @@ class AsignacionController extends Controller
 
 
         return response()->json([], 200);
+
+        
     }
     
 }
