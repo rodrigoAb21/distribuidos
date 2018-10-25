@@ -14,12 +14,10 @@
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <div class="form-group">
                                         <label>Modelos de encuesta</label>
-                                        <select class="form-control" name="tipo">
-                                            <option value="">Encuesta Tecnologia</option>
-                                            <option value="">Encuesta Prestamos</option>
-                                            <option value="">Encuesta Inmuebles</option>
-                                            <option value="">Encuesta Celulares</option>
-                                            <option value="">Encuesta Moda</option>
+                                        <select class="form-control" name="modelo_id">
+                                            @foreach($modelos as $modelo)
+                                            <option value="{{$modelo->id}}">{{$modelo->nombre}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -27,23 +25,20 @@
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <div class="form-group">
                                         <label>Encuestador</label>
-                                        <select class="form-control" name="tipo">
-                                            <option>Roberto Rosales</option>
-                                            <option>Pedro Toledo</option>
-                                            <option>Maria Lopez</option>
-                                            <option>Marcos Quiroz</option>
+                                        <select class="form-control" name="encuestador_id">
+                                            @foreach($encuestadores as $encuestador)
+                                            <option value="{{$encuestador->id}}">{{$encuestador->nombre}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <label>Area</label>
-                                    <select class="form-control" name="tipo">
-                                        <option>El Centro 1</option>
-                                        <option>Equipetrol 3</option>
-                                        <option>Arenales 2</option>
-                                        <option>Manzana 1</option>
-                                        <option>Parque Industrial 1</option>
+                                    <select class="form-control" name="area_id">
+                                        @foreach($areas as $area)
+                                        <option value="{{$area->id}}">{{$area->nombre}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
 

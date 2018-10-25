@@ -71,15 +71,11 @@
 
                     </div>
                     @include('modelos.modales.formPreg')
-
-                    @include('modelos.modales.eliminar')
-
-
-
                 </div>
             </div>
         </div>
     </div>
+    @include('modalEliminar')
 
     @push('scripts')
         <script>
@@ -140,10 +136,10 @@
             }
 
             function eliminarPreguntaM(nombre, url) {
-                $('#formulario').attr("action", url);
-                $('#titulo').html("Eliminar pregunta");
-                $('#enunciado').html("Realmente desea eliminar la pregunta: " + nombre + "?");
-                $('#eliminar').modal('show');
+                $('#modalEliminarForm').attr("action", url);
+                $('#modalEliminarTitulo').html("Eliminar Pregunta");
+                $('#modalEliminarEnunciado').html("Realmente desea eliminar la pregunta: " + nombre + "?");
+                $('#modalEliminar').modal('show');
             }
 
             function eliminar(index) {
