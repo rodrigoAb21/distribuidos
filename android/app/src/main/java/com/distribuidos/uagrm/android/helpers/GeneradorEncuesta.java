@@ -235,7 +235,11 @@ public class GeneradorEncuesta {
 
 
             editText.setTextSize(15);
-            editText.setHint(campo.getEtiqueta());
+            if (campo.getObligatorio() == 1){
+                editText.setHint("*" + campo.getEtiqueta());
+            }else {
+                editText.setHint(campo.getEtiqueta());
+            }
 
 
             switch (campo.getDominio().getTipoDato()){
@@ -547,12 +551,8 @@ public class GeneradorEncuesta {
             //Agregando el editText que sera el input
             EditText editText = new EditText(context);
             editText.setTag(encuesta_id + "-" + pregunta_id + "-" + campo.getId() + "-");
-
-
             editText.setTextSize(15);
-            editText.setHint(campo.getEtiqueta());
             editText.setInputType(InputType.TYPE_NULL);
-
 
             linearLayout.addView(editText);
 
@@ -566,9 +566,7 @@ public class GeneradorEncuesta {
             //Agregando el editText que sera el input
             EditText editText2 = new EditText(context);
             editText2.setTag(encuesta_id + "-" + pregunta_id + "-" + otro.getId() + "-");
-
             editText2.setTextSize(15);
-            editText2.setHint(otro.getEtiqueta());
             editText2.setInputType(InputType.TYPE_NULL);
 
             linearLayout.addView(editText2);
