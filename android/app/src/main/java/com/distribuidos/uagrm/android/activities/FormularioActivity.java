@@ -88,6 +88,7 @@ public class FormularioActivity extends AppCompatActivity {
     }
 
     private void guardar() {
+        generador.guardarUltimo();
         Encuesta encuesta2 = dbHelper.getLastEncuesta(asignacion.getId());
         dbHelper.updateEncuesta(encuesta2.getId(), "Finalizada");
 
@@ -138,6 +139,9 @@ public class FormularioActivity extends AppCompatActivity {
         generador.generarVista(modelo, encuesta.getId());
         generador.cargarUltimo(encuesta.getId());
     }
+
+
+
 
 
 

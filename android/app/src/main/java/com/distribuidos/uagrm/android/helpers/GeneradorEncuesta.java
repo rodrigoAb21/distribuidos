@@ -39,6 +39,7 @@ public class GeneradorEncuesta {
     Context context;
     DBHelper dbHelper;
     View view;
+    String ultimoTag;
 
 
     public GeneradorEncuesta(Context context, View view) {
@@ -235,6 +236,7 @@ public class GeneradorEncuesta {
             editText.setTextSize(15);
             editText.setHint(campo.getEtiqueta());
 
+
             switch (campo.getDominio().getTipoDato()){
                 case "Texto":
                     editText.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -291,6 +293,8 @@ public class GeneradorEncuesta {
                             }
 
                         }
+                    }else{
+                        ultimoTag = editText.getTag().toString();
                     }
                 }
             });
@@ -366,6 +370,8 @@ public class GeneradorEncuesta {
                                 dbHelper.addRespOtro(respOtro);
                             }
                         }
+                    }else{
+                        ultimoTag = editText2.getTag().toString();
                     }
                 }
             });
@@ -374,28 +380,6 @@ public class GeneradorEncuesta {
 
         }
     }
-
-
-
-
-
-
-
-
-
-//    private void getUltimaFicha(Ficha ficha){
-//        if (ficha != null){
-//            List<RespAbierta> abiertas = dbHelper.getRespAbiertas(ficha.getId());
-//            if(abiertas.size() > 0){
-//                cargarUltimo(abiertas);
-//            }else{
-//                Log.w("listaaaa", "Esta enviando vacio!!");
-//            }
-//        }
-//    }
-//
-//
-
 
 
 
@@ -452,6 +436,14 @@ public class GeneradorEncuesta {
          }
 
          return list;
+     }
+
+
+     public void guardarUltimo(){
+        if (ultimoTag != null){
+            EditText et = (EditText) view.findViewWithTag(ultimoTag);
+            et.clearFocus();
+        }
      }
 
 

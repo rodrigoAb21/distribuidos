@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.telecom.Call;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,7 +14,6 @@ import android.view.View;
 import com.distribuidos.uagrm.android.R;
 import com.distribuidos.uagrm.android.adapters.EncuestaAdapter;
 import com.distribuidos.uagrm.android.db.DBHelper;
-import com.distribuidos.uagrm.android.entities.Asignacion;
 import com.distribuidos.uagrm.android.entities.AsignacionLocal;
 import com.distribuidos.uagrm.android.entities.Encuesta;
 import com.distribuidos.uagrm.android.entities.EncuestaAPI;
@@ -25,8 +23,6 @@ import com.distribuidos.uagrm.android.entities.FichaAPI;
 import com.distribuidos.uagrm.android.helpers.TokenManager;
 import com.distribuidos.uagrm.android.network.ApiService;
 import com.distribuidos.uagrm.android.network.RetrofitBuilder;
-import com.google.gson.Gson;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +38,7 @@ public class EncuestaActivity extends AppCompatActivity {
     AsignacionLocal asignacionLocal;
     DBHelper dbHelper;
     List<Encuesta> encuestas;
+    List<Encuesta> finalizadas;
     RecyclerView recyclerView;
     ApiService service;
     retrofit2.Call<Void> call;
@@ -123,9 +120,10 @@ public class EncuestaActivity extends AppCompatActivity {
 
 
     private Encuestas getEncuestasFinalizadas(){
+        finalizadas = dbHelper.getEncuestasFinalizadas(asignacionLocal.getAsignacion_id());
         List<EncuestaAPI> encuestasAPI = new ArrayList<>();
 
-        for (Encuesta enc : encuestas){
+        for (Encuesta enc : finalizadas){
             EncuestaAPI encuestaAPI = new EncuestaAPI();
             encuestaAPI.setId(enc.getId());
             encuestaAPI.setFecha(enc.getFecha());
@@ -156,7 +154,6 @@ public class EncuestaActivity extends AppCompatActivity {
 
         Encuestas ee = new Encuestas();
         ee.setEncuestas(encuestasAPI);
-//        Log.w("GSON_API", "" + new Gson().toJson(ee));
 
         return ee;
     }
@@ -169,7 +166,8 @@ public class EncuestaActivity extends AppCompatActivity {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(retrofit2.Call<Void> call, Response<Void> response) {
-                Log.w("SSS", response.toString() );
+                actualizarEstados();
+                cargarComponentes();
             }
 
             @Override
@@ -180,7 +178,20 @@ public class EncuestaActivity extends AppCompatActivity {
 
     }
 
+    private void actualizarEstados(){
+        for (Encuesta encuesta : finalizadas){
+            dbHelper.updateEncuesta(encuesta.getId(), "Enviada");
+        }
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(call != null){
+            call.cancel();
+            call = null;
+        }
+    }
 
 
 
