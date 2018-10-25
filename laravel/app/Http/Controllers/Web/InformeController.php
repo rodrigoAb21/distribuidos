@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Modelos\Encuesta;
+use App\Modelos\FichaResp;
 use App\Modelos\Modelo;
+use App\Modelos\Pregunta;
+use App\Modelos\RespAbierta;
+use App\Modelos\RespCerrada;
+use App\Modelos\RespOtro;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -99,16 +105,32 @@ class InformeController extends Controller
         return view('informes.listarEncuestas',['encuestas'=>$encuestas,'modelo'=>$modelo_id]);
     }
 
-    public function verEncuesta($modelo_id,$encuesta_id){
-        $preguntas = DB::table('ficha_resp')
-                        ->join('pregunta','ficha_resp.pregunta_id','pregunta.id')
-                        ->join('resp_abierta','ficha_resp.id','resp_abierta.ficha_id')
-                        ->join('resp_cerrada','ficha_resp.id','resp_cerrada.ficha_id')
-                        ->join('resp_otro','ficha_resp.id','resp_otro.ficha_id')
-                        ->join('opcion','resp_cerrada.opcion_id','opcion.id')
-                        ->where('ficha_resp.encuesta_id',$encuesta_id)
-                        ->select('pregunta.enunciado','resp_abierta.valor','opcion.texto', 'resp_otro.valor')
-                        ->get();
-            dd($preguntas);
+    public function verEncuesta($encuesta_id){
+
+        $fichas = DB::table('ficha_resp')
+            ->where('encuesta_id', '=', $encuesta_id)
+            ->select('id', 'pregunta_id')
+            ->get();
+
+        foreach ($fichas as $ficha){
+            $ficha->enunciado = DB::table('pregunta')->where('id', '=', $ficha->pregunta_id)->select('enunciado')->first();
+            $ficha->cerradas = DB::table('resp_cerrada')
+                ->join('opcion', 'resp_cerrada.opcion_id', 'opcion.id')
+                ->where('resp_cerrada.ficha_id','=',$ficha->id)
+                ->select('opcion.texto')
+                ->get();
+            $ficha->otros = DB::table('resp_otro')
+                ->where('ficha_id','=',$ficha->id)
+                ->select('valor')
+                ->get();
+            $ficha->abiertas = DB::table('resp_abierta')
+                ->where('ficha_id','=',$ficha->id)
+                ->select('valor')
+                ->get();
+        }
+
+        return view('informes.verEncuesta',['fichas' => $fichas]);
+
+
     }
 }

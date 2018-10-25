@@ -14,12 +14,16 @@ class FichaResp extends Model
         'pregunta_id'
     ];
 
-    public function resp_abierta(){
+    public function resp_abiertas(){
         return $this->hasMany(RespAbierta::class);
     }
 
-    public function resp_cerrada(){
+    public function resp_cerradas(){
         return $this->hasMany(RespCerrada::class);
+    }
+
+    public function resp_otros(){
+        return $this->hasMany(RespOtro::class);
     }
 
     public function pregunta(){
