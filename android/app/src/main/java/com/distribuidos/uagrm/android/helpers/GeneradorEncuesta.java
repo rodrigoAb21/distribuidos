@@ -21,6 +21,7 @@ import com.distribuidos.uagrm.android.db.DBHelper;
 import com.distribuidos.uagrm.android.entities.Campo;
 import com.distribuidos.uagrm.android.entities.Cerrada;
 import com.distribuidos.uagrm.android.entities.Encuesta;
+import com.distribuidos.uagrm.android.entities.EncuestaAPI;
 import com.distribuidos.uagrm.android.entities.Ficha;
 import com.distribuidos.uagrm.android.entities.Modelo;
 import com.distribuidos.uagrm.android.entities.Opcion;
@@ -445,8 +446,6 @@ public class GeneradorEncuesta {
             et.clearFocus();
         }
      }
-
-
 
 
 

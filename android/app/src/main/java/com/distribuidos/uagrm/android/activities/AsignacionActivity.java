@@ -57,8 +57,8 @@ public class AsignacionActivity extends AppCompatActivity {
         service = RetrofitBuilder.createServiceWithAuth(ApiService.class, tokenManager);
 
         dbHelper = new DBHelper(getApplicationContext());
-
         cargarComponentes();
+        getAsignaciones();
     }
 
     @Override
@@ -136,7 +136,6 @@ public class AsignacionActivity extends AppCompatActivity {
 
         eliminar(apiList, idsLocal);
         agregar(apiList, idsLocal);
-
         cargarComponentes();
     }
 
@@ -152,6 +151,8 @@ public class AsignacionActivity extends AppCompatActivity {
                 asignacionLocal.setAsignacion_id(apiList.get(i).getId());
                 asignacionLocal.setModelo(apiList.get(i).getModelo().getNombre());
                 asignacionLocal.setArea(apiList.get(i).getArea().getNombre());
+                asignacionLocal.setHora_inicio(apiList.get(i).getHora_inicio());
+                asignacionLocal.setHora_final(apiList.get(i).getHora_final());
                 asignacionLocal.setCantidad(apiList.get(i).getCantidad());
                 asignacionLocal.setDescripcion(apiList.get(i).getModelo().getDescripcion());
                 asignacionLocal.setJson("" + new Gson().toJson(apiList.get(i)));

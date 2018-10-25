@@ -31,6 +31,8 @@ public class DBHelper extends SQLiteOpenHelper {
             " `asignacion_id` INTEGER NOT NULL," +
             " `modelo` TEXT NOT NULL," +
             " `area` TEXT NOT NULL," +
+            " `hora_inicio` TEXT NOT NULL," +
+            " `hora_final` TEXT NOT NULL," +
             " `cantidad` INTEGER NOT NULL," +
             " `descripcion` TEXT," +
             " `json` TEXT NOT NULL" +
@@ -114,6 +116,8 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put("asignacion_id", asignacion.getAsignacion_id());
         values.put("modelo", asignacion.getModelo());
         values.put("area", asignacion.getArea());
+        values.put("hora_inicio", asignacion.getHora_inicio());
+        values.put("hora_final", asignacion.getHora_final());
         values.put("cantidad", asignacion.getCantidad());
         values.put("descripcion", asignacion.getDescripcion());
         values.put("json", asignacion.getJson());
@@ -132,6 +136,8 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put("asignacion_id", asignacion.getAsignacion_id());
         values.put("modelo", asignacion.getModelo());
         values.put("area", asignacion.getArea());
+        values.put("hora_inicio", asignacion.getHora_inicio());
+        values.put("hora_final", asignacion.getHora_final());
         values.put("cantidad", asignacion.getCantidad());
         values.put("descripcion", asignacion.getDescripcion());
         values.put("json", asignacion.getJson());
@@ -166,9 +172,11 @@ public class DBHelper extends SQLiteOpenHelper {
             asignacion.setAsignacion_id(cursor.getInt(1));
             asignacion.setModelo(cursor.getString(2));
             asignacion.setArea(cursor.getString(3));
-            asignacion.setCantidad(cursor.getInt(4));
-            asignacion.setDescripcion(cursor.getString(5));
-            asignacion.setJson(cursor.getString(6));
+            asignacion.setHora_inicio(cursor.getString(4));
+            asignacion.setHora_final(cursor.getString(5));
+            asignacion.setCantidad(cursor.getInt(6));
+            asignacion.setDescripcion(cursor.getString(7));
+            asignacion.setJson(cursor.getString(8));
 
             db.close();
             return asignacion;
@@ -193,9 +201,11 @@ public class DBHelper extends SQLiteOpenHelper {
                 asignacion.setAsignacion_id(cursor.getInt(1));
                 asignacion.setModelo(cursor.getString(2));
                 asignacion.setArea(cursor.getString(3));
-                asignacion.setCantidad(cursor.getInt(4));
-                asignacion.setDescripcion(cursor.getString(5));
-                asignacion.setJson(cursor.getString(6));
+                asignacion.setHora_inicio(cursor.getString(4));
+                asignacion.setHora_final(cursor.getString(5));
+                asignacion.setCantidad(cursor.getInt(6));
+                asignacion.setDescripcion(cursor.getString(7));
+                asignacion.setJson(cursor.getString(8));
 
                 asignaciones.add(asignacion);
             }
@@ -443,7 +453,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
 
+    public boolean verificarCerrada(int pregunta_id, int encuesta_id){
 
+
+        return true;
+    }
 
 
     // ------------------------------   RESP ABIERTA   ----------------------------------------
