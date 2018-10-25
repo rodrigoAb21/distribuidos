@@ -80,7 +80,7 @@ public class EncuestaActivity extends AppCompatActivity {
         adapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                mostrarEncuesta(encuestas.get(recyclerView.getChildAdapterPosition(view)).getId());
             }
         });
         recyclerView.setAdapter(adapter);
@@ -99,7 +99,7 @@ public class EncuestaActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.menu_btn_add:
-                nuevaEncuesta();
+                mostrarEncuesta(0);
                 break;
 
             case R.id.menu_btn_enviar:
@@ -110,10 +110,11 @@ public class EncuestaActivity extends AppCompatActivity {
     }
 
 
-    private void nuevaEncuesta(){
+    private void mostrarEncuesta(int encuesta_id){
         Intent intent = new Intent(EncuestaActivity.this, FormularioActivity.class);
         intent.putExtra("json_local", asignacionLocal.getJson());
         intent.putExtra("id_local", id_local);
+        intent.putExtra("encuesta_id", encuesta_id);
         startActivity(intent);
     }
 

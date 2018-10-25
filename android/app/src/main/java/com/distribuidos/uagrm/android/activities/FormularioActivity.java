@@ -51,6 +51,8 @@ public class FormularioActivity extends AppCompatActivity {
     GeneradorEncuesta generador;
     DBHelper dbHelper;
     private View view;
+    int encuesta_id;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,14 +68,15 @@ public class FormularioActivity extends AppCompatActivity {
 
         Bundle bundle = this.getIntent().getExtras();
         if (bundle != null){
-          json_local = bundle.getString("json_local");
-          id_local = bundle.getInt("id_local");
-
+            json_local = bundle.getString("json_local");
+            id_local = bundle.getInt("id_local");
+            this.encuesta_id = bundle.getInt("encuesta_id");
         }else {
             finish();
         }
 
         dbHelper = new DBHelper(getApplicationContext());
+
 
         getModelo();
 
@@ -81,9 +84,12 @@ public class FormularioActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_formulario, menu);
-        return true;
+        if (this.encuesta_id == 0){
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.menu_formulario, menu);
+            return true;
+        }
+        return super.onCreateOptionsMenu(menu);
     }
 
 
@@ -125,34 +131,38 @@ public class FormularioActivity extends AppCompatActivity {
 
     private void getModelo() {
         asignacion = new Gson().fromJson(json_local,Asignacion.class);
-        generarVista(asignacion.getModelo());
+        generarVista(asignacion.getModelo(), this.encuesta_id);
 
     }
 
 
-    private void generarVista(Modelo modelo){
+    private void generarVista(Modelo modelo, int id_encuesta){
         generador = new GeneradorEncuesta(getApplicationContext(), getView());
-
-
-        Encuesta encuesta = dbHelper.getLastEncuesta(asignacion.getId());
-
-        if (encuesta == null){
-            encuesta = new Encuesta();
+            Encuesta encuesta;
+        if (id_encuesta == 0){
+             encuesta = dbHelper.getLastEncuesta(asignacion.getId());
+            if (encuesta == null){
+                encuesta = new Encuesta();
 
                 Date date = Calendar.getInstance().getTime();
                 SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy HH:mm");
                 String fecha = df.format(date);
 
-            encuesta.setFecha(fecha);
-            encuesta.setEstado("En proceso");
-            encuesta.setAsignacion_id(asignacion.getId());
+                encuesta.setFecha(fecha);
+                encuesta.setEstado("En proceso");
+                encuesta.setAsignacion_id(asignacion.getId());
 
-            long id = dbHelper.addEncuesta(encuesta);
-            encuesta.setId((int) id);
+                long id = dbHelper.addEncuesta(encuesta);
+                encuesta.setId((int) id);
+            }
+            generador.generarVista(modelo, encuesta.getId());
+            generador.cargarUltimo(encuesta.getId());
+        } else {
+            generador.generarVistaBloqueada(modelo, id_encuesta);
+            generador.cargarUltimo(id_encuesta);
         }
 
-        generador.generarVista(modelo, encuesta.getId());
-        generador.cargarUltimo(encuesta.getId());
+
     }
 
 
