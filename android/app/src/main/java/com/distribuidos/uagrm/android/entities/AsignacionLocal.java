@@ -5,6 +5,8 @@ public class AsignacionLocal {
     int asignacion_id;
     String modelo;
     String area;
+    String hora_inicio;
+    String hora_final;
     int cantidad;
     String descripcion;
     String json;
@@ -66,5 +68,21 @@ public class AsignacionLocal {
 
     public void setJson(String json) {
         this.json = json;
+    }
+
+    public String getHora_inicio() {
+        return hora_inicio;
+    }
+
+    public void setHora_inicio(String hora_inicio) {
+        this.hora_inicio = hora_inicio;
+    }
+
+    public String getHora_final() {
+        return hora_final;
+    }
+
+    public void setHora_final(String hora_final) {
+        this.hora_final = hora_final;
     }
 }

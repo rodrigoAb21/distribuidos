@@ -21,6 +21,7 @@ import com.distribuidos.uagrm.android.db.DBHelper;
 import com.distribuidos.uagrm.android.entities.Campo;
 import com.distribuidos.uagrm.android.entities.Cerrada;
 import com.distribuidos.uagrm.android.entities.Encuesta;
+import com.distribuidos.uagrm.android.entities.EncuestaAPI;
 import com.distribuidos.uagrm.android.entities.Ficha;
 import com.distribuidos.uagrm.android.entities.Modelo;
 import com.distribuidos.uagrm.android.entities.Opcion;
@@ -234,7 +235,11 @@ public class GeneradorEncuesta {
 
 
             editText.setTextSize(15);
-            editText.setHint(campo.getEtiqueta());
+            if (campo.getObligatorio() == 1){
+                editText.setHint("*" + campo.getEtiqueta());
+            }else {
+                editText.setHint(campo.getEtiqueta());
+            }
 
 
             switch (campo.getDominio().getTipoDato()){
@@ -451,4 +456,162 @@ public class GeneradorEncuesta {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // ------------------------------------------ CARGAR TERMINADO ----------------------------------
+
+
+
+
+    public void generarVistaBloqueada(Modelo modelo, int encuesta_id) {
+        for(Pregunta pregunta : modelo.getPreguntas()){
+
+            CardView cardView = new CardView(context);
+            cardView.setUseCompatPadding(true);
+            cardView.setContentPadding(30,30,30,30);
+            cardView.setElevation(8);
+            cardView.setRadius(10);
+            linearLayout.addView(cardView);
+
+            LinearLayout linearLayoutRepetido = new LinearLayout(context);
+            linearLayoutRepetido.setOrientation(LinearLayout.VERTICAL);
+            cardView.addView(linearLayoutRepetido);
+
+            //Escribimos el enunciado de la pregunta en negritas
+            generarEnunciado(pregunta, linearLayoutRepetido);
+
+            for (Cerrada cerrada : pregunta.getCerradas()){
+                // Verificamos el tipo de seleccion
+
+                generarTituloSeccion(cerrada, linearLayoutRepetido);
+
+                if (cerrada.getTipoSeleccion().equals("Multiple")){
+                    //Creamos el checkbox
+                    generarOpcionesMultiples2(cerrada.getOpciones(),pregunta.getId(), encuesta_id, linearLayoutRepetido);
+                }else{
+
+                    //Creamos el radioGroup
+                    generarOpcionesUnicas2(cerrada.getId(), cerrada.getOpciones(),pregunta.getId(), encuesta_id, linearLayoutRepetido);
+                }
+
+                generarOtros2(cerrada.getOtros(),pregunta.getId(), encuesta_id, linearLayoutRepetido);
+            }
+            // Abiertas
+            generarCampos2(pregunta.getCampos(), pregunta.getId(), encuesta_id, linearLayoutRepetido);
+        }
+        agregarDivision(linearLayout);
+    }
+
+
+    private void generarCampos2(List<Campo> campos, int pregunta_id, int encuesta_id, LinearLayout linearLayout){
+
+        for (Campo campo : campos){
+
+            //Agregando el editText que sera el input
+            EditText editText = new EditText(context);
+            editText.setTag(encuesta_id + "-" + pregunta_id + "-" + campo.getId() + "-");
+            editText.setTextSize(15);
+            editText.setInputType(InputType.TYPE_NULL);
+
+            linearLayout.addView(editText);
+
+        }
+
+    }
+
+    private void generarOtros2(List<Otro> otros, int pregunta_id, int encuesta_id, LinearLayout linearLayout){
+        for (Otro otro : otros){
+
+            //Agregando el editText que sera el input
+            EditText editText2 = new EditText(context);
+            editText2.setTag(encuesta_id + "-" + pregunta_id + "-" + otro.getId() + "-");
+            editText2.setTextSize(15);
+            editText2.setInputType(InputType.TYPE_NULL);
+
+            linearLayout.addView(editText2);
+
+        }
+    }
+
+    private void generarOpcionesMultiples2(List<Opcion> opciones, int pregunta_id, int encuesta_id, LinearLayout linearLayout) {
+
+        for (Opcion opcion : opciones){
+            CheckBox checkBox = new CheckBox(context);
+            checkBox.setTag(encuesta_id + "-" + pregunta_id + "-" + opcion.getId() + "-1-");
+            checkBox.setText(opcion.getTexto());
+            checkBox.setTextSize(14);
+            checkBox.setEnabled(false);
+
+            linearLayout.addView(checkBox);
+        }
+
+    }
+
+
+    private void generarOpcionesUnicas2(int id, List<Opcion> opciones, final int pregunta_id, final int encuesta_id, LinearLayout linearLayout) {
+
+        RadioGroup radioGroup = new RadioGroup(context);
+        radioGroup.setId(id);
+        radioGroup.setOrientation(RadioGroup.VERTICAL);
+
+        //Creamos los radioButtons
+        for (Opcion opcion : opciones){
+
+            RadioButton radioButton = new RadioButton(context);
+            radioButton.setText(opcion.getTexto());
+            radioButton.setTag(encuesta_id + "-" + pregunta_id + "-" + opcion.getId() + "-0-");
+            radioButton.setTextSize(14);
+
+            radioButton.setEnabled(false);
+
+            radioGroup.addView(radioButton);
+
+
+        }
+
+        radioGroup.setEnabled(false);
+        linearLayout.addView(radioGroup);
+
+    }
 }

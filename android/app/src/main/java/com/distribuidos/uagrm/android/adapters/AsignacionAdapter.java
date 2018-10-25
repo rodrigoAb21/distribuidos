@@ -56,13 +56,14 @@ public class AsignacionAdapter
 
     public class ViewHolderAsignaciones extends RecyclerView.ViewHolder {
 
-        TextView modelo, area, cantidad, descripcion;
+        TextView modelo, area, cantidad, descripcion, hora;
 
         public ViewHolderAsignaciones(View itemView) {
             super(itemView);
             this.modelo = (TextView) itemView.findViewById(R.id.asignacion_nombre);
             this.area = (TextView) itemView.findViewById(R.id.asignacion_area);
             this.cantidad = (TextView) itemView.findViewById(R.id.asignacion_cantidad);
+            this.hora = (TextView) itemView.findViewById(R.id.asignacion_horario);
             this.descripcion = (TextView) itemView.findViewById(R.id.asignacion_descripcion);
         }
 
@@ -70,6 +71,7 @@ public class AsignacionAdapter
             this.modelo.setText(asignacion.getModelo());
             this.area.setText(asignacion.getArea());
             this.cantidad.setText(String.valueOf(asignacion.getCantidad()));
+            this.hora.setText(asignacion.getHora_inicio() + " - " + asignacion.getHora_final());
             this.descripcion.setText(asignacion.getDescripcion());
         }
     }
