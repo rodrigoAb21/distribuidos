@@ -63,11 +63,6 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                        <a href="empleados-index.html"><button class="btn btn-primary">Guardar</button></a>
-                                    </div>
-                                </div>
                             </div>
                             <div class="row">
                                 <div class="update ml-auto mr-auto">

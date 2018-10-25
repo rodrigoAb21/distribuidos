@@ -25,4 +25,8 @@ class FichaResp extends Model
     public function pregunta(){
         return $this->belongsTo(Pregunta::class);
     }
+
+    public function encuesta(){
+        return $this->belongsTo(Encuesta::class);
+    }
 }

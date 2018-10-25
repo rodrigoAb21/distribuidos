@@ -40,7 +40,11 @@ Route::middleware('auth')->group(function () {
     /*      FIN       */
     Route::resource('/areas', 'Web\AreaController');
     Route::resource('/asignaciones', 'Web\AsignacionController');
+
     Route::resource('/informes', 'Web\InformeController');
+    Route::get('/informes/{modelo_id}/encuestas',"Web\InformeController@listarEncuestas");
+    Route::get('/informes/{modelo_id}/encuestas/{encuesta_id}',"Web\InformeController@verEncuesta");
+
 
 });
 

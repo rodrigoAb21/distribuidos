@@ -20,4 +20,8 @@ class Modelo extends Model
     public function preguntas(){
         return $this->hasMany(Pregunta::class);
     }
+
+    public function asignaciones(){
+        return $this->hasMany(Asignacion::class);
+    }
 }

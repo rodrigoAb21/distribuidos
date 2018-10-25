@@ -31,7 +31,7 @@ class AsignacionController extends Controller
     {
         $modelos = DB::table('modelo')
                     ->where('user_id', Auth::id())
-                    ->where('estado','finalizado')
+                    ->where('estado','<>','en edición')
                     ->orderBy('nombre','asc')
                     ->select('id','nombre')
                     ->get();
