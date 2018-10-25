@@ -22,7 +22,7 @@
                                 <tbody>
                                 @foreach($modelos as $modelo)
                                 <tr>
-                                    <td>{{$modelo->id}}</td>
+                                    <td>{{$loop->iteration}}</td>
                                     <td>{{$modelo->nombre}}</td>
                                     <td><span class="label label-success">{{$modelo->estado}}</span></td>
                                     <td>0</td>
