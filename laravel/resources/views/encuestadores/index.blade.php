@@ -32,14 +32,13 @@
                                     <td><span class="label label-success">Activo</span></td>
                                     <td>
                                         <a href="{{url('encuestadores/'.$encuestador->id.'/edit')}}"><button class="btn btn-warning"><i class="fa fa-pencil-alt"></i></button></a>
-                                        <button class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash"></i></button>
+                                        <button class="btn btn-danger" onclick="eliminarEncuestador('{{$encuestador->nombre}}', '{{url('encuestadores/'.$encuestador->id)}}')"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
                                 @endforeach
 
                                 </tbody>
 
-                                @include('encuestadores.modal')
 
                             </table>
                         </div>
@@ -49,6 +48,16 @@
         </div>
     </div>
 
-
+    @include('modalEliminar')
+    @push('scripts')
+        <script>
+            function eliminarEncuestador(nombre, url) {
+                $('#modalEliminarForm').attr("action", url);
+                $('#modalEliminarTitulo').html("Eliminar Encuestador");
+                $('#modalEliminarEnunciado').html("Realmente desea eliminar al encuestador: " + nombre + "?");
+                $('#modalEliminar').modal('show');
+            }
+        </script>
+    @endpush
 
 @endsection

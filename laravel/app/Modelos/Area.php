@@ -11,7 +11,7 @@ class Area extends Model
     public $timestamps = false;
     protected $fillable = [
         'nombre',
-        'empresa_id'
+        'user_id'
     ];
 
     public function puntos(){

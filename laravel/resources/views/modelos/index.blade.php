@@ -22,7 +22,7 @@
                                 <tbody>
                                 @foreach($modelos as $modelo)
                                 <tr>
-                                    <td>{{$modelo->id}}</td>
+                                    <td>{{$loop->iteration}}</td>
                                     <td>{{$modelo->nombre}}</td>
                                     <td><span class="label label-success">{{$modelo->estado}}</span></td>
                                     <td>0</td>
@@ -31,7 +31,7 @@
                                         <a href="{{url('/modelos/'.$modelo->id.'/edit')}}">
                                         <button class="btn btn-warning"><i class="fa fa-pencil-alt"></i></button>
                                         </a>
-                                        <button class="btn btn-danger" onclick="datosModal('{{$modelo->nombre}}', '{{url('modelos/'.$modelo->id)}}')"><i class="fa fa-trash"></i></button>
+                                        <button class="btn btn-danger" onclick="eliminarModelo('{{$modelo->nombre}}', '{{url('modelos/'.$modelo->id)}}')"><i class="fa fa-trash"></i></button>
                                         @endif
                                     </td>
                                 </tr>
@@ -46,16 +46,18 @@
         </div>
     </div>
 
-    @include('modelos.modales.eliminar')
+    @include('modalEliminar')
 
 
     @push('scripts')
         <script>
 
-            function datosModal(nombre, url) {
-                $('#formulario').attr("action", url);
-                $('#enunciado').html("Realmente desea eliminar el modelo: " + nombre + "?");
-                $('#eliminar').modal('show');
+            function eliminarModelo(nombre, url) {
+                $('#modalEliminarForm').attr("action", url);
+                $('#modalEliminarTitulo').html("Eliminar Modelo");
+                $('#modalEliminarEnunciado').html("Realmente desea eliminar la pregunta: " + nombre + "?");
+                $('#modalEliminar').modal('show');
+
             }
 
         </script>

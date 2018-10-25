@@ -16,36 +16,42 @@
                                         <th>Modelo</th>
                                         <th>Encuestador</th>
                                         <th>Area</th>
-                                        <th>Estado</th>
                                         <th>Progreso</th>
                                         <th>Opcion</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-
+                                    @foreach($asignaciones as $asignacion)
                                     <tr>
-                                        <td>1</td>
-                                        <td>Encuesta Tecnologia</td>
-                                        <td>Pedro Toledo</td>
-                                        <td>El Centro 1</td>
-                                        <td><span class="label label-success">Activa</span></td>
-                                        <td>13/50</td>
+                                        <td>{{$loop->iteration}}</td>
+                                        <td>{{$asignacion->modelo->nombre}}</td>
+                                        <td>{{$asignacion->user->nombre}}</td>
+                                        <td>{{$asignacion->area->nombre}}</td>
+                                        <td>0/{{$asignacion->cantidad}}</td>
                                         <td>
-                                            <button class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash"></i></button>
+                                            <button class="btn btn-danger" onclick="eliminarAsignacion('{{url('asignaciones/'.$asignacion->id)}}')"><i class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>
-
-
-                                @include('asignaciones.modal')
-
+                                    @endforeach
                             </table>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
-
+    @include('modalEliminar')
+    @push('scripts')
+        <script>
+        function eliminarAsignacion(url){
+            $('#modalEliminarForm').attr("action", url);
+            $('#modalEliminarTitulo').html("Eliminar Asignación");
+            $('#modalEliminarEnunciado').html("Realmente desea eliminar la asignación ?" +"<br><br> Las encuestas realizadas pertenecientes a esta asignación también serán eliminadas.  *");
+            $('#modalEliminar').modal('show');
+        }
+        </script>
+    @endpush
 
 
 @endsection

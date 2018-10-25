@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Web;
 
+
 use App\Modelos\Asignacion;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AsignacionController extends Controller
 {
@@ -16,8 +18,8 @@ class AsignacionController extends Controller
      */
     public function index()
     {
-        $asignaciones = Asignacion::findOrFail(Auth::id());
-        return view('asignaciones.index');
+        $asignaciones = Asignacion::with('modelo','area','user')->where('admin_id','=', Auth::id())->orderBy('id','desc')->get();
+        return view('asignaciones.index', ['asignaciones'=>$asignaciones]);
     }
 
     /**
@@ -27,7 +29,26 @@ class AsignacionController extends Controller
      */
     public function create()
     {
-        return view('asignaciones.create');
+        $modelos = DB::table('modelo')
+                    ->where('user_id', Auth::id())
+                    ->where('estado','finalizado')
+                    ->orderBy('nombre','asc')
+                    ->select('id','nombre')
+                    ->get();
+
+        $areas = DB::table('area')
+                    ->where('user_id', Auth::id())
+                    ->orderBy('nombre','asc')
+                    ->select('id','nombre')
+                    ->get();
+
+        $encuestadores = DB::table('users')
+                             ->where('user_id',Auth::id())
+                             ->orderBy('nombre','asc')
+                             ->select('id','nombre')
+                            ->get();
+
+        return view('asignaciones.create', ['modelos'=>$modelos, 'areas'=>$areas, 'encuestadores'=>$encuestadores]);
     }
 
     /**
@@ -38,6 +59,16 @@ class AsignacionController extends Controller
      */
     public function store(Request $request)
     {
+        $asignacion = new Asignacion();
+        $asignacion->cantidad = $request->cantidad;
+        $asignacion->hora_inicio = $request->inicio;
+        $asignacion->hora_final = $request->fin;
+        $asignacion->encuestador_id = $request->encuestador_id;
+        $asignacion->modelo_id = $request->modelo_id;
+        $asignacion->area_id = $request->area_id;
+        $asignacion->admin_id = Auth::id();
+        $asignacion->save();
+
         return redirect('/asignaciones');
     }
 
@@ -83,6 +114,8 @@ class AsignacionController extends Controller
      */
     public function destroy($id)
     {
+        $asignacion = Asignacion::findOrFail($id);
+        $asignacion->delete();
         return redirect('/asignaciones');
     }
 }
