@@ -58,10 +58,12 @@ class InformeController extends Controller
     public function show($id)
     {
         $preguntaC =[];
+        $cont=0;
         $preguntas = DB::table('pregunta')->where('modelo_id',$id)->get();
         foreach ($preguntas as $pregunta){
-            $preguntaC->enunciado= $pregunta->enunciado;
-            $preguntaC->opciones= DB::select('select opcion.texto from cerrada,opcion where cerrada.pregunta_id=? and opcion.cerrada_id= cerrada.id',[$pregunta->id]);
+            $cont=$cont+1;
+            $preguntaC[$cont]->enunciado= $pregunta->enunciado;
+            $preguntaC[$cont]->opciones= DB::select('select opcion.texto from cerrada,opcion where cerrada.pregunta_id=? and opcion.cerrada_id= cerrada.id',[$pregunta->id]);
         }
         dd($preguntaC);
         return view('informes.show');
