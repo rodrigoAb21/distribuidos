@@ -36,88 +36,26 @@
         </div>
 
         <div class="row">
+           @foreach($preguntas as $pregunta)
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <div class="card ">
                     <div class="card-header ">
-                        <h5 class="card-title">Pregunta 1</h5>
+                        <h5 class="card-title">{{$pregunta->enunciado}}</h5>
                     </div>
                     <div class="card-body ">
-                        <canvas id="chartEmail"></canvas>
+                        <canvas id="grafica-{{$pregunta->id}}"></canvas>
                     </div>
                     <div class="card-footer ">
                         <div class="legend">
-                            <i class="fa fa-circle text-primary"></i> Si
-                            <i class="fa fa-circle text-warning"></i> No
-                            <i class="fa fa-circle text-danger"></i> Talvez
-                            <i class="fa fa-circle text-gray"></i> Nunca
+                            @foreach($pregunta->opciones as $opcion)
+                            <i class="fa fa-circle text-primary"></i> {{$opcion->texto}}
+                            @endforeach
                         </div>
                         <hr>
                     </div>
                 </div>
             </div>
-
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <div class="card ">
-                    <div class="card-header ">
-                        <h5 class="card-title">Pregunta 2</h5>
-                    </div>
-                    <div class="card-body ">
-                        <canvas id="chartEmail1"></canvas>
-                    </div>
-                    <div class="card-footer ">
-                        <div class="legend">
-                            <i class="fa fa-circle text-primary"></i> Si
-                            <i class="fa fa-circle text-warning"></i> No
-                            <i class="fa fa-circle text-danger"></i> Talvez
-                            <i class="fa fa-circle text-gray"></i> Nunca
-                        </div>
-                        <hr>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <div class="card ">
-                    <div class="card-header ">
-                        <h5 class="card-title">Pregunta 3</h5>
-                    </div>
-                    <div class="card-body ">
-                        <canvas id="chartEmail2"></canvas>
-                    </div>
-                    <div class="card-footer ">
-                        <div class="legend">
-                            <i class="fa fa-circle text-primary"></i> Si
-                            <i class="fa fa-circle text-warning"></i> No
-                            <i class="fa fa-circle text-danger"></i> Talvez
-                            <i class="fa fa-circle text-gray"></i> Nunca
-                        </div>
-                        <hr>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <div class="card ">
-                    <div class="card-header ">
-                        <h5 class="card-title">Pregunta 4</h5>
-                    </div>
-                    <div class="card-body ">
-                        <canvas id="chartEmail3"></canvas>
-                    </div>
-                    <div class="card-footer ">
-                        <div class="legend">
-                            <i class="fa fa-circle text-primary"></i> Si
-                            <i class="fa fa-circle text-warning"></i> No
-                            <i class="fa fa-circle text-danger"></i> Talvez
-                            <i class="fa fa-circle text-gray"></i> Nunca
-                        </div>
-                        <hr>
-                    </div>
-                </div>
-            </div>
-
-
+            @endforeach
         </div>
 
 
