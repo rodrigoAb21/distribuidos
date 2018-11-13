@@ -247,7 +247,7 @@ public class FormularioActivity extends AppCompatActivity {
         List<Integer> ids = new ArrayList<>();
 
         for (Campo campo : campos){
-            if (campo.getObligatorio() == 1)
+            if (campo.isObligatorio())
                 ids.add(campo.getId());
         }
 
@@ -278,7 +278,7 @@ public class FormularioActivity extends AppCompatActivity {
         for (Pregunta pregunta : modelo.getPreguntas()){
             FichaAPI fichaAPI = getFichaAPI(encuestaAPI.getFichas(), pregunta.getId());
             for (Cerrada cerrada : pregunta.getCerradas()){
-                if (cerrada.isObligatoria() == 1){
+                if (cerrada.isObligatoria()){
                     if (fichaAPI == null){
                         Toast.makeText(this, "Por favor revise la pregunta: " + pregunta.getEnunciado(), Toast.LENGTH_SHORT).show();
                         return false;

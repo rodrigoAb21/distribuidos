@@ -93,7 +93,7 @@ public class GeneradorEncuesta {
 
     private void generarTituloSeccion(Cerrada cerrada, LinearLayout linearLayout){
         TextView textView = new TextView(context);
-        if (cerrada.isObligatoria() == 1){
+        if (cerrada.isObligatoria()){
             textView.setText("*" + cerrada.getEtiqueta());
         }else{
             textView.setText(cerrada.getEtiqueta());
@@ -235,7 +235,7 @@ public class GeneradorEncuesta {
 
 
             editText.setTextSize(15);
-            if (campo.getObligatorio() == 1){
+            if (campo.isObligatorio()){
                 editText.setHint("*" + campo.getEtiqueta());
             }else {
                 editText.setHint(campo.getEtiqueta());

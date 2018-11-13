@@ -15,7 +15,7 @@ import com.distribuidos.uagrm.android.helpers.TokenManager;
 
 public class RetrofitBuilder {
 
-    private static final String BASE_URL = "http://192.168.0.60/distribuidos/laravel/public/api/";
+    private static final String BASE_URL = "http://192.168.43.34/distribuidos/distribuidos/laravel/public/api/";
 
     private final static OkHttpClient client = buildClient();
     private final static Retrofit retrofit = buildRetrofit(client);

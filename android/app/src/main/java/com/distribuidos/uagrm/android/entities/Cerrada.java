@@ -6,7 +6,7 @@ public class Cerrada {
     int id;
     String etiqueta;
     String tipoSeleccion;
-    int obligatoria;
+    boolean obligatoria;
     int pregunta_id;
     List<Opcion> opciones;
     List<Otro> otros;
@@ -30,11 +30,11 @@ public class Cerrada {
         this.tipoSeleccion = tipoSeleccion;
     }
 
-    public int isObligatoria() {
+    public boolean isObligatoria() {
         return obligatoria;
     }
 
-    public void setObligatoria(int obligatoria) {
+    public void setObligatoria(boolean obligatoria) {
         this.obligatoria = obligatoria;
     }
 

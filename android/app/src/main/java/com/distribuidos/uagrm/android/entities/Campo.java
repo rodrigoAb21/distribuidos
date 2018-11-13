@@ -3,7 +3,7 @@ package com.distribuidos.uagrm.android.entities;
 public class Campo {
     int id;
     String etiqueta;
-    int obligatorio;
+    boolean obligatorio;
     int varios;
     int pregunta_id;
     int dominio_id;
@@ -28,11 +28,11 @@ public class Campo {
         this.etiqueta = etiqueta;
     }
 
-    public int getObligatorio() {
+    public boolean isObligatorio() {
         return obligatorio;
     }
 
-    public void setObligatorio(int obligatorio) {
+    public void setObligatorio(boolean obligatorio) {
         this.obligatorio = obligatorio;
     }
 
