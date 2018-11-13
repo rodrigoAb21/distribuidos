@@ -167,6 +167,7 @@ public class EncuestaActivity extends AppCompatActivity {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(retrofit2.Call<Void> call, Response<Void> response) {
+                Log.w("RESPUESTA", response.toString());
                 actualizarEstados();
                 cargarComponentes();
             }
