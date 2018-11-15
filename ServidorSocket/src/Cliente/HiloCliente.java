@@ -20,8 +20,8 @@ public class HiloCliente extends Thread {
             String cadena;
             while (true){
                 cadena = bufferedReader.readLine();
-                datosSalida.writeUTF(cadena);
                 if (cadena.equals("Salir")) break;
+                datosSalida.writeUTF(cadena);
             }
         }catch (IOException e){
             System.out.println("Error en el Hilo Cliente!");
