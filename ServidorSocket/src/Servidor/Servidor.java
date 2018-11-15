@@ -3,6 +3,7 @@ package Servidor;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Enumeration;
 import java.util.Hashtable;
 
 public class Servidor {
@@ -32,11 +33,21 @@ public class Servidor {
     }
 
     private void agregarCliente(Socket socket){
-        System.out.println("Nuevo cliente: C-" + socket.getPort());
-        HiloServidor cliente =
-                new HiloServidor(socket);
+        System.out.println("Nuevo cliente ---> C-" + socket.getPort());
+        HiloServidor cliente = new HiloServidor(socket);
         clientes.put(socket.getPort(), cliente);
         cliente.start();
+    }
+
+    private String listarClientes(){
+        String cadena = "Lista de Clientes: \n";
+        Enumeration<HiloServidor> lista = clientes.elements();
+        while(lista.hasMoreElements()){
+            HiloServidor cliente = lista.nextElement();
+            if (cliente.getPuerto() > 0)
+                cadena = cadena + "C-"+ cliente.getPuerto() + "\n";
+        }
+        return cadena;
     }
 
 
