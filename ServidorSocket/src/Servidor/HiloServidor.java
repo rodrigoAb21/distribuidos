@@ -1,15 +1,19 @@
 package Servidor;
 
+import Servidor.Eventos.EscuchadorEventos;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class HiloServidor extends Thread{
+    private ArrayList<EscuchadorEventos> escuchadores = new ArrayList<>();
     private Socket cliente;
     private DataInputStream flujoDatosEntrada;
     private DataOutputStream flujoDatosSalida;
-    private long puerto;
+    private int puerto;
 
 
     public HiloServidor(Socket cliente) {
@@ -28,11 +32,11 @@ public class HiloServidor extends Thread{
 
     }
 
-    public long getPuerto() {
+    public int getPuerto() {
         return puerto;
     }
 
-    public void setPuerto(long puerto) {
+    public void setPuerto(int puerto) {
         this.puerto = puerto;
     }
 
@@ -45,9 +49,12 @@ public class HiloServidor extends Thread{
             }
         }catch (IOException e){
             System.out.println("Se perdio conexion con C-" + getPuerto());
+            for (EscuchadorEventos escuchador : escuchadores){
+                System.out.println("Disparando QUITAR CLIENTE");
+                escuchador.quitarCliente(getPuerto());
+            }
             close();
         }
-
 
     }
 
@@ -60,6 +67,14 @@ public class HiloServidor extends Thread{
         }catch (IOException e){
             System.out.println(e);
         }
+    }
+
+    public void agregarEscuchador(EscuchadorEventos escuchador){
+        escuchadores.add(escuchador);
+    }
+
+    public void quitarEscuchador(EscuchadorEventos escuchador){
+        escuchadores.remove(escuchador);
     }
 
 
