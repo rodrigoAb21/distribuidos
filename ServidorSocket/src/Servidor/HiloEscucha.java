@@ -9,8 +9,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class HiloEscucha extends Thread {
-    ServerSocket serverSocket;
-    ArrayList<EscuchadorEventos> escuchadores = new ArrayList<>();
+    private ServerSocket serverSocket;
+    private ArrayList<EscuchadorEventos> escuchadores = new ArrayList<>();
+    private boolean ejecutar = true;
 
     public HiloEscucha(ServerSocket serverSocket) {
         this.serverSocket = serverSocket;
@@ -19,7 +20,7 @@ public class HiloEscucha extends Thread {
     @Override
     public void run() {
         try {
-            while(true){
+            while(ejecutar){
                 Socket socket = serverSocket.accept();
                 if (socket != null){
                     for (EscuchadorEventos escuchador : escuchadores){
@@ -31,6 +32,10 @@ public class HiloEscucha extends Thread {
         }catch (IOException e){
             System.out.println("Sucedio un error mientras se escuchaba...");
         }
+    }
+
+    public void detener(){
+        ejecutar = false;
     }
 
     public void agregarEscuchador(EscuchadorEventos escuchador){

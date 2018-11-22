@@ -26,9 +26,25 @@ public class Servidor implements EscuchadorEventos {
         }
     }
 
-    public void escuchar(){
+    public void iniciar(){
         hiloEscucha.agregarEscuchador(this);
         hiloEscucha.start();
+    }
+
+    public void terminar(){
+        try {
+            hiloEscucha.detener();
+            Enumeration<HiloServidor> lista = clientes.elements();
+            while(lista.hasMoreElements()){
+                HiloServidor cliente = lista.nextElement();
+                if (cliente.getPuerto() > 0){
+                    cliente.close();
+                }
+            }
+            serverSocket.close();
+        }catch (IOException e){
+            System.out.println(e);
+        }
     }
 
     private void agregarCliente(Socket socket){

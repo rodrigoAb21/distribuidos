@@ -60,8 +60,8 @@ public class HiloServidor extends Thread{
 
     public void close(){
         try {
-            if (cliente != null) cliente.close();
             if (flujoDatosEntrada != null) flujoDatosEntrada.close();
+            if (cliente != null) cliente.close();
             setPuerto(-1);
 
         }catch (IOException e){
