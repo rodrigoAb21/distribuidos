@@ -50,7 +50,7 @@ public class HiloServidor extends Thread{
         }catch (IOException e){
             System.out.println("Se perdio conexion con C-" + getPuerto());
             for (EscuchadorEventos escuchador : escuchadores){
-                System.out.println("Disparando QUITAR CLIENTE");
+                System.out.println("Disparando evento QUITAR CLIENTE");
                 escuchador.quitarCliente(getPuerto());
             }
             close();
