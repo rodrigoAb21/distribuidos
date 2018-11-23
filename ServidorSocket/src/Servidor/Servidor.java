@@ -70,7 +70,7 @@ public class Servidor implements EscuchadorEventos {
     public void agregarCliente(Evento e) {
         agregarCliente(e.getSocket());
         System.out.println("Se agrego al cliente: C-" + e.getSocket().getPort());
-        System.out.println(clientes.size());
+        System.out.println("Total de clientes: " + clientes.size());
     }
 
     @Override
@@ -81,7 +81,7 @@ public class Servidor implements EscuchadorEventos {
             cliente.close();
             clientes.remove(puerto);
             System.out.println("Se quito el hilo!");
-            System.out.println(clientes.size());
+            System.out.println("Total de clientes: " +clientes.size());
         }
     }
 }
