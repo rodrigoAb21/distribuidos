@@ -12,8 +12,8 @@ class Encuesta extends Model
     protected $fillable = [
         'estado',
         'fecha',
-        //'longitud',
-        //'latitud',
+        'longitud',
+        'latitud',
         'asignacion_id',
 //        'empresa_id'
     ];

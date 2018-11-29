@@ -1,17 +1,17 @@
 @extends('layouts.dashboard')
 @push('shead')
+
+
+
     <script>
-            function dibujar(puntos){
-                console.log("p:",puntos);
-                var lineas2 =[];
-                for(var punto in puntos){
-                    console.log(puntos[0].longitud);
-                    // console.log(punto[1]);
-                    // lineas.push([punto['latitud'],punto['longitud']]);
-                    // lineas.push(array[2,5]);
-                }
-                console.log(lineas2);
+        var lineas=[];
+        function dibujar(puntos){
+             lineas =[];
+            for(var cont in puntos){
+                lineas.push([parseFloat(puntos[cont].latitud),parseFloat(puntos[cont].longitud)]);
             }
+        }
+
     </script>
 @endpush
 @section('contenido')
@@ -62,26 +62,19 @@
         <script src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js'></script>
         <link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet'/>
 
-    @endpush
 
-    @push('scripts')
         <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.4.10/leaflet.draw.css' rel='stylesheet' />
         <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.4.10/leaflet.draw.js'></script>
         <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-geodesy/v0.1.0/leaflet-geodesy.js'></script>
 
+    @endpush
+
+    @push('scripts')
         <script>
             L.mapbox.accessToken = 'pk.eyJ1Ijoicm9kcmlnb2FiMjEiLCJhIjoiY2psenZmcDZpMDN5bTNrcGN4Z2s2NWtqNSJ9.bSdjQfv-28z1j4zx7ljvcg';
             var map = L.mapbox.map('map', 'mapbox.streets')
                 .setView([-17.783346, -63.180589], 13);
 
-
-            var lineas = [
-                [-17.793, -63.186],
-                [-17.793, -63.167],
-                [-17.779, -63.167],
-                [-17.779, -63.186],
-                [-17.793, -63.186],
-            ];
 
             var area = L.polygon(lineas);
             var featureGroup = L.featureGroup([area]).addTo(map);

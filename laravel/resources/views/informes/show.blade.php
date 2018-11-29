@@ -2,6 +2,28 @@
 @push('shead')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
     <script>
+        var lineasAll=[];
+        var lineas=[];
+        var marcadoresAll=[];
+        function dibujarAreas(areas){
+            // console.log("areas:",areas);
+
+            for (var elem in areas){
+                // console.log(areas[elem]);
+                lineas =[];
+                for(var cont in areas[elem]){
+                    lineas.push([parseFloat(areas[elem][cont].latitud),parseFloat(areas[elem][cont].longitud)]);
+                }
+                lineasAll.push(lineas);
+            }
+        }
+        function dibujarMarcadores(marcadoresE) {
+            for (var elem in marcadoresE){
+                console.log(marcadoresE[elem]);
+                marcadoresAll.push([parseFloat(marcadoresE[elem].latitud),parseFloat(marcadoresE[elem].longitud)]);
+            }
+        }
+
         function crear(id, pregunta) {
             var tipo = pregunta['tipo'];
             var opciones = pregunta['opciones'];
@@ -115,16 +137,15 @@
                         <h4 class="pr-2">Informe estadistico</h4>
 
                         <div class="ml-auto mr-0">
-                            <div class="form-inline">
-                                <select class="form-control" name="areas">
-                                    <option value="">General</option>
-                                    <option selected value="">El Bajio 1</option>
-                                    <option value="">Equipetrol</option>
-                                    <option value="">La guardia</option>
-                                    <option value="">Parque Industrial</option>
-                                </select>
-                                <button class="btn btn-success">Ver</button>
-                            </div>
+                            {{--<div class="form-inline">--}}
+                                {{--<select class="form-control" name="areas">--}}
+                                    {{--<option selected value="">General</option>--}}
+                                    {{--@foreach($areasN as $area)--}}
+                                    {{--<option value={{$area["area_id"]}}>{{$area[0]}}</option>--}}
+                                    {{--@endforeach--}}
+                                {{--</select>--}}
+                                {{--<button class="btn btn-success" >Ver</button>--}}
+                            {{--</div>--}}
                         </div>
                     </div>
 
@@ -134,6 +155,12 @@
                         <div class="row">
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div id="map" style="height: 350px;"></div>
+                                <script type="text/javascript" language="javascript">
+                                    var areasx=<?=json_encode($areasP)?>;
+                                    var marcadores=<?=json_encode($marcadores)?>;
+                                    dibujarAreas(areasx);
+                                    dibujarMarcadores(marcadores);
+                                </script>
                             </div>
                         </div>
                     </div>
@@ -198,23 +225,29 @@
                 .setView([-17.783346, -63.180589], 14);
 
 
-            var lineas = [
-                [-17.793, -63.186],
-                [-17.793, -63.167],
-                [-17.779, -63.167],
-                [-17.779, -63.186],
-                [-17.793, -63.186],
-            ];
+            // var lineas = [
+            //     [-17.793, -63.186],
+            //     [-17.793, -63.167],
+            //     [-17.779, -63.167],
+            //     [-17.779, -63.186],
+            //     [-17.793, -63.186],
+            // ];
+            console.log("das:",lineasAll);
+            for (var elem in lineasAll){
+                new L.polygon(lineasAll[elem]).addTo(map);
+            }
 
+            for (var elem in marcadoresAll){
+                new L.marker(marcadoresAll[elem]).addTo(map);
+            }
 
-
-            var area = L.polygon(lineas).addTo(map);
-
-            L.marker([-17.782, -63.180]).addTo(map);
-            L.marker([-17.780, -63.181]).addTo(map);
-            L.marker([-17.784, -63.183]).addTo(map);
-            L.marker([-17.783, -63.177]).addTo(map);
-            L.marker([-17.785, -63.180]).addTo(map);
+            // var area = L.polygon(lineas).addTo(map);
+            //
+            // L.marker([-17.782, -63.180]).addTo(map);
+            // L.marker([-17.780, -63.181]).addTo(map);
+            // L.marker([-17.784, -63.183]).addTo(map);
+            // L.marker([-17.783, -63.177]).addTo(map);
+            // L.marker([-17.785, -63.180]).addTo(map);
 
 
 

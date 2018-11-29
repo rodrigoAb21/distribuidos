@@ -17,7 +17,7 @@ class AsignacionController extends Controller
 {
 
     public function obtenerTodos(){
-        $asignaciones = Asignacion::with('area','modelo','modelo.preguntas', 'modelo.preguntas.cerradas', 'modelo.preguntas.campos','modelo.preguntas.campos.dominio','modelo.preguntas.cerradas.opciones', 'modelo.preguntas.cerradas.otros', 'modelo.preguntas.cerradas.otros.dominio')->where('encuestador_id', '=', Auth::user()->id)->get();
+        $asignaciones = Asignacion::with('area','modelo','modelo.preguntas', 'modelo.preguntas.cerradas', 'modelo.preguntas.campos','modelo.preguntas.campos.dominio','modelo.preguntas.cerradas.opciones', 'modelo.preguntas.cerradas.otros', 'modelo.preguntas.cerradas.otros.dominio', 'area.puntos')->where('encuestador_id', '=', Auth::user()->id)->get();
 
         return response()->json(['data' => $asignaciones], 200, [], JSON_NUMERIC_CHECK);
     }
@@ -31,6 +31,8 @@ class AsignacionController extends Controller
                 $encuesta = new Encuesta();
                 $encuesta->fecha = $encuest['fecha'];
                 $encuesta->estado = $encuest['estado'];
+                $encuesta->latitud = $encuest['latitud'];
+                $encuesta->longitud = $encuest['longitud'];
                 $encuesta->asignacion_id = $encuest['asignacion_id'];
                 $encuesta->save();
 

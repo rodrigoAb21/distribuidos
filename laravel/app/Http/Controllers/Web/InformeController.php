@@ -7,6 +7,7 @@ use App\Modelos\Encuesta;
 use App\Modelos\FichaResp;
 use App\Modelos\Modelo;
 use App\Modelos\Pregunta;
+use App\Modelos\Punto;
 use App\Modelos\RespAbierta;
 use App\Modelos\RespCerrada;
 use App\Modelos\RespOtro;
@@ -59,12 +60,22 @@ class InformeController extends Controller
     public function show($id)
     {
 
-//        $preguntas = DB::select('select pregunta.id,pregunta.enunciado from pregunta where pregunta.modelo_id=? and pregunta.id in (select cerrada.pregunta_id from cerrada where cerrada."tipoSeleccion" = \'Unica\')',[$id]);
-
         $preguntas = DB::select('select pregunta.id,pregunta.enunciado from pregunta where pregunta.modelo_id=?', [$id]);
 
-        foreach ($preguntas as $pregunta) {
+        $areas = DB::select('select distinct asignacion.area_id from  asignacion where asignacion.modelo_id = ?' ,[$id]);
 
+        foreach ($areas as $area){
+            $areaP[$area->area_id]=DB::table('punto')->where('area_id',$area->area_id)->get();
+        }
+
+        $cont=0;
+        foreach ($areas as $area){
+            $areaN[$cont]["area_id"]=$area->area_id;
+            $areaN[$cont][]=(DB::select('select area.nombre from area where area.id = ?',[$area->area_id]))[0]->nombre;
+            $cont=$cont+1;
+        }
+
+        foreach ($preguntas as $pregunta) {
             if (DB::select('select * from cerrada where pregunta_id=?', [$pregunta->id]) == true) {
                 $pregunta->tipo = (DB::table('cerrada')->where('pregunta_id', $pregunta->id)->select('tipoSeleccion')->get())[0]->tipoSeleccion;
 
@@ -79,8 +90,9 @@ class InformeController extends Controller
             }
         }
 
+        $marcadores = DB::select('select encuesta.latitud, encuesta.longitud from encuesta where encuesta.asignacion_id in (select asignacion.id from asignacion where asignacion.modelo_id = ?)',[$id]);
 
-        return view('informes.show', ['preguntas' => $preguntas]);
+        return view('informes.show', ['preguntas' => $preguntas, 'areasP'=>$areaP, 'areasN'=>$areaN, 'marcadores'=>$marcadores]);
     }
 
     /**

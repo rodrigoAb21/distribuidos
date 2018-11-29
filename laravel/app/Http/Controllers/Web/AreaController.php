@@ -22,7 +22,7 @@ class AreaController extends Controller
      */
     public function index()
     {
-        $areas = Area::all();
+        $areas = DB::table('area')->where('user_id',Auth::user()->id)->get();
         return view('areas.index',['areas'=>$areas]);
     }
 
@@ -68,12 +68,12 @@ class AreaController extends Controller
                 print_r("\n");
                 print_r($numero);
                 if(($cont2) % 2 == 0){
-                    $punto->longitud = $numero;
+                    $punto->latitud = $numero;
                     $punto->area_id = $area->id;
                     $punto->save();
                 }else{
                     $punto = new Punto();
-                    $punto->latitud = $numero;
+                    $punto->longitud = $numero;
                 }
                 $numero="";
             }

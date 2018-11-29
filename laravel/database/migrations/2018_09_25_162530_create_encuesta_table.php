@@ -18,8 +18,8 @@ class CreateEncuestaTable extends Migration
             $table->string('fecha');
             $table->string('estado');
 
-            //$table->double('longitud');
-            //$table->double('latitud');
+            $table->double('longitud');
+            $table->double('latitud');
             //$table->timestamps();
 
             $table->unsignedInteger('asignacion_id');
