@@ -4,6 +4,8 @@ public class Encuesta {
     int id;
     String fecha;
     String estado;
+    double longitud;
+    double latitud;
     int asignacion_id;
 
     public Encuesta() {
@@ -39,5 +41,21 @@ public class Encuesta {
 
     public void setAsignacion_id(int asignacion_id) {
         this.asignacion_id = asignacion_id;
+    }
+
+    public double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
+    }
+
+    public double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
     }
 }

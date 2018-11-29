@@ -43,7 +43,7 @@ import java.util.List;
 
 public class FormularioActivity extends AppCompatActivity {
 
-//
+
     TokenManager tokenManager;
     String json_local;
     int id_local;
@@ -52,6 +52,8 @@ public class FormularioActivity extends AppCompatActivity {
     DBHelper dbHelper;
     private View view;
     int encuesta_id;
+    double lat;
+    double lng;
 
 
     @Override
@@ -71,6 +73,9 @@ public class FormularioActivity extends AppCompatActivity {
             json_local = bundle.getString("json_local");
             id_local = bundle.getInt("id_local");
             this.encuesta_id = bundle.getInt("encuesta_id");
+            lat = bundle.getDouble("latitud");
+            lng = bundle.getDouble("longitud");
+            Log.w("ubienc", "" + lat + ", " + lng);
         }else {
             finish();
         }
@@ -151,6 +156,8 @@ public class FormularioActivity extends AppCompatActivity {
                 encuesta.setFecha(fecha);
                 encuesta.setEstado("En proceso");
                 encuesta.setAsignacion_id(asignacion.getId());
+                encuesta.setLatitud(lat);
+                encuesta.setLongitud(lng);
 
                 long id = dbHelper.addEncuesta(encuesta);
                 encuesta.setId((int) id);

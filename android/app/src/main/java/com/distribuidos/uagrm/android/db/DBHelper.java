@@ -35,6 +35,7 @@ public class DBHelper extends SQLiteOpenHelper {
             " `hora_final` TEXT NOT NULL," +
             " `cantidad` INTEGER NOT NULL," +
             " `descripcion` TEXT," +
+            " `puntos` TEXT," +
             " `json` TEXT NOT NULL" +
             "); ";
 
@@ -43,6 +44,8 @@ public class DBHelper extends SQLiteOpenHelper {
             " `id` INTEGER PRIMARY KEY AUTOINCREMENT," +
             " `fecha` TEXT NOT NULL," +
             " `estado` TEXT NOT NULL," +
+            " `latitud` REAL NOT NULL," +
+            " `longitud` REAL NOT NULL," +
             " `asignacion_id` INTEGER NOT NULL" +
             "); ";
 
@@ -120,6 +123,7 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put("hora_final", asignacion.getHora_final());
         values.put("cantidad", asignacion.getCantidad());
         values.put("descripcion", asignacion.getDescripcion());
+        values.put("puntos", asignacion.getPuntos());
         values.put("json", asignacion.getJson());
 
 
@@ -140,6 +144,7 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put("hora_final", asignacion.getHora_final());
         values.put("cantidad", asignacion.getCantidad());
         values.put("descripcion", asignacion.getDescripcion());
+        values.put("puntos", asignacion.getPuntos());
         values.put("json", asignacion.getJson());
 
         int x = db.update("asignacion", values, "id = ?",
@@ -176,7 +181,8 @@ public class DBHelper extends SQLiteOpenHelper {
             asignacion.setHora_final(cursor.getString(5));
             asignacion.setCantidad(cursor.getInt(6));
             asignacion.setDescripcion(cursor.getString(7));
-            asignacion.setJson(cursor.getString(8));
+            asignacion.setPuntos(cursor.getString(8));
+            asignacion.setJson(cursor.getString(9));
 
             db.close();
             return asignacion;
@@ -205,7 +211,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 asignacion.setHora_final(cursor.getString(5));
                 asignacion.setCantidad(cursor.getInt(6));
                 asignacion.setDescripcion(cursor.getString(7));
-                asignacion.setJson(cursor.getString(8));
+                asignacion.setPuntos(cursor.getString(8));
+                asignacion.setJson(cursor.getString(9));
 
                 asignaciones.add(asignacion);
             }
@@ -225,6 +232,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
         values.put("fecha", encuesta.getFecha());
         values.put("estado", encuesta.getEstado());
+        values.put("latitud", encuesta.getLatitud());
+        values.put("longitud", encuesta.getLongitud());
         values.put("asignacion_id", encuesta.getAsignacion_id());
 
         long x = db.insert("encuesta", null, values);
@@ -269,7 +278,9 @@ public class DBHelper extends SQLiteOpenHelper {
             encuesta.setId(cursor.getInt(0));
             encuesta.setFecha(cursor.getString(1));
             encuesta.setEstado(cursor.getString(2));
-            encuesta.setAsignacion_id(cursor.getInt(3));
+            encuesta.setLatitud(cursor.getDouble(3));
+            encuesta.setLongitud(cursor.getDouble(4));
+            encuesta.setAsignacion_id(cursor.getInt(5));
 
             db.close();
             return encuesta;
@@ -295,7 +306,9 @@ public class DBHelper extends SQLiteOpenHelper {
             encuesta.setId(cursor.getInt(0));
             encuesta.setFecha(cursor.getString(1));
             encuesta.setEstado(cursor.getString(2));
-            encuesta.setAsignacion_id(cursor.getInt(3));
+            encuesta.setLatitud(cursor.getDouble(3));
+            encuesta.setLongitud(cursor.getDouble(4));
+            encuesta.setAsignacion_id(cursor.getInt(5));
 
             db.close();
             return encuesta;
@@ -321,7 +334,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 encuesta.setId(cursor.getInt(0));
                 encuesta.setFecha(cursor.getString(1));
                 encuesta.setEstado(cursor.getString(2));
-                encuesta.setAsignacion_id(cursor.getInt(3));
+                encuesta.setLatitud(cursor.getDouble(3));
+                encuesta.setLongitud(cursor.getDouble(4));
+                encuesta.setAsignacion_id(cursor.getInt(5));
 
                 encuestas.add(encuesta);
             }
@@ -345,7 +360,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 encuesta.setId(cursor.getInt(0));
                 encuesta.setFecha(cursor.getString(1));
                 encuesta.setEstado(cursor.getString(2));
-                encuesta.setAsignacion_id(cursor.getInt(3));
+                encuesta.setLatitud(cursor.getDouble(3));
+                encuesta.setLongitud(cursor.getDouble(4));
+                encuesta.setAsignacion_id(cursor.getInt(5));
 
                 encuestas.add(encuesta);
             }

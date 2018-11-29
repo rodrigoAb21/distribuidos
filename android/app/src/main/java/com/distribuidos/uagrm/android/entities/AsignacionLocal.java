@@ -5,6 +5,7 @@ public class AsignacionLocal {
     int asignacion_id;
     String modelo;
     String area;
+    String puntos;
     String hora_inicio;
     String hora_final;
     int cantidad;
@@ -84,5 +85,13 @@ public class AsignacionLocal {
 
     public void setHora_final(String hora_final) {
         this.hora_final = hora_final;
+    }
+
+    public String getPuntos() {
+        return puntos;
+    }
+
+    public void setPuntos(String puntos) {
+        this.puntos = puntos;
     }
 }

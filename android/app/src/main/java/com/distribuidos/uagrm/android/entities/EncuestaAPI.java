@@ -6,6 +6,8 @@ public class EncuestaAPI {
     int id;
     String fecha;
     String estado;
+    double longitud;
+    double latitud;
     int asignacion_id;
     List<FichaAPI> fichas;
 
@@ -50,5 +52,21 @@ public class EncuestaAPI {
 
     public void setFichas(List<FichaAPI> fichas) {
         this.fichas = fichas;
+    }
+
+    public double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
+    }
+
+    public double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
     }
 }

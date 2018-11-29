@@ -24,15 +24,19 @@ import android.widget.Toast;
 import com.distribuidos.uagrm.android.R;
 import com.distribuidos.uagrm.android.adapters.EncuestaAdapter;
 import com.distribuidos.uagrm.android.db.DBHelper;
+import com.distribuidos.uagrm.android.entities.Area;
 import com.distribuidos.uagrm.android.entities.AsignacionLocal;
 import com.distribuidos.uagrm.android.entities.Encuesta;
 import com.distribuidos.uagrm.android.entities.EncuestaAPI;
 import com.distribuidos.uagrm.android.entities.Encuestas;
 import com.distribuidos.uagrm.android.entities.Ficha;
 import com.distribuidos.uagrm.android.entities.FichaAPI;
+import com.distribuidos.uagrm.android.entities.Punto;
 import com.distribuidos.uagrm.android.helpers.TokenManager;
 import com.distribuidos.uagrm.android.network.ApiService;
 import com.distribuidos.uagrm.android.network.RetrofitBuilder;
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +56,7 @@ public class EncuestaActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ApiService service;
     retrofit2.Call<Void> call;
+    Area area;
 
 
     private LocationManager locationManager;
@@ -86,6 +91,7 @@ public class EncuestaActivity extends AppCompatActivity {
 
         dbHelper = new DBHelper(getApplicationContext());
         asignacionLocal = dbHelper.getAsignacion(id_local);
+        area = new Gson().fromJson(asignacionLocal.getPuntos(), Area.class);
         cargarComponentes();
     }
 
@@ -162,9 +168,13 @@ public class EncuestaActivity extends AppCompatActivity {
                 //noinspection MissingPermission
                 Location pos = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 if (pos != null){
-                    Toast.makeText(this, "Lng: " + pos.getLongitude() + "\n Ltd: " + pos.getLatitude(), Toast.LENGTH_LONG).show();
                     Log.w("UBICACION", pos.getLatitude() + "," + pos.getLongitude());
-                    mostrarEncuesta(0);
+                    if (valido(area, pos)){
+                        mostrarEncuesta(0, pos);
+                    }else{
+                        Toast.makeText(this, "Necesita estar dentro del area!", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
                 else
                     Toast.makeText(this, "Nada choco", Toast.LENGTH_LONG).show();
@@ -184,6 +194,36 @@ public class EncuestaActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private boolean valido(Area areaAsignada, Location pos) {
+        boolean inside = false;
+
+        double x = pos.getLatitude();
+        double y = pos.getLongitude();
+
+        for (int i = 0,j = areaAsignada.getPuntos().size() - 1; i < areaAsignada.getPuntos().size(); j = i++) {
+            double xi = areaAsignada.getPuntos().get(i).getLatitud();
+            double yi = areaAsignada.getPuntos().get(i).getLongitud();
+
+            double xj = areaAsignada.getPuntos().get(j).getLatitud();
+            double yj = areaAsignada.getPuntos().get(j).getLongitud();
+
+            boolean inter = ((yi > y) != (yj > y)) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+            if(inter) inside = !inside;
+        }
+
+        return inside;
+    }
+
+
+    private void mostrarEncuesta(int encuesta_id, Location pos){
+        Intent intent = new Intent(EncuestaActivity.this, FormularioActivity.class);
+        intent.putExtra("json_local", asignacionLocal.getJson());
+        intent.putExtra("id_local", id_local);
+        intent.putExtra("encuesta_id", encuesta_id);
+        intent.putExtra("latitud", pos.getLatitude());
+        intent.putExtra("longitud", pos.getLongitude());
+        startActivity(intent);
+    }
 
     private void mostrarEncuesta(int encuesta_id){
         Intent intent = new Intent(EncuestaActivity.this, FormularioActivity.class);
@@ -204,6 +244,8 @@ public class EncuestaActivity extends AppCompatActivity {
             encuestaAPI.setId(enc.getId());
             encuestaAPI.setFecha(enc.getFecha());
             encuestaAPI.setEstado(enc.getEstado());
+            encuestaAPI.setLatitud(enc.getLatitud());
+            encuestaAPI.setLongitud(enc.getLongitud());
             encuestaAPI.setAsignacion_id(enc.getAsignacion_id());
 
             List<FichaAPI> fichasAPI = new ArrayList<>();

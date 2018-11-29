@@ -109,9 +109,10 @@ public class AsignacionActivity extends AppCompatActivity {
         call_asignacion.enqueue(new Callback<AsignacionResponse>() {
             @Override
             public void onResponse(Call<AsignacionResponse> call, Response<AsignacionResponse> response) {
-                Log.w("llego ok: ", ""+response);
+
                 if (response.isSuccessful()){
                     asignaciones = response.body().getData();
+                    Log.w("XXXX: ", ""+response);
                     sincronizar(asignaciones);
                 }else{
                     tokenManager.deleteToken();
@@ -155,6 +156,8 @@ public class AsignacionActivity extends AppCompatActivity {
                 asignacionLocal.setHora_final(apiList.get(i).getHora_final());
                 asignacionLocal.setCantidad(apiList.get(i).getCantidad());
                 asignacionLocal.setDescripcion(apiList.get(i).getModelo().getDescripcion());
+                Log.w("PPPP", "" + new Gson().toJson(apiList.get(i).getArea()));
+                asignacionLocal.setPuntos("" + new Gson().toJson(apiList.get(i).getArea()));
                 asignacionLocal.setJson("" + new Gson().toJson(apiList.get(i)));
 
                 dbHelper.addAsignacion(asignacionLocal);

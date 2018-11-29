@@ -1,9 +1,12 @@
 package com.distribuidos.uagrm.android.entities;
 
+import java.util.List;
+
 public class Area {
     int id;
     String nombre;
     int user_id;
+    List<Punto> puntos;
 
     public Area() {
     }
@@ -30,5 +33,13 @@ public class Area {
 
     public void setUser_id(int user_id) {
         this.user_id = user_id;
+    }
+
+    public List<Punto> getPuntos() {
+        return puntos;
+    }
+
+    public void setPuntos(List<Punto> puntos) {
+        this.puntos = puntos;
     }
 }
