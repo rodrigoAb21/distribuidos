@@ -119,8 +119,8 @@
             }
 
             function nuevaPregunta(modeloId) {
-                var direccion = "/modelos/"+modeloId+"/nuevaPregunta";
-                $('#formularioPreg').attr('action',direccion);
+                // var direccion = "distribuidos/distribuidos/laravel/public/modelos/"+modeloId+"/nuevaPregunta";
+                // $('#formularioPreg').attr('action',direccion);
                 $('#metodo').prop('value','POST');
                 var metodo = '<input type = "hidden"  id="metodo" name="_method" value="POST">';
                 $('#formularioPreg').append(metodo);

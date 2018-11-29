@@ -12,8 +12,7 @@ class Punto extends Model
     protected $fillable = [
         'longitud',
         'latitud',
-        'area_id',
-        'empresa_id'
+        'area_id'
     ];
 
 

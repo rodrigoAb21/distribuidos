@@ -25,7 +25,7 @@
                                     <td>{{$modelo->nombre}}</td>
                                     <td><span class="label label-default">{{$modelo->estado}}</span></td>
                                     <td>
-                                        <a href="{{url('/informes/1')}}">
+                                        <a href="{{url('/informes/'.$modelo->id.'/estadisticas')}}">
                                             <button class="btn btn-primary"><i class="fa fa-chart-pie fa-2x"></i></button>
                                         </a>
                                         <a href="{{url('/informes/'.$modelo->id.'/encuestas')}}">

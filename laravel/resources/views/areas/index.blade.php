@@ -18,47 +18,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
+                                    @foreach($areas as $area)
                                     <tr>
-                                        <td>1</td>
-                                        <td>El Centro 1</td>
+                                        <td>{{$loop->iteration}}</td>
+                                        <td>{{$area->nombre}}</td>
                                         <td>
-                                            <a href="{{url('areas/1/edit')}}"><button class="btn btn-warning"><i class="fa fa-pencil-alt"></i></button></a>
+                                            <a href="{{url('areas/'.$area->id.'/edit')}}"><button class="btn btn-warning"><i class="fa fa-pencil-alt"></i></button></a>
                                             <button class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Equipetrol 3</td>
-                                        <td>
-                                            <a href="{{url('areas/1/edit')}}"><button class="btn btn-warning"><i class="fa fa-pencil-alt"></i></button></a>
-                                            <button class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Arenales 2</td>
-                                        <td>
-                                            <a href="{{url('areas/1/edit')}}"><button class="btn btn-warning"><i class="fa fa-pencil-alt"></i></button></a>
-                                            <button class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>Manzana 1</td>
-                                        <td>
-                                            <a href="{{url('areas/1/edit')}}"><button class="btn btn-warning"><i class="fa fa-pencil-alt"></i></button></a>
-                                            <button class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>Parque Industrial 1</td>
-                                        <td>
-                                            <a href="{{url('areas/1/edit')}}"><button class="btn btn-warning"><i class="fa fa-pencil-alt"></i></button></a>
-                                            <button class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash"></i></button>
-                                        </td>
-                                    </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                             @include('areas.modal')

@@ -2,8 +2,16 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Modelos\Area;
+use App\Modelos\Punto;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use function MongoDB\BSON\toJSON;
+use Psy\Util\Json;
+use function Sodium\add;
 
 class AreaController extends Controller
 {
@@ -14,7 +22,8 @@ class AreaController extends Controller
      */
     public function index()
     {
-        return view('areas.index');
+        $areas = Area::all();
+        return view('areas.index',['areas'=>$areas]);
     }
 
     /**
@@ -35,6 +44,41 @@ class AreaController extends Controller
      */
     public function store(Request $request)
     {
+        $area= new Area();
+        $area->nombre = $request->nombre;
+        $area->user_id = Auth::user()->id;
+        $area->save();
+
+        $cont = 0;
+        $cont2=0;
+        $numero="";
+        $punto = new Punto();
+//        dd(strlen($request->coordenadas));
+        print_r($request->coordenadas);
+        while ($cont<strlen($request->coordenadas)){
+
+            if($request->coordenadas[$cont]!="," and $cont!=strlen($request->coordenadas)-1){
+              $numero = $numero.$request->coordenadas[$cont];
+
+            }else{
+                $cont2 = $cont2+1;
+                print_r("\n");
+                print_r($numero);
+                $numero=(double)$numero;
+                print_r("\n");
+                print_r($numero);
+                if(($cont2) % 2 == 0){
+                    $punto->longitud = $numero;
+                    $punto->area_id = $area->id;
+                    $punto->save();
+                }else{
+                    $punto = new Punto();
+                    $punto->latitud = $numero;
+                }
+                $numero="";
+            }
+            $cont=$cont+1;
+        }
         return redirect('/areas');
     }
 
@@ -57,7 +101,9 @@ class AreaController extends Controller
      */
     public function edit($id)
     {
-        return view('areas.edit');
+        $area = Area::findOrFail($id);
+        $puntos= DB::table('punto')->where('area_id',$id)->get();
+        return view('areas.edit',['puntos'=>$puntos,'area'=>$area]);
     }
 
     /**

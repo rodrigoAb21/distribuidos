@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\DB;
 class PreguntaController extends Controller
 {
     public function nuevaPregunta(Request $request, $id){
-
         $pregunta = new Pregunta();
         $pregunta->enunciado = $request->enunciado;
         $pregunta->modelo_id = $id;

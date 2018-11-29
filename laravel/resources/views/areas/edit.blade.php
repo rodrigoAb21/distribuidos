@@ -1,4 +1,19 @@
 @extends('layouts.dashboard')
+@push('shead')
+    <script>
+            function dibujar(puntos){
+                console.log("p:",puntos);
+                var lineas2 =[];
+                for(var punto in puntos){
+                    console.log(puntos[0].longitud);
+                    // console.log(punto[1]);
+                    // lineas.push([punto['latitud'],punto['longitud']]);
+                    // lineas.push(array[2,5]);
+                }
+                console.log(lineas2);
+            }
+    </script>
+@endpush
 @section('contenido')
     <div class="content">
         <div class="row">
@@ -14,6 +29,10 @@
                             <div class="row">
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div id="map" style="height: 350px;"></div>
+                                    <script language="javascript" type="text/javascript">
+                                    var x=<?=json_encode($puntos)?>;
+                                    dibujar(x);
+                                    </script>
                                 </div>
                             </div>
                             <div class="row justify-content-center mt-4">
@@ -21,7 +40,7 @@
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                     <div class="form-group">
                                         <label>Nombre</label>
-                                        <input type="text" name="nombre" value="El Centro 1" class="form-control" >
+                                        <input type="text" name="nombre" value={{$area->nombre}} class="form-control" >
                                     </div>
                                 </div>
 

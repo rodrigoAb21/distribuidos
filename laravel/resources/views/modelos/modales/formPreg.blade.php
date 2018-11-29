@@ -7,7 +7,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="formularioPreg" action="{{url('/modelos/'.$modelo->id.'/nuevaPregunta')}}" method="POST">
+            <form id="formularioPreg" action="{{url('modelos/'.$modelo->id.'/nuevaPregunta')}}" method="POST">
                 <input type = "hidden"  id="metodo" name="_method" >
                 {{--{{method_field('PATCH')}}--}}
                 {{csrf_field()}}

@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/informes', 'Web\InformeController');
     Route::get('/informes/{modelo_id}/encuestas',"Web\InformeController@listarEncuestas");
     Route::get('/informes/{modelo_id}/encuestas/{encuesta_id}',"Web\InformeController@verEncuesta");
+    Route::get('/informes/{modelo_id}/estadisticas',"Web\InformeController@show");
 
 
 });

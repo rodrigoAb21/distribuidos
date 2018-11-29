@@ -21,6 +21,7 @@
                                         <div class="form-group">
                                             <label>Nombre</label>
                                             <input type="text" name="nombre" class="form-control" >
+                                            <input name="coordenadas" id="coordenadas" value="" hidden>
                                         </div>
                                     </div>
 
@@ -28,7 +29,7 @@
 
                             <div class="row">
                                 <div class="update ml-auto mr-auto">
-                                    <button class="btn btn-warning btn-round" type="submit">Guardar</button>
+                                    <button class="btn btn-warning btn-round" type="submit" onclick="obtenerCoordenadas()">Guardar</button>
                                 </div>
                             </div>
                         </form>
@@ -50,6 +51,7 @@
         <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-geodesy/v0.1.0/leaflet-geodesy.js'></script>
 
         <script>
+            var coordenadas;
             L.mapbox.accessToken = 'pk.eyJ1Ijoicm9kcmlnb2FiMjEiLCJhIjoiY2psenZmcDZpMDN5bTNrcGN4Z2s2NWtqNSJ9.bSdjQfv-28z1j4zx7ljvcg';
             var map = L.mapbox.map('map', 'mapbox.streets')
                 .setView([-17.783346, -63.180589], 13);
@@ -83,6 +85,16 @@
                 e.layer.bindPopup((LGeo.area(e.layer) / 1000000).toFixed(2) + ' km<sup>2</sup>');
                 e.layer.openPopup();
             }
+
+            map.on('draw:created', function (e) {
+                var layer = e.layer;
+                var shape = layer.toGeoJSON();
+                coordenadas = shape['geometry']['coordinates'][0];
+            });
+            function obtenerCoordenadas(){
+                document.getElementById('coordenadas').value = coordenadas;
+            }
         </script>
+
     @endpush
 @endsection
