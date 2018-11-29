@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.distribuidos.uagrm.android.R;
+import com.distribuidos.uagrm.android.entities.Area;
+import com.distribuidos.uagrm.android.entities.Punto;
+import com.google.gson.Gson;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.mapboxsdk.Mapbox;
@@ -28,6 +31,7 @@ public class AreaActivity extends AppCompatActivity implements
     private PermissionsManager permissionsManager;
     private MapboxMap mapboxMap;
     private MapView mapView;
+    Area area;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +43,13 @@ public class AreaActivity extends AppCompatActivity implements
 
         // This contains the MapView in XML and needs to be called after the access token is configured.
         setContentView(R.layout.activity_area);
+
+        Bundle bundle = this.getIntent().getExtras();
+        if (bundle != null){
+            area = new Gson().fromJson(bundle.getString("area"), Area.class);
+        }else {
+            finish();
+        }
 
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
@@ -54,14 +65,15 @@ public class AreaActivity extends AppCompatActivity implements
 
     private void drawPolygon(MapboxMap mapboxMap) {
         List<LatLng> polygon = new ArrayList<>();
-        polygon.add(new LatLng(-17.817312, -63.231023));
-        polygon.add(new LatLng(-17.819175, -63.228996));
-        polygon.add(new LatLng(-17.816958, -63.226463));
-        polygon.add(new LatLng(-17.815089, -63.228475));
-        polygon.add(new LatLng(-17.817312, -63.231023));
+        if (area.getPuntos().size() > 0){
+            for (Punto punto : area.getPuntos()){
+                polygon.add(new LatLng(punto.getLatitud(), punto.getLongitud()));
+            }
+        }
 
         mapboxMap.addPolygon(new PolygonOptions()
                 .addAll(polygon)
+                .alpha(0.4f)
                 .fillColor(Color.parseColor("#3bb2d0")));
     }
 

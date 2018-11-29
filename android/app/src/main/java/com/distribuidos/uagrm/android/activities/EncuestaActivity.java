@@ -182,7 +182,7 @@ public class EncuestaActivity extends AppCompatActivity {
                 break;
             case R.id.menu_btn_area:
                 Intent intento = new Intent(getApplicationContext(), AreaActivity.class);
-                intento.putExtra("id_local", id_local);
+                intento.putExtra("area", asignacionLocal.getPuntos());
                 startActivity(intento);
 
                 break;
