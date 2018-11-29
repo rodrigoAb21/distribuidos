@@ -1,4 +1,111 @@
 @extends('layouts.dashboard')
+@push('shead')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
+    <script>
+        function crear(id, pregunta) {
+            var tipo = pregunta['tipo'];
+            var opciones = pregunta['opciones'];
+
+            var opcionesL=[];
+            var valoresL=[];
+
+            for(let i = 0; i < opciones.length; i++){
+                opcionesL.push([opciones[i]['texto']]);
+                valoresL.push([opciones[i]['resultado']]);
+            }
+
+            if(tipo == "Unica") {
+            console.log("entro");
+            var datos ={
+                type: 'pie',
+                data: {
+                    datasets: [{
+
+                        backgroundColor: [
+                            '#e3e3e3',
+                            '#4acccd',
+                            '#fcc468',
+                            '#ef8157'
+                        ],
+                        pointRadius: 0,
+                        pointHoverRadius: 0,
+                        borderWidth: 0,
+                        data: valoresL
+
+                    }],
+                    labels: opcionesL
+                },
+                options: {}
+            };
+            var dibujo = document.getElementById(id).getContext('2d');
+            new Chart(dibujo,datos);
+            }else{
+
+                var valores= [];
+                for(let i = 0; i < valoresL.length; i++){
+                    valores.push(parseInt([valoresL[i][0]]));
+                }
+                var datos ={
+                    type: 'bar',
+                    data: {
+                        datasets:[{
+                            data: valores,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.6)',
+                                'rgba(54, 162, 235, 0.6)',
+                                'rgba(255, 206, 86, 0.6)',
+                                'rgba(75, 192, 192, 0.6)',
+                                'rgba(153, 102, 255, 0.6)',
+                                'rgba(255, 159, 64, 0.6)',
+                                'rgba(255, 99, 132, 0.6)',
+                                'rgba(54, 162, 235, 0.6)',
+                                'rgba(255, 206, 86, 0.6)',
+                                'rgba(75, 192, 192, 0.6)',
+                                'rgba(153, 102, 255, 0.6)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 0.6)',
+                                'rgba(54, 162, 235, 0.6)',
+                                'rgba(255, 206, 86, 0.6)',
+                                'rgba(75, 192, 192, 0.6)',
+                                'rgba(153, 102, 255, 0.6)',
+                                'rgba(255, 159, 64, 0.6)',
+                                'rgba(255, 99, 132, 0.6)',
+                                'rgba(54, 162, 235, 0.6)',
+                                'rgba(255, 206, 86, 0.6)',
+                                'rgba(75, 192, 192, 0.6)',
+                                'rgba(153, 102, 255, 0.6)'
+                            ],
+                            borderWidth: 1
+                        }],
+                        labels: opcionesL
+                    },
+                    options: {
+                        scales: {
+                            xAxes:[
+
+                            ],
+                            yAxes: [{
+                                ticks: {
+                                    min: 0,
+                                    max: 10,
+                                    beginAtZero:true
+                                }
+                            }]
+                        },
+                        legend: {
+                            display: false
+                        }
+                    }
+                };
+
+                var dibujo = document.getElementById(id).getContext('2d');
+                new Chart(dibujo, datos);
+            }
+
+        };
+    </script>
+@endpush
 @section('contenido')
     <div class="content">
         <div class="row">
@@ -42,14 +149,19 @@
                     <div class="card-header ">
                         <h5 class="card-title">{{$pregunta->enunciado}}</h5>
                     </div>
-                    <div class="card-body ">
-                        <canvas id="grafica-{{$pregunta->id}}"></canvas>
+                    <div id="card-body" class="card-body ">
+                        <canvas id="pregunta-{{$pregunta->id}}"></canvas>
+                        @if($pregunta->tipo != "Entrada")
+                            <script language="javascript" type="text/javascript">
+                               var x=<?=json_encode($pregunta)?>;
+
+                               crear("pregunta-"+x['id'],x);
+
+                            </script>
+                        @endif
                     </div>
                     <div class="card-footer ">
                         <div class="legend">
-                            @foreach($pregunta->opciones as $opcion)
-                            <i class="fa fa-circle text-primary"></i> {{$opcion->texto}}
-                            @endforeach
                         </div>
                         <hr>
                     </div>
@@ -107,13 +219,65 @@
 
 
         </script>
-        <script src="{{asset('js/plantilla/demo.js')}}" type="text/javascript"></script>
+        <script src="{{asset('js/plantilla/demo.js')}}"
+                type="text/javascript"></script>
         <script src="{{asset('js/terceros/chartjs/chartjs.min.js')}}"></script>
 
         <script>
-            $(document).ready(function() {
-            demo.initChartsPages();
-            });
+
+            // $(document).ready(function() {
+            //     demo.initChartsPages();
+            // });
+            // var ctx = "graficaChart";
+            //
+            // var graficaChart = new Chart(ctx,{
+            //     type: 'pie',
+            //     data: {
+            //         datasets: [{
+            //             data: [10, 20, 30,60],
+            //             backgroundColor: [
+            //                 'rgba(255, 99, 132, 0.2)',
+            //                 'rgba(54, 162, 235, 0.2)',
+            //                 'rgba(255, 206, 86, 0.2)','rgba(54, 162, 235, 0.2)',
+            //                 'rgba(255, 206, 86, 0.2)',
+            //             ],
+            //
+            //         }],
+            //
+            //         labels: ['1','2','3']
+            //
+            //     },
+            //     options: {}
+            // });
+
+
+                // var idPregunta= document.getElementById("1").getContext("2d");
+                // var opciones= ["si","no","tal vez"];
+                // var valores = [20, 30, 50];
+                // var ctx = idPregunta;
+                // var grafica = new Chart(ctx,{
+                //     type: 'pie',
+                //     data: {
+                //         datasets: [{
+                //             data: valores,
+                //             backgroundColor: [
+                //                 'rgba(255, 99, 132, 0.2)',
+                //                 'rgba(54, 162, 235, 0.2)',
+                //                 'rgba(255, 206, 86, 0.2)',
+                //                 'rgba(54, 162, 235, 0.2)',
+                //                 'rgba(255, 206, 86, 0.2)',
+                //             ],
+                //
+                //         }],
+                //         labels: opciones
+                //     },
+                //     options: {}
+                // });
+
+
+
+
+
         </script>
     @endpush
 

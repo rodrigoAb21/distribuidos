@@ -18,6 +18,7 @@
     <link href="{{asset('css/plantilla/paper-dashboard.css')}}" rel="stylesheet" />
 
     @stack('shead')
+
 </head>
 
 <body class="">
