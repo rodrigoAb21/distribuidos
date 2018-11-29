@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,18 +21,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:label="Asignaciones"
             android:name=".activities.AsignacionActivity"
-            />
+            android:label="Asignaciones" />
         <activity
-            android:label="Encuestas"
             android:name=".activities.EncuestaActivity"
+            android:label="Encuestas"
             android:parentActivityName=".activities.AsignacionActivity" />
         <activity
-            android:label="Nueva encuesta"
-            android:name=".activities.FormularioActivity" />
-
-
+            android:name=".activities.FormularioActivity"
+            android:label="Nueva encuesta" />
+        <activity android:name=".activities.AreaActivity"></activity>
     </application>
 
 </manifest>

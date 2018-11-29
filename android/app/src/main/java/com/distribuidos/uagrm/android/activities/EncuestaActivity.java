@@ -163,10 +163,17 @@ public class EncuestaActivity extends AppCompatActivity {
                 Location pos = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 if (pos != null){
                     Toast.makeText(this, "Lng: " + pos.getLongitude() + "\n Ltd: " + pos.getLatitude(), Toast.LENGTH_LONG).show();
+                    Log.w("UBICACION", pos.getLatitude() + "," + pos.getLongitude());
                     mostrarEncuesta(0);
                 }
                 else
                     Toast.makeText(this, "Nada choco", Toast.LENGTH_LONG).show();
+
+                break;
+            case R.id.menu_btn_area:
+                Intent intento = new Intent(getApplicationContext(), AreaActivity.class);
+                intento.putExtra("id_local", id_local);
+                startActivity(intento);
 
                 break;
 

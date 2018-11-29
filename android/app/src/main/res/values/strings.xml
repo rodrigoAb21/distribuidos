@@ -5,9 +5,6 @@
     <string name="err_name">The name field is required.</string>
     <string name="err_email">The email must be a valid email address.</string>
     <string name="err_password">The password must be at least 6 characters.</string>
-
-
-
-
+    <string name="access_token">pk.eyJ1Ijoicm9kcmlnb2FiMjEiLCJhIjoiY2psenZmcDZpMDN5bTNrcGN4Z2s2NWtqNSJ9.bSdjQfv-28z1j4zx7ljvcg</string>
 
 </resources>

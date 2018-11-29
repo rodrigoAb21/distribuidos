@@ -9,6 +9,10 @@
         android:title="Nuevo"
         app:showAsAction="always" />
     <item
+        android:id="@+id/menu_btn_area"
+        android:title="Ver Area"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/menu_btn_enviar"
         android:title="Enviar finalizados"
         app:showAsAction="never" />
