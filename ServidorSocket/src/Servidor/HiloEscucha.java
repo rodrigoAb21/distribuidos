@@ -24,7 +24,6 @@ public class HiloEscucha extends Thread {
                 Socket socket = serverSocket.accept();
                 if (socket != null){
                     for (EscuchadorEventos escuchador : escuchadores){
-                        System.out.println("Disparando evento AGREGAR CLIENTE");
                         escuchador.agregarCliente(new Evento(socket));
                     }
                 }

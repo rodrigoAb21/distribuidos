@@ -69,19 +69,27 @@ public class Servidor implements EscuchadorEventos {
     @Override
     public void agregarCliente(Evento e) {
         agregarCliente(e.getSocket());
+<<<<<<< Updated upstream
         System.out.println("Se agrego al cliente: C-" + e.getSocket().getPort());
         System.out.println("Total de clientes: " + clientes.size());
+=======
+//        System.out.println("Se agrego al cliente: C-" + e.getSocket().getPort());
+//        System.out.println(clientes.size());
+>>>>>>> Stashed changes
     }
 
     @Override
     public void quitarCliente(int puerto) {
         HiloServidor cliente = (HiloServidor) clientes.get(puerto);
-        System.out.println("Quitando hilo cliente C-" + puerto);
+//        System.out.println("Quitando hilo cliente C-" + puerto);
         if (cliente != null){
             cliente.close();
             clientes.remove(puerto);
+<<<<<<< Updated upstream
             System.out.println("Se quito el hilo!");
             System.out.println("Total de clientes: " +clientes.size());
+=======
+>>>>>>> Stashed changes
         }
     }
 }

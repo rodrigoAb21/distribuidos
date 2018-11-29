@@ -1,6 +1,15 @@
 package com.distribuidos.uagrm.android.activities;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Build;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.distribuidos.uagrm.android.R;
 import com.distribuidos.uagrm.android.adapters.EncuestaAdapter;
@@ -44,6 +54,11 @@ public class EncuestaActivity extends AppCompatActivity {
     retrofit2.Call<Void> call;
 
 
+    private LocationManager locationManager;
+    private LocationListener listener;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,10 +80,55 @@ public class EncuestaActivity extends AppCompatActivity {
             finish();
         }
 
+        iniciandoUbi();
+
+        verUbicacion();
+
         dbHelper = new DBHelper(getApplicationContext());
         asignacionLocal = dbHelper.getAsignacion(id_local);
         cargarComponentes();
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults) {
+        switch (requestCode) {
+            case 10:
+                verUbicacion();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void iniciandoUbi(){
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+
+        listener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+
+            }
+
+            @Override
+            public void onStatusChanged(String s, int i, Bundle bundle) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String s) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String s) {
+                Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(i);
+            }
+        };
+    }
+
 
 
     private void cargarComponentes(){
@@ -94,12 +154,20 @@ public class EncuestaActivity extends AppCompatActivity {
         return true;
     }
 
-
+    @SuppressLint("MissingPermission")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.menu_btn_add:
-                mostrarEncuesta(0);
+                //noinspection MissingPermission
+                Location pos = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                if (pos != null){
+                    Toast.makeText(this, "Lng: " + pos.getLongitude() + "\n Ltd: " + pos.getLatitude(), Toast.LENGTH_LONG).show();
+                    mostrarEncuesta(0);
+                }
+                else
+                    Toast.makeText(this, "Nada choco", Toast.LENGTH_LONG).show();
+
                 break;
 
             case R.id.menu_btn_enviar:
@@ -195,6 +263,22 @@ public class EncuestaActivity extends AppCompatActivity {
         }
     }
 
+    private void verUbicacion() {
+        // first check for permissions
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
+                                Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.INTERNET}
+                        , 10);
+            }
+            return;
+        }
+        // this code won'textView execute IF permissions are not allowed, because in the line above there is return statement.
+        locationManager.requestLocationUpdates("gps", 5000, 0, listener);
 
+
+    }
 
 }

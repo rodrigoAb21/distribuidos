@@ -2,9 +2,7 @@ package Servidor;
 
 import Servidor.Eventos.EscuchadorEventos;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -14,6 +12,10 @@ public class HiloServidor extends Thread{
     private DataInputStream flujoDatosEntrada;
     private DataOutputStream flujoDatosSalida;
     private int puerto;
+
+    static InputStreamReader isr;
+    static BufferedReader br;
+    static String message;
 
 
     public HiloServidor(Socket cliente) {
@@ -26,6 +28,8 @@ public class HiloServidor extends Thread{
                     new DataOutputStream(cliente.getOutputStream());
             flujoDatosSalida.writeUTF("Servidor: Bienvenido, esta conectado" +
                     "en el puerto: " + puerto);
+
+
         }catch (IOException e){
             System.out.println("Error hilo servidor");
         }
@@ -44,13 +48,21 @@ public class HiloServidor extends Thread{
     public void run() {
         try {
             while (true) {
-                String mensaje = flujoDatosEntrada.readUTF();
-                System.out.println("C-" + cliente.getPort() +": "+ mensaje);
+
+                isr = new InputStreamReader(cliente.getInputStream());
+                br = new BufferedReader(isr);
+
+                message = br.readLine();
+
+                System.out.println("C-" + cliente.getPort() +": "+ message);
+                flujoDatosEntrada.readUTF();
+//                System.out.println("C-" + cliente.getPort() +": "+ mensaje);
+
+
             }
         }catch (IOException e){
             System.out.println("Se perdio conexion con C-" + getPuerto());
             for (EscuchadorEventos escuchador : escuchadores){
-                System.out.println("Disparando evento QUITAR CLIENTE");
                 escuchador.quitarCliente(getPuerto());
             }
             close();
@@ -62,6 +74,9 @@ public class HiloServidor extends Thread{
         try {
             if (flujoDatosEntrada != null) flujoDatosEntrada.close();
             if (cliente != null) cliente.close();
+//            if (isr != null) isr.close();
+//            if (br != null) br.close();
+
             setPuerto(-1);
 
         }catch (IOException e){
