@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 class PreguntaController extends Controller
 {
     public function nuevaPregunta(Request $request, $id){
+//        dd($request);
         $pregunta = new Pregunta();
         $pregunta->enunciado = $request->enunciado;
         $pregunta->modelo_id = $id;
@@ -44,7 +45,7 @@ class PreguntaController extends Controller
                     $cerrada = new Cerrada();
                     $cerrada->etiqueta = $selector['etiqueta'];
                     $cerrada->tipoSeleccion= $selector['tipoP'];
-                    $cerrada->obligatoria = false;
+                    $cerrada->obligatoria = (array_key_exists("obligatorio",$selector));
                     $cerrada->pregunta_id = $pregunta->id;
                     $cerrada->save();
 

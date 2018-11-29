@@ -32,6 +32,11 @@
                                         <button class="btn btn-warning"><i class="fa fa-pencil-alt"></i></button>
                                         </a>
                                         <button class="btn btn-danger" onclick="eliminarModelo('{{$modelo->nombre}}', '{{url('modelos/'.$modelo->id)}}')"><i class="fa fa-trash"></i></button>
+                                        <form action="{{url('modelos/'.$modelo->id.'/finalizar')}}" method="POST">
+                                            {{method_field("patch")}}
+                                            {{csrf_field()}}
+                                            <button class="btn btn-success" type="submit"><i class="fa fa-check"></i></button>
+                                        </form>
                                         @endif
                                     </td>
                                 </tr>

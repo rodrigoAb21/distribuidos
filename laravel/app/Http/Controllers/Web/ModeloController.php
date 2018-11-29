@@ -109,4 +109,11 @@ class ModeloController extends Controller
     public function eliminarPregunta($mid, $pid){
         return redirect('/modelos/'.$mid.'/edit');
     }
+
+    public function finalizar($id){
+        $modelo = Modelo::findOrFail($id);
+        $modelo->estado="finalizada";
+        $modelo->update();
+        return redirect('/modelos');
+    }
 }
