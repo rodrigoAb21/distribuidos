@@ -172,7 +172,7 @@ public class EncuestaActivity extends AppCompatActivity {
                     if (valido(area, pos)){
                         mostrarEncuesta(0, pos);
                     }else{
-                        Toast.makeText(this, "Necesita estar dentro del area!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Necesita estar dentro del area asignada", Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -325,7 +325,7 @@ public class EncuestaActivity extends AppCompatActivity {
             return;
         }
         // this code won'textView execute IF permissions are not allowed, because in the line above there is return statement.
-        locationManager.requestLocationUpdates("gps", 5000, 0, listener);
+        locationManager.requestLocationUpdates("gps", 2000, 0, listener);
 
 
     }
